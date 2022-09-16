@@ -22,7 +22,6 @@ npm-debug.log
 **/.DS_Store
 node_modules
 *~
-dist
 /target
 *.iml
 atlassian-ide-plugin.xml
