@@ -1,0 +1,112 @@
+ <div class="content-container" ng-controller="OfficeActivityLogController" >
+     <ul class="breadcrumb">
+        <li><a href="#/offices">{{'label.partners' | translate}}</a></li>
+		<li class="active">{{'label.heading.Officetransactionhistory' | translate}}</li>
+    </ul>
+       <!-- <div class="card cardgrid" >
+        <div class="content"> -->
+         <!-- <div class="toolbar">
+         <h3>{{'label.heading.Officetransactionhistory' | translate}}</h3>
+		 </div> -->
+      <div id="pane1" class="tab-pane" data-ng-class="{active: activitylogC}" select="getTransactionHistory()" > 
+			<div class="widget mb30">
+			     <div class="row ">
+					<div class="col-md-3">
+						<input data-ng-model="filterText" type="text" class="form-control" placeholder="Filter by name">
+					</div>
+					<div class="col-md-9">
+						<form class="form-inline ">
+						   <div class="row ">
+						 	<div class="col-md-5">
+							 	 <div class="form-group row d-flex align-items-center">
+							 	 	<div class="col-md-4">
+							 	 		<label class="control-label" for="validFrom">{{'label.fromDate' | translate }}</label> 
+							 	 	</div>
+							 	 	<div class="col-md-8">
+							 	 		<input type="text" id="fromDate" class="form-control"data-ng-model="fromDate" datepicker-pop="dd MMM yyyy">
+							 	 	 </div>
+							 	  </div>
+						 	 </div>
+						 	 <div class="col-md-5">
+							 	 <div class="form-group row d-flex align-items-center">
+							 	 	<div class="col-md-4">
+							 	 		<label class="control-label mt8 mr-25" for="validFrom">{{'label.toDate' | translate }}</label>
+							 	 	</div>
+							 	 	<div class="col-md-8">
+							 	 		 <input type="text" id="toDate" class="form-control" data-ng-model="toDate" datepicker-pop="dd MMM yyyy" max="'2020-06-22'" date-disabled="disabled(date, mode)">
+							 	 	 </div>
+							 	  </div>
+						 	  </div>
+						 	  <div class="col-md-2">
+						 	  	  <button class="btn primary_btn btn-disabled  pull-right" type="submit" data-ng-click="getTrans(fromDate,toDate)">{{'label.button.search' | translate}}</button>
+						 	  </div>
+						 	</div>
+						 </form>
+					</div>
+			   </div>
+			</div>
+		    <div class="widget">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<!-- <th>{{'table.user' | translate}}</th> -->
+							<th>{{'table.officeId' | translate}}</th>
+							<th>{{'table.transactiondate' | translate}}</th>
+							<th>{{'table.transactiontype' | translate}}</th>
+							<th>{{'table.history' | translate}}</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="pointer-main" data-ng-repeat="transactionhistory in transactionhistory.currentPageItems  | filter:filterText">
+							<!-- <td>{{transactionhistory.user}}</td> -->
+							<td class="pointer" data-ng-click="routeTo(transactionhistory.officeId)">{{transactionhistory.officeId}}</td>  
+							<!-- <td>{{transactionhistory.clientId}}</td>  -->
+							<td class="pointer" data-ng-click="routeTo(transactionhistory.officeId)">{{transactionhistory.transactionDate  | DateTimeFormat}}</td>
+							<td class="pointer" data-ng-click="routeTo(transactionhistory.officeId)">{{transactionhistory.transactionType}}</td>  
+							<td class="pointer" data-ng-click="routeTo(transactionhistory.officeId)">{{transactionhistory.history | EventTypeCategory:transactionhistory.transactionType:transactionhistory.officeId}}</td> 
+						</tr>
+					</tbody>
+				</table>
+				<ul class="pager">
+					<li class="previous"><a data-ng-click="transactionhistory.previous()" href="" data-ng-disabled="!transactionhistory.hasPrevious()">&larr; {{'label.prev' | translate}}</a></li>
+					<li class="next" ><a data-ng-click="transactionhistory.next()" href="" data-ng-disabled="!transactionhistory.hasNext()">{{'label.next' | translate}} &rarr;</a></li>
+				</ul>
+			</div>
+  		</div>
+  		
+    		<!-- <div id="pane2" class="tab-pane" data-ng-class="{active:oldActivitylogC}" >
+					<div>
+					<form data-ng-submit="searchTransactionHistory()">
+						<div class="col-sm-5">
+							<input data-ng-model="filterText" type="text" class="form-control mb20" placeholder="Filter by name">
+						</div>
+						</form>
+					<table class="table table-striped">
+						<thead>
+				  			<tr>
+	 							<th>{{'table.user' | translate}}</th>
+	 							<th>{{'table.transactiondate' | translate}}</th>
+								<th>{{'table.transactiontype' | translate}}</th>
+								<th>{{'table.history' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="transactionhistory in transactionhistoryOld.currentPageItems  | filter:filterText">
+								<td>{{transactionhistory.user}}</td>
+								<td>{{transactionhistory.transactionDate  | DateTimeFormat}}</td>
+								<td>{{transactionhistory.transactionType}}</td>  
+								<td>{{transactionhistory.history}}</td> 
+							</tr>
+						</tbody>
+					</table>
+					<ul class="pager">
+						<li class="previous"><a data-ng-click="transactionhistory.previous()" href="" data-ng-disabled="!transactionhistory.hasPrevious()">&larr; {{'label.prev' | translate}}</a></li>
+						<li class="next" ><a data-ng-click="transactionhistory.next()" href="" data-ng-disabled="!transactionhistory.hasNext()">{{'label.next' | translate}} &rarr;</a></li>
+					</ul>
+				</div>
+    		</div>  -->
+	</div>
+
+				
+				 

@@ -1,0 +1,47 @@
+<div class="content-container" ng-controller="ViewRumController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+	    <li><a href="#/rating">{{'label.rating' | translate}}</a></li>
+	    <li class="active">{{'label.viewuom' | translate}}&nbsp;&nbsp;</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h3>{{rum.Name}}</h3>
+				<div class="pull-right">
+	      			<div class="btn-group">
+	          			<a has-permission = UPDATE_RUM href="#/editrum/{{rum.id}}" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a>
+	     			</div>
+	    		</div>	
+			</div>
+			<br/>
+				<div class="row">
+					<div class="col-md-6">
+						<table class="table table-bordered table-striped"> 
+							<tr>
+								<td>{{ 'label.id' | translate }}</td>
+								<td>{{rum.id}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.chargecodeid' | translate }}</td>
+								<td>{{rum.chargeName}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.templateid' | translate }}</td>
+								<td>{{rum.templateName}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.rumname' | translate }}</td>
+								<td>{{rum.rumName}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.rumexpression' | translate }}</td>
+								<td>{{rum.rumExpression}}</td>
+							</tr>
+						</table>
+						
+					</div>
+				</div>
+		 </div>
+	</div>
+</div>

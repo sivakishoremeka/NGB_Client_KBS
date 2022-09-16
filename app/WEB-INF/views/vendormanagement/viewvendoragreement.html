@@ -1,0 +1,71 @@
+<div data-ng-controller="ViewVendorAgreementController">
+		<ul class="breadcrumb">
+	        <li><a href="#/vendormanagement">{{'label.vendor.vendormanagement' | translate}}</a></li>
+	        <li><a href="#/viewvendormanagement/{{vendorId}}">viewvendor</a></li>
+	        <li class="active">{{vendorAgreeData.id}}&nbsp;&nbsp;</li>
+	    </ul>
+	 <div class="card">
+      <div class="content">
+          <div class="pull-right">
+      		<div class="btn-group">
+	          <a has-permission='UPDATE_VENDOR' href="#/editvendoragreement/{{vendorAgreeRouteParamId}}/{{vendorId}}" class="btn btn-primary"><i class="fa fa-edit fa fa-white"></i> Edit</a>
+	     	</div>
+	     </div>	
+	   
+	<div class="row">
+	 <h3>&nbsp;&nbsp;&nbsp;{{vendorAgreeData.id}}</h3>
+        <div class="col-md-6">
+        	<table class="table table-bordered table-striped">
+					<tr>
+						<td width="35%"><strong>Status</strong></td>
+						<td width="65%">{{vendorAgreeData.agreementStatus}}</td>
+					</tr>
+					<tr>
+						<td><strong>Start Date</strong></td>
+						<td>{{vendorAgreeData.agreementStartDate}}</td>
+					</tr>
+					</table>
+		</div>
+		<div class="col-md-6">
+        	<table class="table table-bordered table-striped">
+				<tr>
+					<td><strong>Content Type</strong></td>
+					<td>{{vendorAgreeData.contentType}}</td>
+				</tr>
+				<tr>
+					<td><strong>End Date</strong></td>
+					<td>{{vendorAgreeData.agreementEndDate}}</td>
+				</tr>
+			</table>
+		</div>
+		
+	</div>
+	
+	<div>
+	   <h3>&nbsp;&nbsp;&nbsp;Agreement Details</h3>
+	   <div class="col-md-3">
+       	<input data-ng-model="filterText" type="text" class="form-control" placeholder="{{'placeholder.searchbar' | translate}}">
+       </div>
+        <table class="table table-striped">
+          <thead>
+            <tr class="graybg">
+				   <th>Content Code</th>
+                   <th>Loyalty Type</th>
+                   <th>Loyalty Share/Content Cost</th>
+                   <th>PriceRegions</th>
+            </tr>
+          </thead>
+          <tbody>
+             <tr data-ng-show="agreement.id" data-ng-repeat="agreement in agreements | filter:filterText">      
+                <td>{{agreement.contentCode}}</td>
+                <td>{{agreement.loyaltyType}}</td>
+                <td data-ng-hide="agreement.loyaltyType == 'None'">{{agreement.loyaltyShare}}</td> 
+                <td data-ng-show="agreement.loyaltyType == 'None'">{{agreement.contentCost}}</td> 
+                <td>{{agreement.regionName}}</td>                
+             </tr>
+          </tbody>
+         </table>
+        </div>
+ 	 </div>
+ 	</div>
+</div>

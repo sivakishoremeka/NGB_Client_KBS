@@ -1,0 +1,62 @@
+<div class="content-container" ng-controller="ViewTicketTeamController">
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+        </li>
+
+        <li class="active">{{'label.viewticketteam' | translate}}</li>
+    </ul>
+    <div class="widget">
+        <h3>View Ticket Team</h3>
+        <ul class="btn-group-list text-right mt20 mb20">
+            <li>
+                <a has-permission=U PDATE_TICKETTEAM href="#/editticketteam/{{ticketteam.id}}" class="btn primary_btn"><i class="fa fa-edit"></i> Edit</a>
+            </li>
+            <li><a has-permission=D ELETE_TICKETTEAM data-ng-click="deleteTicketteam()" class="btn primary_btn"><i class="fa fa-trash-o"></i> Delete</a>
+            </li>
+        </ul>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <td>{{ 'label.teamhead' | translate }}</td>
+                    <td>{{ticketteam.userId}}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'label.teamcode' | translate }}</td>
+                    <td>{{ticketteam.teamCode}}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'label.teamdescription' | translate }}</td>
+                    <td>{{ticketteam.teamDescription}}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'label.teamcategory' | translate }}</td>
+                    <td>{{ticketteam.teamCategory}}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'label.status' | translate }}</td>
+                    <td>{{ticketteam.status}}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'label.teamEmail' | translate }}</td>
+                    <td>{{ticketteam.teamEmail}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="ticketteam.html">
+    <div class="modal-header silver">
+        <h3 class="bolder">Delete TicketTeam</h3>
+    </div>
+    <div class="modal-body">
+        <h4 class="text-center">Are you sure?</h4>
+  </div>
+    <div class="modal-footer ">
+    	<ul class="btn-group-list">
+    		<li> <button class="btn btn-warning " ng-click="cancel() ">{{'button.cancel' | translate}}</button></li>
+    		<li><button class="btn btn-primary " ng-click="approve() ">{{'label.confirm' | translate}}</button></li>
+    	</ul>
+    </div>
+    </script>
+</div>

@@ -1,0 +1,73 @@
+<div class="content-container" data-ng-controller="FeeMasterController">
+  <ul class="breadcrumb">
+    <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+    <li class="active">{{'label.feemaster' | translate}}</li>
+  </ul>
+  <div class="widget mb30">
+    
+    
+    <div class="row">
+      <div class="col-md-3">
+        <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+      </div>
+      <div class="col-md-9">
+        <ul class="text-right btn-group-list">
+          <li><a href="#/createfeemaster" class="btn primary_btn" has-permission='CREATE_FEEMASTER'><i
+          class="fa fa-plus"></i>{{'label.createfeemaster' | translate}}</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="widget">
+    
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr class="graybg">
+            <th>{{ 'label.feemaster.code' | translate }}</th>
+            <th>{{ 'label.feemaster.description' | translate }}</th>
+            <th>{{ 'label.feemaster.transactiontype' | translate }}</th>
+            <th>{{ 'label.chargecode' | translate }}</th>
+            <!-- <th>{{ 'label.feemaster.defaultfeeamount' | translate }}</th> -->
+            <th>{{ 'table.heading.actions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="pointer-main" data-ng-repeat="feeMasterData in feeMasterDatas | filter:filterText">
+            <td class="pointer"  data-ng-click="routeTo(feeMasterData.id)">{{feeMasterData.feeCode}}</td>
+            <td class="pointer"  data-ng-click="routeTo(feeMasterData.id)">{{feeMasterData.feeDescription}}</td>
+            <td class="pointer"  data-ng-click="routeTo(feeMasterData.id)">{{feeMasterData.transactionType}}</td>
+            <td class="pointer"  data-ng-click="routeTo(feeMasterData.id)">{{feeMasterData.chargeCode}}</td>
+            <!--  <td class="pointer"  data-ng-click="routeTo(feeMasterData.id)">{{feeMasterData.defaultFeeAmount}}</td> -->
+            <td class="pointer">
+              <ul class="table-icon-list">
+                <li><a has-permission='UPDATE_FEEMASTER' href="#/editfeemaster/{{feeMasterData.id}}"
+              uib-popover="{{'button.edit' | translate}}" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></li>
+              <li>
+                <a has-permission='DELETE_FEEMASTER' data-ng-click="deleteFeeMaster(feeMasterData.id)"
+              uib-popover="{{'button.delete' | translate}}" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>
+              </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <script type="text/ng-template" id="approve.html">
+    <div class="modal-header silver">
+      <h3 class="bolder">{{'label.delete.feemaster' | translate}}</h3>
+    </div>
+    <div class="modal-body">
+      <h4 class="text-center">Are you sure?</h4>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+      <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+    </div>
+    </script>
+  </div>
+</div>

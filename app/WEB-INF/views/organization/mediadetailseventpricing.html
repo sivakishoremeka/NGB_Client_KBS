@@ -1,0 +1,259 @@
+<div class="content-container" ng-controller="MediadetailsEventpricingController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li class="active">{{'label.mediadetailseventpricing' | translate}}</li>
+	</ul>
+	<div class="widget mb30">
+      <div class="row">
+    		<div class="col-md-3">
+    			<input data-ng-model="filterText" type="text" class="form-control" data-ng-autofocus="true" class="span marginbottom0px" placeholder="{{'placehoder.mediadetails.searchbar' | translate}}"/>
+    	    </div>
+      </div>
+	</div>
+  
+	<div class="widget">
+		<uib-tabset tabset-name="mediadetailseventpricingTabset">
+			<uib-tab heading="{{'label.heading.mediadetails' | translate}}">
+		  
+		        <!-- <div class="toolbar"> -->
+				     <!-- <div class="col-md-3">
+				     	<input data-ng-model="filterText" type="text" class="form-control" data-ng-autofocus="true" class="span marginbottom0px" placeholder="{{'placehoder.mediadetails.searchbar' | translate}}"/>
+				     </div> -->
+	     			  <ul class="btn-group-list text-right mb20">
+                  <li>
+				        	<a has-permission='CREATE_MEDIAASSET' href="#/createMedia" class="btn primary_btn pull-right"><i 
+				        	class="fa fa-plus"></i> {{ 'link.create.new.mediadetail' | translate }}</a></li>
+				        	<li><a has-permission='CREATE_MEDIAASSET' href="#/createAdvanceMedia" class="btn primary_btn pull-right"><i 
+				        	class="fa fa-plus"></i> {{ 'link.create.adv.mediadetail' | translate }}</a></li>
+				      </ul> 
+	  			
+		     <div class="table-responsive">
+		      <table class="table table-striped">
+		        <thead>
+		            <tr class="graybg">
+		                <th>{{ 'table.mediadetails.title' | translate }}</th>
+		                <th>{{'table.mediadetails.categeory' | translate}}</th>
+		                <th>{{'table.mediadetails.contentprovider' | translate}}</th>
+		                <th>{{'table.mediadetails.share' | translate}}</th>
+		                <th>{{ 'table.mediadetails.status' | translate }}</th>
+		                <th>{{'table.actions'|translate}}</th> 
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr class="pointer-main" data-ng-repeat="mediaData in mediaDetailsData | filter:filterText">
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.mediaTitle}}</td>            
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.mediaCategory}}</td>        
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.contentProviderValue}}</td> 
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.cpShareValue}}</td>         
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.status}}</td>
+		                <td>
+                      <ul class="table-icon-list">
+                        <li> <a data-ng-click="createMediaLocations(mediaData.mediaId)" uib-popover="Add Location" data-popover-trigger="mouseenter" class="fa fa-map-marker"></a></li>
+                        <li>
+                           <a data-ng-click="createMediaAttributes(mediaData.mediaId)" uib-popover="Add Attributes" data-popover-trigger="mouseenter" class="fa fa-tags"></a>
+                        </li>
+                        <li>
+                          <a href="#/createEventFromMedia/{{mediaData.mediaId}}/{{mediaData.mediaTitle}}/{{fromMedia}}" uib-popover="Add Event" data-popover-trigger="mouseenter"><i class="fa fa-plus"></i></a>
+                        </li>
+                        <li>
+                           <a href="#/editmedia/{{mediaData.mediaId}}" uib-popover="Edit Media" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a>
+                        </li>
+                      </ul>
+		                	<!--  <a data-ng-click="deletemedia(mediaData.mediaId)" uib-popover="Delete Media" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a> -->
+		                </td> 
+		            </tr>
+		        </tbody>
+     		</table>
+      </div>
+     </uib-tab>
+     		
+     		
+     		<!-- Events Tab Starting here -->
+     		<uib-tab heading="{{'label.heading.event' | translate}}" select="getEvents()">
+		   
+			    <!-- <div class="toolbar"> -->
+		         <!-- <div class="row"> -->
+		             <!-- <div class="col-md-8">
+		                <input data-ng-model="filterText" type="text" class="form-control" class="span marginbottom0px" 
+		                	placeholder="{{'placeholder.searchbar' | translate}}">
+	         		</div> -->
+              <ul class="btn-group-list text-right mb20">
+                <li>  <a has-permission='CREATE_EVENT' && 
+            has-permission='READ_EVENT' href="#/createEvent" class="btn primary_btn"><i 
+              class="fa fa-plus"></i> {{'lable.createevent' | translate }}</a></li>
+              </ul>
+		     <!-- </div> -->
+				<!-- </div> -->
+			<div class="table-responsive">
+					<table class="table table-striped" >
+						<thead>
+							<tr class="graybg">
+								<th>{{'label.eventname' | translate}}</th>
+								<th>{{'label.eventdescription' | translate}}</th>	
+								<th>{{'label.eventcategory' | translate}}</th>			
+								<th>{{'label.status' | translate}}</th>
+								<th>{{'label.actions' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="pointer-main" data-ng-repeat="event in events | filter:filterText">
+								<td class="pointer" data-ng-click="routeToEvent(event.id)">{{event.eventName}}</td>
+								<td class="pointer" data-ng-click="routeToEvent(event.id)">{{event.eventDescription}}</td>	
+								<td class="pointer" data-ng-click="routeToEvent(event.id)">{{event.eventCategory}}</td>			
+								<td class="pointer" data-ng-click="routeToEvent(event.id)">{{event.status}}</td>
+								<td>
+                   <ul class="table-icon-list">
+                     <li><a has-permission='UPDATE_EVENT' href="#/editEvent/{{event.id}}" uib-popover="{{'label.editevent' | translate}}" 
+                    data-popover-trigger="mouseenter" class="fa fa-edit"></a></li>
+                    <li>
+                      <a has-permission='DELETE_EVENT' data-ng-click="deleteEvent(event.id)" uib-popover="{{'label.deleteevent' | translate}}" 
+                    data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>
+                    </li>
+                    <li>
+                      <a has-permission='CREATE_EVENTPRICE' && has-permission='READ_EVENTPRICE'
+                            href="#/addEventPrice/{{event.id}}" uib-popover="{{'label.addprice' | translate}}" data-popover-trigger="mouseenter" class="fa fa-plus"></a> 
+                    </li>
+                   </ul>
+				          </td>
+							    </tr>
+							</tbody>
+						</table>
+          </div>
+		         	</uib-tab>
+		         </uib-tabset>
+			
+		</div>
+<script type="text/ng-template" id="deletePopupForEvent.html">
+    	<div class="modal-header silver">
+        	<h3 class="bolder">{{'label.heading.deletediscount' | translate}}</h3>
+        </div>
+
+        <div class="modal-body">
+            <h4 class="center">Are you sure?</h4>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+        </div>
+ </script>
+ 
+ <script type="text/ng-template" id="createmedialocation.html">
+  <form class="form-horizontal widget " ng-submit="submit()">
+       <div class="error" ng-show="errorStatus || errorDetails">
+          <label>{{'label.errors' | translate}}</label>
+          <label ng-show="errorStatus">{{errorStatus}}</label>
+          <label ng-hide="errorStatus" ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+       </div>
+    <div class="model-body">
+       <h3>{{'label.add.medialocations' | translate}}</h3>
+          <div class="table-responsive">
+          <table class="table table-striped">
+                <tr class="control-group">
+                  <td>
+                       <select class="form-control" ng-model="formData.languageId" ng-options="mediaLanguageData.id as mediaLanguageData.mCodeValue  for mediaLanguageData in mediaLanguageDatas">
+                            <options>{{'label.select.apptableName' | translate}}</options>
+                       </select>
+                     </td>
+                     <td>
+                       <select class="form-control" ng-model="formData.formatType" ng-options="mediaFormat.mediaName as mediaFormat.mediaName for mediaFormat in mediaFormats">
+                            <options>{{'label.select.apptableName' | translate}}</options>
+                       </select>
+                     </td>
+                     <td>
+                       <input type="text" class="form-control" ng-model="formData.location" placeholder="{{'label.media.location' | translate}}"/>
+                     </td>
+                     <td>
+                       <a ng-click="addMediaLocation()">&nbsp;<i class="fa fa-plus "></i></a>
+                       </td>
+                     </tr>
+                   </table>
+                 </div>
+                   <div class="table-responsive">
+                     <table class="table table-striped" width="100%" ng-show="formData.mediaAssetLocations.length>0">
+                       <tr class="graybg">
+                          <th>{{'table.heading.language' | translate}}</th>
+                          <th>{{'table.heading.format' | translate}}</th>
+                          <th>{{'table.heading.location' | translate}}</th>
+                       </tr>
+                          <tr ng-repeat="mediaAssetLocation in formData.mediaAssetLocations" >
+                           <td><select class="form-control" ng-model="mediaAssetLocation.languageId" ng-options="mediaLanguageData.id as mediaLanguageData.mCodeValue  for mediaLanguageData in mediaLanguageDatas"></select></td>
+                            <td><select class="form-control" ng-model="mediaAssetLocation.formatType" ng-options="mediaFormat.mediaName as mediaFormat.mediaName for mediaFormat in mediaFormats" class="form-control"></select></td>
+                           <td><input type="text" class="form-control" ng-model="mediaAssetLocation.location" placeholder="{{'label.media.location' | translate}}"/></td>
+                            <td><a ng-click="removeMediaLocation($index)"><i class="fa fa-remove "></i></a></td>
+                        </tr>
+                      </table>
+               </div>
+             </div>
+        <div class="model-footer">
+         <ul class="btn-group-list text-right mt20 mb20">
+         <li><button id="cancel" class="btn btn-warning" ng-click="reject()">{{'button.cancel' | translate}}</button></li>
+         <li><button id="submit" class="btn btn-primary" ng-click="accept()" ng-disabled="disabledMediaLocationSaveBtn">{{'label.save' | translate}}</button></li>
+       </ul>
+     </div>
+</script>
+
+<script type="text/ng-template" id="createmediaattribute.html">
+  <div class="modal-content widget" >
+     <form class="form-horizontal" ng-submit="submit()">
+         <div class="error" ng-show="errorStatus || errorDetails">
+            <label>{{'label.errors' | translate}}</label>
+            <label ng-show="errorStatus">{{errorStatus}}</label>
+            <label ng-hide="errorStatus" ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+         </div>
+          <div class="model-body">
+            <h3>{{'label.add.mediaattributes' | translate}}</h3>
+            <div class="table-responsive">
+               <table class="table table-striped">
+                <tr>
+                  <td>
+                        <input class="form-control" type="text" ng-model="formData.attributeType" readonly />
+                      </td>
+                      <td>
+                         <select class="form-control" ng-model="formData.attributeName" ng-options="mediaAttribute.id as mediaAttribute.mediaName for mediaAttribute in mediaAttributes"></select>
+                      </td>
+                      <td>
+                          <input class="form-control" type="text" ng-model="formData.attributevalue"  placeholder="{{'label.media.captionvalue' | translate}}"/>
+                      </td>
+                      <td><input class="form-control" type="text" ng-model="formData.attributeNickname"  placeholder="{{'label.media.nickname' | translate}}"/>
+                        
+                      </td>
+                      <td>
+                         <input class="form-control"  type="text" ng-model="formData.attributeImage" placeholder="{{'label.media.image' | translate}}"/>
+                      </td>
+                      <td>
+                         <a ng-click="addMediaAttributes()">&nbsp;<i class="fa fa-plus "></i></a>
+                      </td>
+                 </tr>
+               </table>
+             </div>
+              <div class="table-responsive">
+                      <table class="table table-striped" ng-show="formData.mediaassetAttributes.length>0">
+                        <tr class="graybg">
+                            <th>{{'table.media.cast' | translate}}</th>
+                           <th>{{'table.heading.attributetype' | translate}}</th>
+                            <th>{{'label.media.captionvalue' | translate}}</th>
+                          <th>{{'label.media.nickname' | translate}}</th>
+                             <th>{{'label.media.image' | translate}}</th>
+                        </tr>
+                        <tr ng-repeat="mediaassetAttribute in formData.mediaassetAttributes" >
+                          <td><input type="text" class="form-control ml-10"  ng-model="mediaassetAttribute.attributeType" readonly /></td>
+                           <td><select class="form-control  ml-10" ng-model="mediaassetAttribute.attributeName" ng-options="mediaAttribute.id as mediaAttribute.mediaName for mediaAttribute in mediaAttributes"></select></td>
+                            <td><input type="text" class="form-control  ml-10" ng-model="mediaassetAttribute.attributevalue" placeholder="{{'label.media.captionvalue' | translate}}" /></td>
+                           <td><input type="text" class="form-control  ml-10" ng-model="mediaassetAttribute.attributeNickname" placeholder="{{'label.media.nickname' | translate}}"/></td>
+                           <td><input type="text" class="form-control  ml-10" ng-model="mediaassetAttribute.attributeImage" placeholder="{{'label.media.image' | translate}}"/></td>
+                           <td><a ng-click="deleteMediaAttributes($index)"><i class="fa fa-remove"></i></a></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                    <div class="model-footer">
+                       <ul class="btn-group-list text-right">
+                       <li>  <button id="cancel" class="btn btn-warning" ng-click="reject()">{{'button.cancel' | translate}}</button></li>
+                       <li>  <button id="submit" class="btn btn-primary" ng-click="accept()" ng-disabled="disabledMediaAttributesSaveBtn">{{'label.save' | translate}}</button></li>
+                     </ul>
+                      </div>
+         </div>
+  
+</script>
+ 
+</div>

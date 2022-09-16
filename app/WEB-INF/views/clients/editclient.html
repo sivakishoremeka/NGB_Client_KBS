@@ -1,0 +1,326 @@
+<div class="content-container" ng-controller="PayInvoiceController">
+    <ul class="breadcrumb">
+        <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+        <li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+        <li class="active">{{'label.editcustomer' | translate}}</li>
+    </ul>
+    <div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+        <h3>{{'label.editcustomer' | translate}}</h3>
+        <form name="editclientform" novalidate class="form-horizontal" data-ng-controller="EditClientController" data-ng-submit="submit()">
+            <!-- <div class="error" data-ng-show="errorStatus || errorDetails">
+					<label>{{'label.contract.error' | translate}}</label>
+					<label data-ng-show="errorStatus">{{errorStatus}}</label>
+					<label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+				</div> -->
+            <api-validate></api-validate>
+            <!-- <div class="form-group">
+	                    <label class="control-label">{{ 'label.office' | translate }}<span class="required">*</span></label>
+	                  	<div class="col-sm-3">
+	                     	<select data-ng-model="officeId" class="form-control" data-ng-options="office.id as office.name for office in offices">
+	                  			</select>
+	                	</div>
+
+						 <label class="control-label">{{ 'label.office' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input type="text"  
+								placeholder=officeName
+								data-ng-model="office" 
+								name="serialNumber" 
+								class="form-control"
+								uib-typeahead="office as office.name for office in offices" 
+								typeahead-on-select = "lcoMovement(office)"
+								autocomplete="off" data-typeahead-min-length="0">
+						</div>
+	                	<label class="control-label">{{ 'label.password' | translate }}</label>
+	                  	<div class="col-sm-3">
+	                    		<input type="password" class="form-control" data-ng-model="formData.password">
+	                  	</div>
+	             	</div> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.office' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" placeholder=officeName data-ng-model="officeModel" name="serialNumber" class="form-control" uib-typeahead="officeDetails as groupByOffice(officeDetails.externalId, officeDetails.name) for officeDetails in getData($viewValue)" typeahead-on-select="lcoMovement(officeModel)" autocomplete="off" data-typeahead-min-length="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.password' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control" data-ng-model="formData.password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">Title</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select ng-model="source" class="form-control">
+                                <option value="Mr">Mr</option>
+                                <option value="Mr">Mrs</option>
+                                <option value="Ms">Ms</option>
+                                <option value="Miss">Miss</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{'label.clientcategory' | translate}}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select data-ng-model="formData.clientCategory" class="form-control" data-ng-options="ClientCategoryData.id as ClientCategoryData.categoryType for ClientCategoryData in ClientCategoryDatas"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label data-ng-hide="entryType =='ORP'" class="control-label" for="firstname">{{'label.firstname' | translate}}
+                                <span class="required">*</span></label>
+                            <label data-ng-show="entryType =='ORP'" class="control-label" for="firstname">{{'label.corporate' | translate}}
+                                <span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="firstname" class="form-control" data-ng-model="formData.firstname" required data-ng-minlength=3 data-late-Validate/>
+                            <span data-ng-show="editclientform.firstname.$invalid">
+	                          		<small class="error" data-ng-show="editclientform.firstname.$error.req">Required Field</small>
+	                        		<small class="error" data-ng-show="editclientform.firstname.$error.minlength && !editclientform.firstname.$error.req">
+	                        			Your name is required to be at least 3 characters</small>
+	                      		</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="middlename">{{'label.middlename' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="formData.middlename">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label data-ng-hide="entryType =='ORP'" class="control-label" for="lastname">{{'label.lastname' | translate}}<span class="required">*</span></label>
+                            <label data-ng-show="entryType =='ORP'" class="control-label" for="firstname">{{'label.contactperson' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="lastname" class="form-control" data-ng-model="formData.lastname" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.phone' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="formData.phone">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.cafid' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="formData.externalId">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{'label.email' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="formData.email">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.homephone' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="formData.homePhoneNumber">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                    <div data-ng-show="isSelfCareUser">
+	             <div class="row">
+	                <div class="col-md-6">
+	                        <div class="form-group row">
+	                            <div class="col-md-4">
+	                                <label class="control-label">{{ 'label.username' | translate }}</label>
+	                            </div>
+	                            <div class="col-md-8">
+	                                <input type="text" class="form-control" data-ng-model="formData.userName">
+	                            </div>
+	                        </div>
+	                    </div>
+                     <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label">{{'label.client.select.image' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="file" id="file" data-ng-file-select="onFileSelect($files)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.IdentificationProof' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select data-ng-model="formData.idKey" class="form-control" data-ng-options="idProof.id as idProof.mCodeValue for idProof in idProofs">
+                                <option value="">{{'label.select.one' | translate}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.IdentificationProofValue' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="formData.idValue" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a id="cancel" href="#/viewclient/id/{{clientId}}">
+                        <button type="reset" class="btn btn-warning" data-ng-click="reset123()">{{'button.cancel' | translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit" type="submit" class="btn btn-primary">{{'button.save' | translate}}</button>
+                </li>
+            </ul>
+
+            <!-- <div class="offset3">
+	                	<label class="control-label">{{'label.client.select.image' | translate}}</label>
+	                	<div class="col-sm-3">
+	                  		<input type="file" id="file" data-ng-file-select="onFileSelect($files)">
+	                	</div>
+	              	</div> -->
+            <!-- <div class="form-group">
+						<label class="control-label" for="addressKey"> {{'label.addresstype' | translate }} </label>
+						<div class="col-sm-3">
+							<select ng-model="formData.addressType" class="form-control" ng-change="addressTypeChangeFun(formData.addressType)"
+								ng-options="address.value as address.value for address in addressTypeData" 
+								value="{{address.value}}" ></select>
+						</div>
+					</div> -->
+
+            <!-- <div class="form-group">
+						<label class="control-label" for="addressKey"> {{'label.addresstype' | translate }} </label>
+						<div class="col-sm-3">
+							<select ng-model="formData1.addressType" class="form-control" ng-change="addressTypeChangeFun(formData1.addressType)"
+								ng-options="address.value as address.value for address in addressTypeData" 
+								value="{{address.value}}" ></select>
+						</div>
+						 <div class="form-group"> 
+						<label class="control-label" for="city">{{'label.city' | translate}}</label>
+						<div class="col-sm-3" data-ng-hide="propertyMaster">
+							<input type="text" id="city" class="form-control" data-ng-model="formData1.city" autocomplete="off" list="citylist" 
+								data-ng-change="getStateAndCountry(formData.city)">
+						</div>
+						    <div class="col-sm-3" data-ng-show="propertyMaster">
+                           <input type="text" id="city" class="form-control" name="city" data-ng-model="formData1.city" readonly required />  
+                          </div>
+					  </div>
+					<datalist id="citylist">
+                   		<option  data-ng-repeat="cityData in cityDatas" value="{{cityData}}">
+            		</datalist>
+
+					 </div> 
+					 </div>
+					 <div class="form-group"  divdata-ng-hide="propertyMaster">
+						<label class="control-label" for="addressNo">{{'label.addressno' | translate}}</label>
+						<div class="col-sm-3">
+							<input type="text" id="addressNo" class="form-control" data-ng-model="formData1.addressNo">
+						</div>
+						<label class="control-label" for="district">{{'label.district' | translate}}</label>
+						<div class="col-sm-3">
+							<input type="text" id="district" class="form-control" ng-model="formData1.district" readonly>
+						</div>
+					</div>
+					<div class="form-group" data-ng-show="propertyMaster">
+                    	<label class="control-label">{{'label.buildingcode' | translate}}<span class="required">*</span></label>
+                   		<div class="col-sm-3">
+                			<input type="text" id="addressNo" name="address" class="form-control" data-ng-model="formData1.addressNo" 
+                				data-typeahead="propertyCode.propertyCode as propertyCode.propertyCode for propertyCode in getPropertyCode($viewValue)"
+                   					autocomplete="off" data-typeahead-min-length="0" data-ng-blur="getPropertyDetails(formData.addressNo)" 
+                   						required data-late-Validate/><br/>
+               					<span  data-ng-show="editaddressform.address.$invalid">
+              						<small class="error" data-ng-show="editaddressform.address.$error.req">{{'label.required.field' | translate}}</small>
+        						</span>
+       					</div>
+      				</div>
+					<div class="form-group">
+						<label class="control-label" for="street">{{'label.street' | translate}}</label>
+						<div class="col-sm-3">
+							<input type="text" id="street" class="form-control" ng-model="formData1.street">
+						</div>
+					   <label class="control-label" for="state">{{'label.state' | translate}}</label>
+						<div class="col-sm-3">
+							<input type="text" id="state" class="form-control" ng-model="formData1.state" readonly>
+						</div> 
+					 </div>
+					 <div class="form-group"> 
+						<label class="control-label" for="zip">{{'label.zipcode' | translate}}</label>
+						<div class="col-sm-3">
+							<input type="text" id="zip" class="form-control" ng-model="formData1.zip">
+						</div>
+
+						<label class="control-label" for="country">{{'label.country' | translate}}</label>
+						<div class="col-sm-3">
+							<input type="text" id="country" class="form-control" ng-model="formData1.country" readonly>
+						</div>
+					 </div> -->
+
+        </form>
+    </div>
+</div>

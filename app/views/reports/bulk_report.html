@@ -1,0 +1,116 @@
+<div class="content-container" data-ng-controller="BulkReportController">
+	<ul class="breadcrumb">
+		<li><a href="#/reports/all">{{'link.reports' | translate}}</a></li>
+		<li class="active">{{'label.bulkReport' | translate
+			}}&nbsp;&nbsp;</li>
+	</ul>
+
+	<div class="widget mb30">
+		<div class="row align-items-center">
+			<div class="col-md-2">
+				<form rc-submit="searchTickets()">
+					<input ng-autofocus="true" ng-model="filterText" type="text"
+						ng-keyup="onFilter()" class="form-control"
+						placeholder="{{'label.input.searchforreports' | translate}}">
+				</form>
+			</div>
+			<div class="col-md-9" >
+				<form class="form-inline">
+				<ul class="btn-group-list text-right">
+						<li>
+							<div class="form-group row align-items-center">
+								<div class="col-md-3.5 p-0">
+									<label class="control-label" for="startDate">{{'label.startDate'|
+										translate }}</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" id="startDate" class="form-control"
+										data-ng-model="startDate" datepicker-pop="dd MMM yyyy">
+								</div>
+							</div></li>
+						<li><div class="form-group row align-items-center">
+								<div class="col-md-3.5">
+									<label class="control-label " for="endDate">{{'label.endDate'|
+										translate }}</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" id="endDate" class="form-control"
+										data-ng-model="endDate" datepicker-pop="dd MMM yyyy">
+								</div>
+							</div>
+						</li>
+						<li>
+									<button class="btn primary_btn btn-disabled mrl10"
+										type="submit"
+										data-ng-click="getBulkReportsByDate(startDate,endDate)">{{'label.button.search'|
+										translate}}</button>
+							</li>
+					</ul>
+					<!-- <div class="row">
+						<div class="col-md-2.5">
+							<div class="form-group row align-items-center">
+								<div class="col-md-3.5 p-0">
+									<label class="control-label" for="startDate">{{'label.startDate'|
+										translate }}</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" id="startDate" class="form-control"
+										data-ng-model="startDate" datepicker-pop="dd MMM yyyy">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2.5">
+							<div class="form-group row align-items-center">
+								<div class="col-md-3.5">
+									<label class="control-label " for="endDate">{{'label.endDate'|
+										translate }}</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" id="endDate" class="form-control"
+										data-ng-model="endDate" datepicker-pop="dd MMM yyyy"
+										max="'2020-06-22'" date-disabled="disabled(date, mode)">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<ul class="btn-group-list text-right ">
+								<li>
+									<button class="btn primary_btn btn-disabled mrl10"
+										type="submit"
+										data-ng-click="getBulkReportsByDate(startDate,endDate)">{{'label.button.search'|
+										translate}}</button>
+								</li>
+							</ul>
+
+						</div>
+					</div> -->
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="widget">
+	<h3>{{viewName}}</h3>
+		 <div class="table-responsive">
+		 	<table class="table table-striped" >
+		 	<thead>
+            <tr class="graybg">
+                <th>{{ 'table.reportname' | translate }}</th>
+                <th>{{ 'table.reportDate' | translate}}</th>
+                <!-- <th>{{ 'table.startDate' | translate }}</th>
+                <th>{{ 'table.endDate' | translate }}</th> -->
+                <th style="width:25%;">{{ 'table.heading.actions' | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+           <tr class="pointer-main" data-ng-repeat="bulkReport in bulkReports">
+                <td class="pointer">{{bulkReport.reportName}}</td>            
+                <td class="pointer">{{bulkReport.reportDate}}</td>
+                <td>
+                <a has-permission = DOWNLOAD data-ng-click="downloadReport(bulkReport)" class="btn primary_btn">
+                <i class="fa fa-download"></i>{{'label.heading.download' | translate }}</a>&nbsp;</td>
+            </tr>
+        </tbody>
+		 	</table>
+		 </div>
+	</div>
+</div>

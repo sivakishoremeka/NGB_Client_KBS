@@ -1,0 +1,122 @@
+<div class="content-container" data-ng-controller="GrnDetailsController">
+	<ul class="breadcrumb">
+		<li><a href="#/inventory">{{'link.admin.inventory' |
+				translate}}</a></li>
+		<li class="active">{{'label.grndetails' | translate}}</li>
+	</ul>
+	<!-- <div class="card cardgrid"> -->
+	<div class="widget mb30">
+		<!-- <div class="toolbar">
+				<div class="toolbar ptb15 mrl15 bb1 mb20">
+					<h4 class="ptrbl0">{{'label.grndetails' | translate}}</h4>
+				</div>
+				<div class="row">
+					<div class="col-md-3 mt-8">
+				    	<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+					</div>
+				    <div class="col-md-3 pull-right mt-8">
+						<a has-permission="CREATE_GRN" href="#/addgrndetails" class="btn primary_btn pull-right"><i class="fa fa-plus"></i>
+			          		{{ 'button.addgoodreceipt' | translate }}</a>
+			        </div>
+			        <div class="col-md-3 pull-right mt-8">
+						<a href="#/uploadandprocessitemdetails" class="btn primary_btn pull-right" id="iconfa" ><i class="fa fa-upload"></i>
+			          		{{'label.heading.bulkstockupload' | translate}}</a>
+			        </div>
+			    </div>
+			</div> -->
+
+	 <form>
+		<div class="row align-items-center">
+			<div class="col-md-4">
+				<div id="search">
+					<input ng-autofocus="true" id="search" type="text"
+						class="form-control" ng-model="filterText"
+						placeholder="{{'label.input.filterbyname' | translate}}">
+				</div>
+			</div>
+			<div class="col-md-8">
+				<ul class="btn-group-list text-right">
+					<li>
+						<a has-permission="CREATE_GRN" href="#/addgrndetails" class="btn primary_btn"><i class="fa fa-plus"></i>{{ 'button.addgoodreceipt' | translate }}</a>
+					</li>
+					<li>
+						<a href="#/uploadandprocessitemdetails" class="btn primary_btn"><i class="fa fa-upload"></i>{{'label.heading.bulkstockupload' |
+							translate}}</a>
+						</li>
+				</ul>
+			</div>
+		 </div>
+		</form>
+	</div>
+
+	<!-- </div> -->
+	<div class="widget">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{'label.id' | translate}}</th>
+					<th>{{'label.purchasedate' | translate}}</th>
+					<th>{{'label.suppliername' | translate}}</th>
+					<th>{{'label.officename' | translate}}</th>
+					<th>{{'label.itemdescription' | translate}}</th>
+					<th>{{'label.orderedquantity' | translate}}</th>
+					<th>{{'label.receivedquantity' | translate}}</th>
+					<th>{{'label.balancequantity' | translate}}</th>
+					<th>{{'label.status' | translate}}</th>
+					<th>{{'label.actions' | translate}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="pointer-main"
+					ng-repeat="g in grn.currentPageItems | filter:filterText">
+					<td class="pointer" data-ng-click="routeTogrn(g.id)">{{g.id}}</td>
+					<td class="pointer" data-ng-click="routeTogrn(g.id)">{{g.purchaseDate
+						| DateFormat}}</td>
+					<td class="pointer" data-ng-click="routeTogrn(g.id)">{{g.supplierName}}</td>
+					<td class="pointer" data-ng-click="routeTogrn(g.id)">{{g.officeName}}</td>
+					<td class="pointer" data-ng-click="routeTogrn(g.id)">{{g.itemDescription}}</td>
+					<td class="pointer" data-ng-click="routeTogrn(g.id)">{{g.orderdQuantity}}</td>
+					<td class="pointer" data-ng-click="routeTogrn(g.id)">{{g.receivedQuantity}}</td>
+					<td class="pointer" data-ng-click="routeTogrn(g.id)">{{g.balanceQuantity}}</td>
+					<td class="pointer" data-ng-click="routeTogrn(g.id)"
+						ng-show="g.orderdQuantity != g.receivedQuantity">Pending</td>
+					<td class="pointer" data-ng-click="routeTogrn(g.id)"
+						ng-show="g.orderdQuantity == g.receivedQuantity">Completed</td>
+					<td><a ng-show="(g.orderdQuantity != g.receivedQuantity)"
+						has-permission="UPDATE_INVENTORY" ng-click="editGrnQuantity(g)"
+						uib-popover="EditOrderQuantity" popover-trigger="mouseenter"
+						class="fa fa-edit"></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<ul class="pager">
+			<li class="previous"><a ng-click="grn.previous()" href=""
+				ng-disabled="!grn.hasPrevious()">&larr;{{ 'label.Prev' |
+					translate }} </a></li>
+			<li class="next"><a ng-click="grn.next()" href=""
+				ng-disabled="!grn.hasNext()">{{ 'label.Next' | translate }}
+					&rarr;</a></li>
+		</ul>
+	</div>
+		<script type="text/ng-template" id="EditGRNQuality.html">
+		<div class="modal-header silver">
+        	<h3 class="bolder">{{ 'label.Edit Ordered Quantity' | translate }}</h3>
+    	</div>
+    	<div class="modal-body" style="height:160px;">
+ 			<api-validate></api-validate>
+       			<fieldset>
+ 					<div class="form-group">
+						<label class="control-label col-sm-4" for="quality">{{'label.orderedquantity' | translate }}</label>
+						<div class="col-sm-4">
+             				<input type="text" id="serialnum" class="form-control" ng-model="formData.orderdQuantity">
+            			</div>
+	   				</div>
+    			</fieldset>
+    	</div>
+     	<div class="modal-footer">
+        	<button id="cancel" class="btn btn-warning" ng-click="cancelQuantity()">{{'button.cancel' | translate}}</button>
+     		<button id="submit" class="btn btn-primary" ng-click="approvQuantity()">{{'button.save' | translate}}</button>
+     	</div>
+	</script>
+	</div>
+</div>

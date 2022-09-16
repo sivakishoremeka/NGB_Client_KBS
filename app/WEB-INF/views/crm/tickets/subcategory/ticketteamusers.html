@@ -1,0 +1,130 @@
+<div class="content-container" ng-controller="TicketTeamUsersController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li class="active">{{'label.ticketteamusers' | translate}}</li>
+    </ul>
+    <div class="widget mb30">
+        <div class="row">
+            <div class="col-md-3">
+                <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+            </div>
+        </div>
+    </div>
+    <div class="widget">
+        <uib-tabset tabset-name="ticketteamusersTabset">
+        <uib-tab heading="{{'label.heading.ticketteam' | translate}}" select="ticketTeam()">
+        <ul class="btn-group-list text-right mt20 mb20">
+            <li><a has-permission=C REATE_TICKETTEAM href="#/createticketteam" class="btn primary_btn pull-right"><i class="fa fa-plus"></i> {{ 'link.create.new.ticketteam' | translate }}</a></li>
+        </ul>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{ 'label.teamhead' | translate }}</th>
+                        <th>{{ 'label.teamcode' | translate }}</th>
+                        <th>{{ 'label.teamdescription' | translate }}</th>
+                        <th>{{ 'label.teamcategory' | translate }}</th>
+                        <th>{{ 'label.status' | translate }}</th>
+                        <th>{{ 'label.actions' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pointer-main" data-ng-repeat="ticketteam  in ticketteams.currentPageItems | filter:filterText" select="getAllticketteam()">
+                        <td class="pointer" data-ng-click="routeToticketteam(ticketteam.id)">{{ticketteam.userName}}</td>
+                        <td class="pointer" data-ng-click="routeToticketteam(ticketteam.id)">{{ticketteam.teamCode}}</td>
+                        <td class="pointer" data-ng-click="routeToticketteam(ticketteam.id)">{{ticketteam.teamDescription}}</td>
+                        <td class="pointer" data-ng-click="routeToticketteam(ticketteam.id)">{{ticketteam.teamCategory}}</td>
+                        <td class="pointer" data-ng-click="routeToticketteam(ticketteam.id)">{{ticketteam.status}}</td>
+                        <td class="pointer">
+                            <ul class="table-icon-list">
+                                <li>
+                                    <a has-permission=U PDATE_TICKETTEAM href="#/editticketteam/{{ticketteam.id}}" uib-popover="Edit Ticketteam" data-popover-trigger="mouseenter" class="fa fa-edit"></a>
+                                </li>
+                                <li>
+                                    <a has-permission=D ELETE_TICKETTEAM data-ng-click="deleteTicketteam(ticketteam.id)" uib-popover="Delete Ticketteam" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </uib-tab>
+        <uib-tab heading="{{'label.heading.ticketmapping' | translate}}" select="ticketMapping()">
+        <!-- <div class="col-md-3">
+                                    <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+        </div> -->
+        <ul class="btn-group-list text-right mt20 mb20">
+            <li><a has-permission=C REATE_TICKETMAPPING href="#/createticketmapping" class="btn primary_btn"><i class="fa fa-plus"></i> {{ 'link.create.new.ticketmapping' | translate }}</a></li>
+        </ul>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="graybg">
+                        <th>{{ 'label.id' | translate }}</th>
+                        <th>{{ 'label.teamcode' | translate }}</th>
+                        <!-- <th>{{ 'label.userid' | translate }}</th>
+                                        <th>{{ 'label.userrole' | translate }}</th>
+                                        <th>{{ 'label.isteamlead' | translate }}</th>
+                        <th>{{ 'label.status' | translate }}</th> -->
+                        <th>{{ 'label.action' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pointer-main" data-ng-repeat="ticketMapping in ticketMappings.currentPageItems | filter:filterText ">
+                        <td class="pointer" data-ng-click="routeToTicketMapping(ticketMapping.teamId)">{{ticketMapping.id}}</td>
+                        <td class="pointer" data-ng-click="routeToTicketMapping(ticketMapping.teamId)">{{ticketMapping.teamCode}}</td>
+                        <!-- <td class="pointer"  data-ng-click="routeToTicketMapping(ticketMapping.id)">{{ticketMapping.userId}}</td>
+                                        <td class="pointer"  data-ng-click="routeToTicketMapping(ticketMapping.id)">{{ticketMapping.userRole}}</td>
+                                        <td class="pointer"  data-ng-click="routeToTicketMapping(ticketMapping.id)">{{ticketMapping.isTeamLead}}</td>
+                        <td class="pointer"  data-ng-click="routeToTicketMapping(ticketMapping.id)">{{ticketMapping.status}}</td>-->
+                        <td class="pointer">
+                            <ul class="table-icon-list">
+                                <li>
+                                    <a has-permission=U PDATE_TICKETMAPPING href="#/editticketmapping/{{ticketMapping.teamId}}" uib-popover="Edit TicketMapping" data-popover-trigger="mouseenter" class="fa fa-edit"></a>
+                                </li>
+                                <li>
+                                    <a has-permission=D ELETE_TICKETMAPPING data-ng-click="deleteticketmapping(ticketMapping.teamId)" uib-popover="Delete TicketMapping" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+<script type="text/ng-template" id="ticketteam.html">
+<div class="modal-header silver">
+    <h3 class="bolder">Delete TicketTeam</h3>
+</div>
+<div class="modal-body style=" height:60px; ">
+    <h4 class="text-center">Are you sure?</h4>
+</div>
+<div class="modal-footer ">
+        <ul class="btn-group-list text-right ">
+                <li><button class="btn btn-warning " ng-click="cancel() ">{{'button.cancel' | translate}}</button></li>
+            <li><button class="btn btn-primary " ng-click="approve() ">{{'label.confirm' | translate}}</button></li>
+        </ul>
+</div>
+</script>
+<script type="text/ng-template " id="ticketmapping.html ">
+<div class="modal-header silver ">
+    <h3 class="bolder ">Delete TicketMapping</h3>
+</div>
+<div class="modal-body style="height:60px;">
+    <h4 class="text-center">Are you sure?</h4>
+</div>
+<div class="modal-footer">
+    <ul class="btn-group-list text-right">
+        <li>
+        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button></li>
+        <li>
+            <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+        </li>
+    </ul>
+</div>
+</script>
+</div>

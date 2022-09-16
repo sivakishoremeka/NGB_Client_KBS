@@ -1,0 +1,172 @@
+<div class="content-container">
+    <div class="widget">
+        <h3 class="full-bg-title">{{'label.anchor.system' | translate}}</h3>
+        <div class="master-wrap">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="master-list">
+                        <li>
+                            <a class="list-group-item" href="#/users" has-permission='READ_USER'>
+                            <div class="icon-box">
+                                <i id="iconfa" class="fa fa-group fa fa-large"></i>
+                            </div>
+                            <div class="right-box">
+                                <h4 i id="iconh4" class="list-group-item-heading">
+                                {{ 'label.anchor.users' | translate }}</h4>
+                                <p class="list-group-item-text">{{'label.definemodifyusersandassociatedroles' | translate}}</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="list-group-item" href="#/admin/roles" has-permission='READ_ROLE'>
+                            <div class="icon-box">
+                                <i id="iconfa" class="fa fa-key fa fa-large"></i>
+                            </div>
+                            <div class="right-box">
+                        <h4 id="iconh4" class="list-group-item-heading">{{'label.anchor.manageroleandpermissions'
+                        | translate}}</h4>
+                        <p class="list-group-item-text">{{'label.defineormodifyrolesandassociatedpermissions' | translate}}</p>
+                    </div>
+                    </a>
+                </li>
+                    <li>
+                        <a class="list-group-item" href="#/admin/viewmctasks" has-permission='READ_PERMISSION'>
+                            <div class="icon-box">
+                                <i id="iconfa" class="fa fa-sitemap fa fa-large"></i>
+                            </div>
+                            <div class="right-box">
+                        <h4 id="iconh4" class="list-group-item-heading">{{'label.anchor.configuremakercheckertask'
+                        | translate}}</h4>
+                        <p class="list-group-item-text">{{'label.defineormodifymakercheckertasks' | translate}}</p>
+                    </div>
+                    </a>
+                </li>
+                    <!-- <a class="list-group-item" href="#/audit" has-permission='READ_AUDIT'>
+                        <h4 class="list-group-item-heading"><i class="fa fa-large fa fa-list-alt"></i>{{'label.anchor.audittrails'
+                        | translate}}</h4>
+                        <p class="list-group-item-text">{{'label.auditlogsofalltheactivities' | translate}}</p>
+                    </a> -->
+                    <li>
+                        <a class="list-group-item" href="#/currencyconfig" has-permission='READ_CURRENCYCONFIG'>
+                            <div class="icon-box">
+                                <i id="iconfa" class="fa fa-large fa fa-rupee"></i>
+                            </div>
+                            <div class="right-box">
+                        <h4 id="iconh4" class="list-group-item-heading">{{'label.anchor.currencyconfig'
+                        | translate}}</h4>
+                        <p class="list-group-item-text">{{'label.currencyconfigurations' | translate}}</p>
+                    </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="list-group-item" href="#/currencydetails" has-permission='READ_COUNTRYCURRENCY'>
+                        <div class="icon-box">
+                                <i id="iconfa" class="fa fa-briefcase fa fa-large"></i>
+                            </div>
+                            <div class="right-box">
+                    <h4 id="iconh4" class="list-group-item-heading">{{'label.anchor.currencyexchangedetails'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">Enter the Currency that will be mapped </p>
+                </div>
+                </a>
+            </li>
+                <!-- <a class="list-group-item" href="#/hooks" has-permission='READ_PERMISSION'>
+                    <h4 class="list-group-item-heading"><i class="fa fa-anchor fa fa-large"></i>{{'label.anchor.managehooks'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.defineormodifyhooks' | translate}}</p>
+                </a> -->
+                <!-- <a class="list-group-item" href="#/entitytoentitymapping" has-permission='READ_PERMISSION'>
+                    <h4 class="list-group-item-heading"><i class="fa fa-road fa fa-large"></i>{{'label.anchor.entitytoentitymapping'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.definemappings' | translate}}</p>
+                </a> -->
+                <!-- <a class="list-group-item" href="#/surveys" has-permission='READ_PERMISSION'>
+                    <h4 class="list-group-item-heading"><i class="fa fa-file-text-o fa fa-large"></i>{{'label.anchor.managesurveys'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.managesurveys' | translate}}</p>
+                </a> -->
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="master-list">
+                <li>
+                    <a class="list-group-item" href="#/global" has-permission='READ_CONFIGURATION'>
+                        <div class="icon-box">
+                                <i id="iconfa" class="fa fa-large fa fa-gears"></i>
+                            </div>
+                            <div class="right-box">
+                    <h4 id="iconh4" class="list-group-item-heading">{{'label.anchor.configuration'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.globalconfigurationsand' | translate}}</p>
+                </div>
+                </a>
+            </li>
+                <li>
+                    <a class="list-group-item" href="#/mappingconfig" has-permission = "('READ_SERVICEMAPPING','READ_PLANMAPPING','READ_PROVISIONINGSYSTEM','READ_EVENTACTIONMAP')">
+                        <div class="icon-box">
+                                <i id="iconfa" class="fa fa-large fa fa-gears"></i>
+                            </div>
+                            <div class="right-box">
+                    <h4 id="iconh4" class="list-group-item-heading">{{'link.admin.provisioningconfiguration' | translate}}</h4>
+                    <p class="list-group-item-text">Service and Provisioning configurations</p>
+                </div>
+                </a>
+            </li>
+                <li>
+                    <a class="list-group-item" href="#/datatables" has-permission='READ_DATATABLE'>
+                        <div class="icon-box">
+                                <i id="iconfa" class="fa fa-table fa fa-large"></i>
+                            </div>
+                            <div class="right-box">
+                    <h4 id="iconh4" class="list-group-item-heading">{{'label.anchor.managedatatables'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.addnewextrafieldstoanyentityintheformofdatatable' |
+                    translate}}</p>
+                </div>
+                </a>
+            </li>
+                <li>
+                    <a class="list-group-item" href="#/reports" has-permission='READ_REPORT'>
+                        <div class="icon-box">
+                                <i id="iconfa" class="fa fa-large fa fa-file-word-o"></i>
+                            </div>
+                            <div class="right-box">
+                    <h4 id="iconh4" class="list-group-item-heading">{{'label.anchor.managereports'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.addnewreportand' | translate}}</p>
+                </div>
+                </a>
+            </li>
+                <li>
+                    <a class="list-group-item" href="#/codes" has-permission='READ_CODE'>
+                        <div class="icon-box">
+                                <i id="iconfa" class="fa fa-list-ul fa fa-large"></i>
+                            </div>
+                            <div class="right-box">
+                    <h4 id="iconh4" class="list-group-item-heading">{{'label.anchor.managecodes'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.codesareusedtodefinedropdownvalues' | translate}}</p>
+                </div>
+                </a>
+            </li>
+                <!-- <a class="list-group-item" href="#/jobs" has-permission='READ_SCHEDULER'>
+                    <h4 class="list-group-item-heading"><i class="fa fa-large fa fa-clock-o"></i>{{'label.anchor.schedulerjobs'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.scheduleajobmodifyjobs' | translate}}</p>
+                </a> -->
+                <!-- <a class="list-group-item" href="#/accountnumberpreferences" has-permission='READ_PERMISSION'>
+                    <h4 class="list-group-item-heading"><i class="fa fa-key fa fa-large"></i>{{'label.anchor.accountNumberPreferences'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.accountNumberPreferences' | translate}}</p>
+                </a> -->
+                <!-- <a class="list-group-item" href="#/externalservices" has-permission='READ_CONFIGURATION'>
+                    <h4 class="list-group-item-heading"><i class="fa fa-large fa fa-cog"></i>{{'label.anchor.externalServices'
+                    | translate}}</h4>
+                    <p class="list-group-item-text">{{'label.externalServices' | translate}}</p>
+                </a> -->
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</div>

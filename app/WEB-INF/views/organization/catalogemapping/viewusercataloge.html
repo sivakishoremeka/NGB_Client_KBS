@@ -1,0 +1,55 @@
+<div class="content-container" ng-controller="ViewUserCatalogeController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+			<span class="divider"></span>
+		</li>
+		<li>
+			<a href="#/catalogemapping" >{{'label.catalogemapping' | translate}}</a>
+			<span class="divider"></span>
+		</li>
+		<li class="active">{{userId }}</li>
+	</ul>
+	<div class="widget">
+		
+		
+		<h3>{{userName}}</h3>
+		<ul class="btn-group-list text-right mt20 mb20">
+			
+			<li><a has-permission = UPDATE_USERCATALOGE href="#/editusercataloge/{{userId}}" class="btn primary_btn"><i class="fa fa-edit"></i> Edit</a></li>
+			<!-- <a has-permission = DELETE_USERCATALOGE data-ng-click="deleteusercataloge()" class="btn btn-primary"><i class="fa fa-trash-o"></i> Delete</a> -->
+			
+		</ul>
+		
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr class="graybg">
+						<th>{{'label.id' | translate}}</th>
+						<th>{{'label.name' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="selectedSalesCataloge in selectedCatalog | filter:filterText">
+						<td>{{selectedSalesCataloge.id }}</td>
+						<td>{{selectedSalesCataloge.name}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</div>
+<script type="text/ng-template" id="usercataloge.html">
+<div class="modal-header silver">
+	<h3 class="bolder">Delete UserCataloge</h3>
+</div>
+<div class="modal-body style="height:60px;">
+	<h4 class="text-center">Are you sure?</h4>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+	<button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+</div>
+</script>
+</div>

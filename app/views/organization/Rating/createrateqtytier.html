@@ -1,0 +1,129 @@
+<div class="content-container" ng-controller="CreateRateQtyTierController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'link.admin.masters' | translate}}</a></li>
+        <li><a href="#/rating">{{'label.rating' | translate}}</a></li>
+        <li><a href="#/createrateqtytier">{{'label.createrateqtytier' | translate}}</a>
+    </ul>
+    <div class="widget">
+                <h3>{{'label.createrateqtytier' | translate}}</h3>
+            <br>
+            
+            <form name="createrateqtytier" novalidate="" class="form-horizontal" rc-submit="submit()">
+                <api-validate></api-validate>
+                
+			<div class="error" data-ng-show="errorStatus || errorDetails">
+				<label data-ng-show="errorStatus">{{errorStatus}}</label> <label
+					data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code
+					| translate}}</label>
+			</div>
+			
+			<div>
+			<table class="table" data-ng-show="timePeriodData.length>0" style="width: 1200px;">
+			    <thead>
+						<tr class="graybg">
+						    <th>{{ 'label.select' | translate}}</th>
+							<th>{{ 'label.timeperiodId' | translate }}</th>
+							<th>{{ 'label.timeperiodName' | translate }}</th>
+							<th>{{ 'label.startYear' | translate }}</th>
+							<th>{{ 'label.endYear' | translate }}</th>
+							<th>{{ 'label.startMonth' | translate }}</th>
+							<th>{{ 'label.endMonth' | translate }}</th>
+							<th>{{ 'label.startDay' | translate }}</th>
+							<th>{{ 'label.endDay' | translate }}</th>
+							<th>{{ 'label.startTime' | translate }}</th>
+							<th>{{ 'label.endTime' | translate }}</th>
+						</tr>
+				</thead>
+				<tbody>
+						<tr data-ng-repeat="timePeriod in timePeriodData">
+						    <td><input type="checkbox" ng-model="active" ng-true-value="true" 
+						        ng-false-value="false" ng-change="runJobSelected(job, active)"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.timeperiodId" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.timeperiodName" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.startYear" type="text"></td>
+								<td><input class="input-small form-control"
+								data-ng-model="timePeriod.endYear" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.startMonth" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.endMonth" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.startDay" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.endDay" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.startTime" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.endTime" type="text"></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+                
+        <!--             <div class="form-group">
+                         <label class="control-label col-sm-2" for="tierName">{{'label.tiername'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="tierName" class="form-control" name="tierName" data-ng-model="formData.tierName" />
+                         </div>
+                     </div> 
+                     <div class="form-group">
+                         <label class="control-label col-sm-2" for="usageRateplanId">{{'label.usagerateplan'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <select type="text" id="usageRateplanId" class="form-control" name="usageRateplanId" data-ng-model="formData.usageRateplanId"
+                             data-ng-options="rate.planPriceId as getBothrate(rate.planPriceId,rate.rumName,rate.timemodelName) for rate in rate">
+                             <option value="">{{'label.select.one' | translate}}</option>
+                             </select>
+                         </div>
+                     </div>
+                     
+                     <div class="row">
+                          <table class="table">
+                             <tr>
+                                <td>
+                                    <label for="startRange">{{'label.startrange'| translate }}&nbsp;</label>
+                                    <input type="text" id="startRange" class="input-small form-control" name="startRange" data-ng-model="startRange"/>
+                                </td>
+                                <td>
+                                     <label class="control-label" for="endRange">{{'label.endrange'| translate }}&nbsp;</label>
+                                    <input type="text" id="endRange" class="input-small form-control" name="endRange" data-ng-model="endRange"/>
+                                </td>
+                                <td>
+                                   <a data-ng-click="!(createrateqtytier.createrateqtytier.$error.pattern)&&addCreateRateQtyTierData()" style="margin-left:25px;">
+                                       <i class="fa fa-plus" style="margin-top: 30px;"></i>
+                                   </a>&nbsp;
+                                  </td>
+                            </tr>
+                          </table>
+                     
+                           <div data-ng-show="range.length>0">
+                            
+                            <table class="table">
+                                   <tr class="graybg">
+                                       <th>{{ 'label.startrange' | translate }}</th>
+                                       <th>{{ 'label.endrange' | translate }}</th>
+                                       
+                                   </tr>
+                                 <tr data-ng-repeat="existsTemplateDefinition in range track by $index">
+                                     
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.startRange" type="text" ></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.endRange" type="text" ></td>
+                                <td>
+				                  <a data-ng-click="removeRange($index)"><i class="fa fa-times"></i>
+				                  </a>
+				               </td>
+                                 </tr>
+                            </table>
+                     
+                   <div class="col-md-offset-9 pull-right">
+                       <a href="#/organization"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+                       <button id="save" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+                   </div>
+                  </div>
+                 </div> -->
+            </form>
+	</div>
+</div>

@@ -1,0 +1,237 @@
+<div class="content-container" ng-controller="CreateServiceActivationController">
+<ul class="breadcrumb">
+        <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+		<li><a href='#/viewclient/id/{{clientviewId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+		<li class="active">{{'label.serviceactivation' | translate}}</li>
+    </ul>
+    <div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+        <div class="content" ng-if="!isCrm">
+            <h3>{{'label.button.activation' | translate}}</h3>
+            <div uib-alert type="danger" ng-show=" errorDetails.length > 0">
+                <label><i class="fa fa-exclamation-circle"></i>Service is not Creating</label>
+                <div ng-repeat="error in errorDetails">
+                    <label>{{error.code | translate:error.args}}</label>
+                </div>
+            </div>
+            <form class="form-horizontal" rc-submit="submit()">
+                <h4>{{'label.service.details' | translate}}</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label">{{ 'label.activationdate' | translate }}&nbsp;<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input data-ng-model="dateTime" data-is-open="opened2" min="minDate" class="form-control" max="maxDate" data-date-disabled="disabled(date, mode)" style="background-color: #FFFFFF;" readonly required/>
+                                <span data-ng-show="deviceinfoform.saleDate.$invalid">
+			                		 	<span class="error" data-ng-show="deviceinfoform.saleDate.$error.req">Required Field</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="serviceId">{{'label.addservice' | translate }}&nbsp;
+                                    <span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <select id="serviceId" data-ng-model="formData.serviceId" class="form-control" name="serviceId" data-ng-options="serviceDatas.id as getBothService(serviceDatas.serviceCode, serviceDatas.serviceDescription) for serviceDatas in serviceData" ng-change="changeServiceFun()" required>
+                                    <option value="">{{'label.select.one' | translate}}</option>
+                                </select>
+                                <span data-ng-show="clientserviceinfoform.serviceId.$invalid">
+				                		 <span class="error" data-ng-show="clientserviceinfoform.serviceId.$error.req">Required Field</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="formData.serviceId">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row" data-ng-repeat="serviceDetails in serviceDetail">
+                                <div class="col-md-4">
+                                    <label class="control-label">{{serviceDetails.codeParamName}}</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <span>
+                  		    <input ng-if="serviceDetails.paramType == 'Query' " id="paramValue" data-ng-model="serviceDetails.clientDetails.email" 
+                                    class="form-control" type="text" name="paramValue" required>
+                  			<input ng-if="serviceDetails.paramType != 'Combo' && serviceDetails.paramType != 'Boolean' && serviceDetails.paramType != 'Date' && serviceDetails.paramType != 'Password' && serviceDetails.paramType != 'Query'" 
+                  				class="form-control" type="text" name="paramValue" data-ng-model="serviceDetails.paramValue" required/>
+                  			<input ng-if="serviceDetails.paramType != 'Combo' && serviceDetails.paramType != 'Boolean' && serviceDetails.paramType != 'Date' && serviceDetails.paramType != 'Text' && serviceDetails.paramType != 'Query'" 
+                                  class="form-control" type="password" name="paramValue" data-ng-model="serviceDetails.paramValue" required/>
+                			<select ng-if="serviceDetails.paramType == 'Combo'" id="paramValue" data-ng-model="serviceDetails.paramValue" 
+					    			class="form-control" name="paramValue" 
+					    		    data-ng-options="detail.id as detail.systemcode for detail in serviceDetails.details" required>
+					    			<option value="">{{'label.select.one' | translate}}</option>		
+							</select>
+							<select ng-if="serviceDetails.paramType == 'Boolean'" id="paramValue" data-ng-model="serviceDetails.paramValue" 
+					    			class="form-control" name="paramValue" data-ng-options="paramValue for paramValue in paramValues" required>
+							</select>
+							<input type="text" ng-if="serviceDetails.paramType == 'Date'" data-datepicker-pop="yyyy-MM-dd" id="paramValue" 
+								data-ng-model="serviceDetails.paramValue"  data-is-open="opened2" min="minDate" max="'2020-06-22'" 
+									class="form-control" name="paramValue" data-date-disabled="disabled(date, mode)" 
+										style="background-color:#FFFFFF;" required/>
+							<span data-ng-show="clientserviceinfoform.paramValue.$invalid">
+		                		 <span class="error" data-ng-show="clientserviceinfoform.paramValue.$error.req">Required Field</span>
+                                    </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>{{'label.device.details' | translate}}</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="serialNumber">{{'label.serialNumber' | translate }}&nbsp;
+                                    <span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" data-ng-model="itemDetail" name="serialNumber" class="input-small form-control" uib-typeahead="itemDetail as itemDetail for itemDetail in getData($viewValue)" autocomplete="off" data-typeahead-on-select="getItemData($item, $model, $label)" data-typeahead-min-length="0" required> <span data-ng-show="deviceinfoform.serialNumber.$invalid">
+                		 	<span class="error" data-ng-show="deviceinfoform.serialNumber.$error.req">Required Field</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="itemId">{{'label.item' | translate }}&nbsp;<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="itemId" data-ng-model="formData.itemCode" disabled class="input-small form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="discountId">{{'label.discountCode' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <select data-ng-model="formData.discountId" class="input-small form-control" data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="totalPrice">{{'label.totalPrice' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="totalPrice" class="input-small form-control" name="totalPrice" data-ng-model="formData.totalPrice" style="background-color: #FFFFFF;" required/> <span data-ng-show="deviceinfoform.totalPrice.$invalid">
+                		 	<span class="error" data-ng-show="deviceinfoform.totalPrice.$error.req">Required Field</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- pairable -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="pairableSerialNo">{{'label.pairedserialnumber' | translate}}<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="pairableSerialNo" name="pairableSerialNo" data-ng-model="pairableSerialNo" class="input-small form-control" autocomplete="off" list="pairableItemlist" data-ng-change="selectPairableItemDetails(pairableSerialNo)" required />
+                                <datalist id="pairableItemlist">
+                                    <option data-ng-repeat="pairableItemDetail in pairableItemDetails" value="{{pairableItemDetail}}">
+                                </datalist>
+                                <span data-ng-show="deviceinfoform.pairableSerialNo.$invalid">
+	        		 	<span class="error" data-ng-show="deviceinfoform.pairableSerialNo.$error.req">Required Field</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="pairableItemId">{{'label.paireditem' | translate }}&nbsp;<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="pairableItemId" data-ng-model="pairableFormData.itemCode" disabled class="input-small form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="pairableDiscountId">{{'label.discountCode' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <select data-ng-model="pairableFormData.discountId" class="input-small form-control" data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="totalPrice">{{'label.totalPrice' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="totalPrice" class="form-control" data-ng-model="pairableFormData.totalPrice" style="background-color: #FFFFFF;" required/> <span data-ng-show="deviceinfoform.pairableSerialNo.$invalid"> <span class="error" data-ng-show="deviceinfoform.pairableSerialNo.$error.req">Required Field</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>{{'label.plan.details' | translate}}</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="id">{{ 'label.salescataloge' | translate }}<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <select id="id" data-ng-model="formData.id" data-ng-change="serviceChangeFun(formData.id)" data-ng-options="salesCataloges.id as salesCataloges.name for salesCataloges in salesCataloges" class="form-control">
+                                    <option value="">{{'label.select.one' | translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="planCode">{{ 'label.activation.plan' | translate }}<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <select data-ng-model="plandata" class="form-control" name="planCode" data-ng-options="plandata as getPlan(plandata.planCode, plandata.planDescription) for plandata in availablePlans" data-ng-change='setBillingFrequency(plandata)' required>
+                                    <option value="">{{'label.select.one' | translate}}</option>
+                                </select>
+                                <span data-ng-show="planinfoform.planCode.$invalid">
+                		 	<span class="error" data-ng-show="planinfoform.planCode.$error.req">Required Field</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="btn-group-list text-right mt20 mb20">
+                    <li>
+                        <a href="#/clients">
+                            <button id="cancel" type="reset" class="btn btn-warning">Cancel</button>
+                        </a>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </li>
+                </ul>
+            </form>
+        </div>

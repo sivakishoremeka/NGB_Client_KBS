@@ -1,0 +1,760 @@
+<div class="content-container" ng-controller="ViewOfficeController">
+	<ul class="breadcrumb">
+		<li><a href="#/offices">{{'label.Entity' | translate}}</a></li>
+		<li class="active">{{office.name}}</li>
+	</ul>
+	<div class="widget mb30 avatar-wrap">
+		<div class="row d-flex align-items-center">
+			<div class="col-md-1">
+				<div class="avatarDiv">
+					<img data-ng-hide="client.imagePresent"
+						src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar">
+					<img data-ng-show="client.imagePresent" src="{{image}}"
+						alt="Avatar" class="avatar">
+					<h3>{{office.name}}</h3>
+					<i class="fa fa-circle fs15 {{client.status.code | StatusLookup}}"></i>
+					<small ng-if="client.subStatus.description">
+						[{{client.subStatus.description}}] </small>
+				</div>
+			</div>
+
+			<div class="col-md-11">
+				<div class="row">
+					<div class="col-md-4">
+						<label id="fthin">{{ 'label.orgname' | translate }}: <span
+							id="fnormal">{{office.nameDecorated | DotRemove}}</span></label>
+					</div>
+					<div class="col-md-4">
+						<label id="fthin">{{ 'label.parentorg' | translate }}: <span
+							id="fnormal">{{office.parentName}}</span></label>
+					</div>
+					<div class="col-md-4">
+						<label id="fthin">{{ 'label.businesstype' | translate }}:
+							<span id="fnormal">{{office.businessType}}</span>
+						</label>
+					</div>
+					<div class="col-md-4">
+						<label id="fthin">{{ 'label.balanceAmount' | translate }}:
+							<span id="fnormal">{{office.balance}}</span>
+						</label>
+					</div>
+					<div class="col-md-4">
+						<label id="fthin">{{ 'label.creditlimit' | translate }}: <span
+							id="fnormal">{{office.credit}}</span></label>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- <div class="content ptrbl0">
+			<div class="toolbar">
+	               <div class="client-title" style="height:110px;">
+	                   <div class="col-md-1 prl0 tc avatarDiv" >
+	                       <img data-ng-hide="client.imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar" >
+	                       <img data-ng-show="client.imagePresent" src="{{image}}" alt="Avatar"  class="avatar">
+	                   	<h3>{{office.name}} <i class="fa fa-circle fs15 {{client.status.code | StatusLookup}}"></i></h3>
+	                   	<small ng-if="client.subStatus.description">
+	                       	[{{client.subStatus.description}}]
+	                   	</small>
+	                   </div>
+	                   <div class="col-md-11">
+	                   	<div class="form-group" >
+	                           <label id="fthin" class="col-md-3">{{ 'label.orgname' | translate }}: <span id="fnormal">{{office.nameDecorated | DotRemove}}</span></label>
+	                           <label id="fthin" class="col-md-4">{{ 'label.parentorg' | translate }}:<span id="fnormal">{{office.parentName}}</span></label>
+	                       	   <label id="fthin" class="col-md-4">{{ 'label.businesstype' | translate }}:<span id="fnormal">{{office.businessType}}</span></label>
+	                           
+	                    </div>
+	                   </div>
+	                    <div class="col-md-11">
+	                      <div class="form-group">
+	                           <label id="fthin" class="col-md-3">{{ 'label.balanceAmount' | translate }}:<span id="fnormal">{{office.balanceAmount}}</span></label>
+	                           <label id="fthin" class="col-md-3">{{ 'label.creditlimit' | translate }}:<span id="fnormal">{{office.credit}}</span></label>
+	                      </div>
+	                        
+	                   </div>
+	               </div>
+	           </div>
+		</div> -->
+	</div>
+
+	<!--  These tabs are moved down -->
+	<!-- <div class="widget mb30">
+		<div class="row d-flex align-items-center">
+			<div class="col-md-12">
+				<ul class="btn-group-list pull-right">
+					<li><a type="button" class="btn primary_btn "
+						href="#/OfficeTicket/{{office.id}}"> <i class="fa fa-plus"></i>{{"label.addticket"
+							| translate}}
+					</a></li>
+					<li><a has-permission="CREATE_OFFICEPAYMENT"
+						href="#/officepayments/{{office.id}}" class="btn primary_btn">
+							<i class="fa fa-usd "></i>{{'label.officepayments' | translate}}
+					</a></li>
+					<li><a href="#/officeadjustments/{{office.id}}"
+						class="btn primary_btn"> <i class="fa fa-adjust"></i>{{'label.officeadjustments'
+							| translate}}
+					</a></li>
+					<li><a has-permission="UPDATE_OFFICE"
+						href="#/editoffice/{{office.id}}" class="btn primary_btn"> <i
+							class="fa fa-edit"></i>{{'label.button.edit' | translate}}
+					</a></li>
+					<li><a has-permission="CREATE_PARTNERAGREEMENT"
+						href="#/createpartneragreement/{{office.id}}/{{office.id}}"
+						class="btn primary_btn"> <i class="fa fa-plus"></i>{{'label.createagreement'
+							| translate}}
+					</a></li>
+					<li><a class="btn btn-min primary_btn"
+						data-ng-click="downloadFile(office.id)"> <i class="fa fa-plus"></i>Invoice
+					</a></li>
+					<li>
+					  < button id="download" class="btn btn-min btn-primary col-sm-offset-6" data-ng-click="downloadFile(office.id)" class="btn primary_btn">
+  			        <i class=" icon-download-alt icon-white,">PDF</button>
+				</li>
+				</ul>
+			</div>
+		</div>
+	</div> -->
+
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="widget mb30">
+				<div class="top-full-wrap">
+				  <h3>{{office.name}}</h3>
+					  <ul class="table-icon-list text-right" id="main-menu-right">
+		  				<li>
+		  					<a has-permission="UPDATE_OFFICE" href="#/editoffice/{{office.id}}"> <i class="fa fa-edit"></i><!-- {{'label.button.edit' | translate}}  --></a>
+		  				</li>
+		  			 </ul>
+				</div>
+				<table class="table table-striped viewoffice-tabel"
+					id="tablegrid">
+					<tbody class="scrollContent">
+					<tr>
+						<td>{{ 'label.orgcode' | translate }}</td>
+						<td>{{office.externalId}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'label.orgname' | translate }}</td>
+						<td>{{office.nameDecorated | DotRemove}}</td>
+					</tr>
+					<!-- <tr>
+                <td >{{ 'label.businesstype' | translate }}</td>
+                <td >{{office.businessType}}</td>
+            </tr> -->
+					<tr>
+						<td>{{ 'label.orgtype' | translate }}</td>
+						<td>{{office.officeType}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'label.orgopenedon' | translate }}</td>
+						<td>{{office.openingDate | DateFormat}}</td>
+					</tr>
+
+					<tr>
+						<td>{{ 'label.contactperson' | translate }}</td>
+						<td>{{office.contactPerson}}</td>
+					</tr>
+
+					<tr>
+						<td>{{ 'label.heading.email' | translate }}</td>
+						<td>{{office.email}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'label.phonenumber' | translate }}</td>
+						<td>{{office.phoneNumber}}</td>
+					</tr>
+
+					<!-- <tr>
+                <td >{{ 'label.parentorg' | translate }}</td>
+                <td>{{office.parentName}}</td>
+            </tr> -->
+
+
+
+					<tr ng-if="isCrm">
+						<td>{{ 'label.balanceAmount' | translate }}</td>
+						<td>{{office.balanceAmount}}</td>
+					</tr>
+					<tr ng-if="isCrm">
+						<td>{{ 'label.walletAmount' | translate }}</td>
+						<td>{{office.walletAmount}}</td>
+					</tr>
+
+							<!--  <tr>
+		                <td style="color:blue;">{{ 'label.balanceAmount' | translate }}</td>
+		                <td>{{office.balanceAmount}}</td>
+		            </tr> -->
+		        </tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="widget mb30">
+				<h3 class="full-bg-title">Address</h3>
+				<table class="table table-striped viewoffice-tabel"
+					id="tablegrid">
+					<tbody class="scrollContent">
+					<tr>
+						<td>{{ 'label.addressname' | translate
+							}}</td>
+						<td>{{office.addressName}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'label.heading.city/area' | translate }}</td>
+						<td>{{office.city}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'label.heading.district' | translate }}</td>
+						<td>{{office.district}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'label.heading.state' | translate }}</td>
+						<td>{{office.state}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'label.heading.country' | translate }}</td>
+						<td>{{office.country}}</td>
+					</tr>
+
+					<tr>
+						<td>{{ 'label.zip' | translate }}</td>
+						<td>{{office.zip}}</td>
+					</tr>
+
+					<tr>
+						<td>{{ 'label.gstregno' | translate }}</td>
+						<td>{{office.gstRegNo}}</td>
+					</tr>
+					<!-- <tr>
+                <td >{{ 'label.creditlimit' | translate }}</td>
+                <td style="color:black;width:75px;">{{office.credit}}</td>
+            </tr> -->
+                 </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="widget distributor-nav">
+		<!-- </uib-tab> -->
+		<div class="row d-flex align-items-center">
+			<div class="col-md-12">
+				<ul class="btn-group-list text-left mb20">
+				    <li><a type="button" class="btn primary_btn "
+						href="#/OfficeTicket/{{office.id}}" has-permission="CREATE_OFFICETICKET"> <i class="fa fa-plus"></i>{{"label.addticket"
+							| translate}}
+					</a></li>
+				    <li><a has-permission="CREATE_OFFICEPAYMENT"
+						href="#/officepayments/{{office.id}}" class="btn primary_btn">
+							<i class="fa fa-usd "></i>{{'label.officepayments' | translate}}
+					</a></li>
+					<li><a href="#/officeadjustments/{{office.id}}" has-permission="CREATE_OFFICEADJUSTMENT"
+						class="btn primary_btn"> <i class="fa fa-adjust"></i>{{'label.officeadjustments'
+							| translate}}
+					</a></li>
+					<li><a has-permission="CREATE_PARTNERAGREEMENT"
+						href="#/createpartneragreement/{{office.id}}/{{office.id}}"
+						class="btn primary_btn"> <i class="fa fa-plus"></i>{{'label.createagreement'
+							| translate}}
+					</a></li>
+					<li><a class="btn btn-min primary_btn" has-permission='CREATE_INVOICE'
+						data-ng-click="downloadFile(office.id)"> <i class="fa fa-plus"></i>Invoice
+					</a></li>
+					<!-- <li>
+					  < button id="download" class="btn btn-min btn-primary col-sm-offset-6" data-ng-click="downloadFile(office.id)" class="btn primary_btn">
+  			        <i class=" icon-download-alt icon-white,">PDF</button>
+				</li> -->
+				</ul>
+			</div>
+		</div>
+		<uib-tabset class="overflowhidden" style="margin-top: 4px;"
+			tabset-name="officeTabset" scrollable> 
+		<uib-tab heading="Upcoming Renewals" select="getUpcomingRenewals(fromDate,toDate)" has-permission='READ_LCO' style="width: 16.5%">
+		<div class="row mt20 mb20">
+			<div class="col-md-4">
+				<input ng-autofocus="true" ng-model="filterText" type="text"
+					ng-keyup="onFilter()" class="form-control"
+					placeholder="{{'label.input.filterbyname' | translate}}">
+			</div>
+				<div class="col-md-2">
+					<div class="form-group row align-items-center">
+						<div class="col-md-3.5 p-0">
+							<label class="control-label" for="fromDate">{{'label.fromDate'| translate }}</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" id="fromDate" class="form-control" data-ng-model="fromDate" datepicker-pop="dd MMM yyyy">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group row align-items-center">
+						<div class="col-md-3.5">
+							<label class="control-label " for="toDate">{{'label.toDate'| translate }}</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" id="toDate" class="form-control" data-ng-model="toDate" datepicker-pop="dd MMM yyyy">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<ul class="btn-group-list">
+						<li>
+							<button class="btn primary_btn btn-disabled mrl10" type="submit"data-ng-click="getSelectDateRenewals(fromDate,toDate)">{{'label.button.search'| translate}}</button>
+						</li>
+					</ul>						
+				</div>
+			<div class="col-md-2">
+				<ul class="btn-group-list pull-right">
+					<li><button id="Renewal" class=" btn primary_btn pull-right"
+							data-ng-click="RenewalSubmit()">
+							<i class="fa fa-plus"></i>{{'button.renewal' | translate}}
+						</button></li>
+				</ul>
+			</div>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th><input type="checkbox" ng-model="activeall"
+						ng-true-value="true" ng-false-value="false"
+						ng-change="selectAll(activeall)"></th>
+					<th>{{'label.Stb Number' | translate}}</th>
+					<th>{{'label.Customer Number' | translate}}</th>
+					<th>{{'label.Name' | translate}}</th>
+					<th>{{'label.Mobile Number' | translate}}</th>
+					<th>{{'label.Order Number' | translate}}</th>
+					<th>{{'label.Active Date' | translate}}</th>
+					<th>{{'label.Expiry Date' | translate}}</th>
+					<th>{{'label.Balance Amount' | translate}}</th>
+					<!-- <th>Balance Check</th> -->
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="pointer-main"
+					ng-repeat="client in clientsData  | filter:filterText">
+					<!-- ng-hide="client.status.value == 'Closed'" -->
+					<td><input type="checkbox" ng-checked="activeall"
+						ng-model="active" ng-true-value="true" ng-false-value="false"
+						ng-change="clientSelected(client, active)">
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.stbId}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.accountNo}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.displayName}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.phone}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.orderId}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.startDate
+						| DateFormat}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.endDate
+						| DateFormat}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.balanceAmount}}</td>
+					<!-- <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.balanceCheck}}</td>
+		                 -->
+
+				</tr>
+			</tbody>
+		</table>
+		</uib-tab> <uib-tab heading="Customers" select="getClients()"
+			active="PartnersCustomersTab" has-permission='READ_LCO' style="width: 16.5%">
+		<div class="row mt20 mb20">
+			<div class="col-md-4">
+				<input ng-autofocus="true" ng-model="filterText" type="text"
+					ng-keyup="onFilter()" class="form-control"
+					placeholder="{{'label.input.filterbyname' | translate}}">
+			</div>
+			<div class="col-md-8">
+				<ul class="btn-group-list pull-right">
+					<li><button id="Renewal" class=" btn primary_btn pull-right"
+							data-ng-click="RenewalSubmit()">
+							<i class="fa fa-plus"></i>{{'button.renewal' | translate}}
+						</button></li>
+				</ul>
+			</div>
+		</div>
+		<!-- <div class="col-sm-12">
+			<form ng-submit="searchItemDetails(filterText)" >
+			        	<div class="col-md-3">
+				        	<input ng-autofocus="true" ng-model="filterText" ng-keyup="onFilter()" type="text"
+                                       class="form-control unstyled"
+                                       placeholder="{{'label.input.filterbynameaccno' | translate}}">
+				        </div>
+				          <div class="col-sm-4">
+				          <button id="Renewal" class="btn primary_btn pull-right" data-ng-click="RenewalSubmit()" ><i
+                            		class="fa fa-plus"></i>{{'button.renewal' | translate}}</button>
+                    			<a href="" class="btn primary_btn" ng-click="RenewalSubmit()"><i
+                            		class="fa fa-plus"></i>Renewal</a>
+                		  </div>
+				    	  
+					</form>
+					</div> --> <!-- <div class="container" style="width:1404px;margin-top:-6px;"> -->
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th><input type="checkbox" ng-model="activeall"
+						ng-true-value="true" ng-false-value="false"
+						ng-change="selectAll(activeall)"></th>
+					<th>{{'label.Stb Number' | translate}}</th>
+					<th>{{'label.Customer Number' | translate}}</th>
+					<th>{{'label.Name' | translate}}</th>
+					<th>{{'label.Mobile Number' | translate}}</th>
+					<th>{{'label.Order Number' | translate}}</th>
+					<th>{{'label.Active Date' | translate}}</th>
+					<th>{{'label.Expiry Date' | translate}}</th>
+					<th>{{'label.Balance Amount' | translate}}</th>
+					<!-- <th>Balance Check</th> -->
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="pointer-main"
+					ng-repeat="client in clientsData  | filter:filterText">
+					<!-- ng-hide="client.status.value == 'Closed'" -->
+					<td><input type="checkbox" ng-checked="activeall"
+						ng-model="active" ng-true-value="true" ng-false-value="false"
+						ng-change="clientSelected(client, active)">
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.stbId}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.accountNo}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.displayName}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.phone}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.orderId}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.startDate
+						| DateFormat}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.endDate
+						| DateFormat}}</td>
+					<td class="pointer" data-ng-click="routeTo(client.id)">{{client.balanceAmount}}</td>
+					<!-- <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.balanceCheck}}</td>
+		                 -->
+
+				</tr>
+			</tbody>
+		</table>
+		</uib-tab> <uib-tab heading="Tickets" select="getAllTickets()"
+			active="PartnersTicketTab" has-permission='READ_TICKET' style="width: 16.5%">
+		<div class="row mt20 mb20">
+			<div class="col-md-4">
+				<input ng-autofocus="true" ng-model="filterText" type="text"
+					ng-keyup="onFilter()" class="form-control"
+					placeholder="{{'label.input.filterbyname' | translate}}">
+			</div>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{ 'label.ticketNumber' | translate}}</th>
+					<th>{{ 'label.priority' | translate}}</th>
+					<th>{{ 'label.ticketdate' | translate }}</th>
+					<th>{{ 'label.problemcode' | translate}}</th>
+					<th>{{ 'label.status' | translate }}</th>
+					<th>{{ 'label.title' | translate}}</th>
+					<th>{{ 'label.assignto' | translate }}</th>
+					<th>{{ 'label.lastcomment' | translate }}</th>
+					<th>{{ 'label.FileName' | translate }}</th>
+					<th>{{'table.actions' | translate}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="pointer-main"
+					data-ng-repeat="ticket in tickets  | filter:filterText">
+					<td class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.ticketNumber}}</td>
+					<td class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.priority}}</td>
+					<td class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.ticketDate
+						| DateFormat}}</td>
+					<td class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.problemDescription}}</td>
+					<td data-ng-show="(ticket.status == 'OPEN') && ticket.ticketstatus"
+						class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.ticketstatus}}</td>
+					<td
+						data-ng-show="(ticket.status == 'CLOSED') || !ticket.ticketstatus"
+						class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.status}}</td>
+					<td class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.title}}</td>
+					<td class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.userName}}</td>
+					<td class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.lastComment}}</td>
+					<td class="pointer" data-ng-click="routeToticket(ticket.id)">{{ticket.fileName}}</td>
+					<td><a
+						data-ng-show="(ticket.status == 'OPEN'||ticket.status == 'New Open'||ticket.status == 'Working'||ticket.status == 'Testing')"
+						data-ng-click="downloadFiles(ticket.DocumentId)"
+						uib-popover="Download Uploaded File" popover-trigger="mouseenter"><i
+							class="fa fa-download"></i></a> <a
+						data-ng-show="(ticket.status == 'OPEN'||ticket.status == 'New Open'||ticket.status == 'Working'||ticket.status == 'Testing')"
+						has-permission="UPDATE_TICKET"
+						data-ng-click="routeToEditTicket(office.id,ticket.id)"
+						uib-popover="Comment" data-popover-trigger="mouseenter"><i
+							class="fa fa-edit viewbgclient-t-actions"></i></a>&nbsp; <a
+						data-ng-show="(ticket.status == 'OPEN'||ticket.status == 'New Open'||ticket.status == 'Working'||ticket.status == 'Testing')"
+						has-permission="CLOSE_TICKET"
+						data-ng-click="callCloseTicket(officeId,ticket.id)"
+						uib-popover="Close" data-popover-trigger="mouseenter"><i
+							class="fa fa-times viewbgclient-t-actions"></i></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<ul class="pager">
+			<li class="previous"><a
+				data-ng-click="patnerDisbursementData.previous()" href=""
+				data-ng-disabled="!patnerDisbursementData.hasPrevious()">&larr;
+					Prev</a></li>
+			<li class="next"><a
+				data-ng-click="patnerDisbursementData.next()" href=""
+				data-ng-disabled="!patnerDisbursementData.hasNext()">Next &rarr;</a></li>
+		</ul>
+		</uib-tab> <uib-tab
+			heading="{{'label.heading.financialtransactions' | translate}}"
+			select="getfinancialtransactions()" has-permission='READ_OFFICEFINANCIALTRANSACTIONS' style="width: 16.5%">
+		<div class="row mt20 mb20">
+			<div class="col-md-4">
+				<input ng-autofocus="true" ng-model="filterText" type="text"
+					ng-keyup="onFilter()" class="form-control"
+					placeholder="{{'label.input.filterbyname' | translate}}">
+			</div>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr class="graybg">
+					<th>{{ 'label.transactionId' | translate }}</th>
+					<th>{{ 'label.transactionType' | translate }}</th>
+					<th>{{ 'label.debitAmount' | translate }}</th>
+					<th>{{ 'label.creditAmount' | translate }}</th>
+					<th>{{ 'label.transDate' | translate }}</th>
+					<th>{{ 'label.transactionCategory' | translate }}</th>
+					<th>{{ 'label.cancelRemark' | translate }}</th>
+					<th>{{ 'label.actions' | translate }}</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="officeFinanceTrans in officeFinanceTrans">
+					<td>{{officeFinanceTrans.transactionId}}</td>
+					<td>{{officeFinanceTrans.transactionType}}</td>
+					<td>{{officeFinanceTrans.amount}}</td>
+					<td>{{officeFinanceTrans.creditAmount}}</td>
+					<td>{{officeFinanceTrans.transDate | DateFormat}}</td>
+					<td>{{officeFinanceTrans.transactionCategory}}</td>
+					<td>{{officeFinanceTrans.cancelRemark}}</td>
+
+					<td><a
+						data-ng-show="officeFinanceTrans.transactionType == 'PAYMENT' && officeFinanceTrans.isDeleted == 'N'"
+						data-ng-click="cancelPayment(officeFinanceTrans.transactionId,officeFinanceTrans.receiptNo,officeFinanceTrans.officePoid)"
+						uib-popover="Payment Reversal" popover-trigger="mouseenter"><i
+							class="fa fa-times"></i></a></td>
+					<!-- <td><a has-permission = UPDATE_PLAN href="#/editplan/{{plan.id}}" uib-popover="Edit Plan" title="Edit Plan"
+               data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;</td> -->
+				</tr>
+			</tbody>
+
+			<!-- <tr class="pointer-main"
+					data-ng-repeat="partner in partners  | filter:filterText">
+					<td class="pointer"
+						data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.partnerName}}</td>
+					<td class="pointer"
+						data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.parentName}}</td>
+					<td class="pointer"
+						data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.currency}}</td>
+					<td class="pointer"
+						data-ng-click="routeToPartner(partner.id,partner.officeId)">
+						{{partner.openingDate | DateFormat}}</td>
+					<td class="pointer"
+						data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.balanceAmount}}</td>
+					<td><a has-permission='UPDATE_PARTNER'
+						href="#/editpartner/{{partner.id}}" uib-popover="Edit Partner"
+						data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td>
+				</tr> -->
+		</table>
+		</uib-tab> <uib-tab heading="Disbursements" select="getPartnerDisbursements()"
+			active="PartnersDisbursementTab" has-permission='READ_PARTNERDISBURSEMENT' style="width: 16.5%">
+		<div class="row mt20 mb20">
+			<div class="col-md-4">
+				<input ng-autofocus="true" ng-model="filterText" type="text"
+					ng-keyup="onFilter()" class="form-control"
+					placeholder="{{'label.input.filterbyname' | translate}}">
+			</div>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr class="graybg">
+					<th>{{'label.id' | translate}}</th>
+					<th>{{'label.transactiondate' | translate}}</th>
+					<th>{{'label.source' | translate}}</th>
+					<th>{{'label.commissionamount' | translate}}</th>
+					<th>{{'label.commissiontype' | translate}}</th>
+					<th>{{'label.commissionrate' | translate}}</th>
+					<th>{{'label.commissionamount' | translate}}</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+					data-ng-repeat="patnerDisbursementData in patnerDisbursementData.currentPageItems | filter:filterText">
+					<td>{{patnerDisbursementData.id}}</td>
+					<td>{{patnerDisbursementData.transDate |DateFormat}}</td>
+					<td>{{patnerDisbursementData.source}}</td>
+					<td>{{patnerDisbursementData.netAmount}}</td>
+					<td>{{patnerDisbursementData.percentage}}</td>
+					<td>{{patnerDisbursementData.shareAmount}}</td>
+					<td>{{patnerDisbursementData.commissionAmount}}</td>
+
+				</tr>
+			</tbody>
+		</table>
+		<ul class="pager">
+			<li class="previous"><a
+				data-ng-click="patnerDisbursementData.previous()" href=""
+				data-ng-disabled="!patnerDisbursementData.hasPrevious()">&larr;
+					Prev</a></li>
+			<li class="next"><a
+				data-ng-click="patnerDisbursementData.next()" href=""
+				data-ng-disabled="!patnerDisbursementData.hasNext()">Next &rarr;</a></li>
+		</ul>
+		</uib-tab> <uib-tab heading="Agreement Details" select="getAgreementDetails()" 
+							has-permission='READ_PARTNERSAGREEMENT' style="width: 16.5%">
+		<div class="row mt20 mb20">
+			<div class="col-md-4">
+				<input ng-autofocus="true" ng-model="filterText" type="text"
+					ng-hide="true" ng-keyup="onFilter()" class="form-control"
+					placeholder="{{'label.input.filterbyname' | translate}}">
+			</div>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{'label.plandescription' | translate}}</th>
+					<!-- <th>{{'label.agreementstatus' | translate}}</th> -->
+					<th>{{'label.contreffectdate' | translate}}</th>
+					<th>{{'label.contrenddate' | translate}}</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="agreement in agreements | filter:filterText">
+					<td>{{agreement.planDescription}}</td>
+					<!-- <td>{{agreement.agreementStatus}}</td> -->
+					<td>{{agreement.startDate | DateFormat}}</td>
+					<td>{{agreement.endDate | DateFormat}}</td>
+					<!-- <td><a has-permission="UPDATE_PARTNERAGREEMENT" href="#/editpartneragreement/{{agreements.id}}/{{partner.id}}" 
+			                       uib-popover="Edit Agreement" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td> -->
+					<td><a has-permission="DELETE_PARTNERAGREEMENT"
+						data-ng-click="deleteAgreement(agreement.id,agreement.planPoId,agreement.dealPoId,office.poId,office.settlementPoId,agreement.packageId,office.clientPoId,office.clientServicePoId,agreement.orderId)"
+						uib-popover="Delete Agreement" data-popover-trigger="mouseenter"><i
+							class="fa fa-times"></i></a></td>
+				</tr>
+			</tbody>
+		</table>
+		</uib-tab> <uib-tab heading="{{officedatatable.registeredTableName}}"
+			ng-repeat="officedatatable in officedatatables"
+			select="dataTableChange(officedatatable)"
+			has-permission='READ_{{officedatatable.registeredTableName}}' style="width: 16.5%">
+		<div class="row mt20 mb20">
+			<div class="col-md-12">
+				<ul class="btn-group-list pull-right">
+					<li><a ng-show="datatabledetails.isData"
+						class="btn btn-danger pull-right"
+						ng-click="deleteAll(officedatatable.registeredTableName, office.id)"
+						has-permission='DELETE_{{officedatatable.registeredTableName}}'><i
+							class="fa fa-trash "></i>{{'label.button.deleteall' | translate}}</a></li>
+					<li><a data-ng-show="showDataTableAddButton"
+						ng-href="#/makedatatableentry/{{officedatatable.registeredTableName}}/{{office.id}}?fromEntity=office"
+						class="btn btn-primary"
+						has-permission='CREATE_{{officedatatable.registeredTableName}}'><i
+							class="fa fa-plus "></i>{{'label.button.add' | translate}}</a></li>
+					<li><a data-ng-show="showDataTableEditButton"
+						ng-href="#/viewsingledatatableentry/{{officedatatable.registeredTableName}}/{{office.id}}?mode=edit"
+						class="btn btn-primary"
+						has-permission='UPDATE_{{officedatatable.registeredTableName}}'><i
+							class="fa fa-edit "></i>{{'label.button.edit' | translate}}</a></li>
+				</ul>
+
+			</div>
+		</div>
+		<div ng-show="datatabledetails.isData">
+			<table class="table" data-ng-show="datatabledetails.isMultirow">
+				<thead>
+					<th ng-repeat="column in datatabledetails.columnHeaders">{{column.columnName
+						| prettifyDataTableColumn}}</th>
+				</thead>
+				<tbody>
+					<tr class="pointer-main" ng-repeat="data in datatabledetails.data">
+						<td class="pointer" ng-repeat="row in data.row track by $index"
+							ng-click="viewDataTable(officedatatable.registeredTableName,data)">{{row}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table width450px table-striped"
+				data-ng-hide="datatabledetails.isMultirow">
+				<tr ng-repeat="value in singleRow">
+					<td class="graybg table-font-nav">{{value.key |
+						prettifyDataTableColumn}}</td>
+					<td><span class="padded-td">{{value.value}}</span></td>
+				</tr>
+			</table>
+		</div>
+		</uib-tab> </uib-tabset>
+
+	</div>
+</div>
+<script type="text/ng-template" id="deletePopupForAgreement.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete Agreement</h3>
+                    </div>
+                    <div class="modal-body style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+                    </div>
+  </script>
+
+<script type="text/ng-template" id="cancelpayment.html">
+    	<div class="modal-header silver">
+        	<h3 class="bolder">{{'dialog.cancelpayment.title.message' | translate}}</h3>
+        </div>
+        <div class="modal-body modal-big" style="height:270px;">
+        	<div class="control-group">
+				<div class="controls">
+					<label class="control-label" style="color:red;" ng-show="error.length>0">{{error | translate}}</label>
+				</div>	
+			</div>
+			<div class="control-group">
+				<label class="control-label">{{ 'label.cancelremark' | translate }}</label>
+				<div class="controls">
+					<input type="text" ng-model="formData.cancelRemark" required late-Validate style="background-color:#FFFFFF;"/> 
+				</div>	
+			</div>
+		</div>
+        <div class="modal-footer">
+        	<button id="cancel" class="btn btn-warning" ng-click="reject()">{{'button.cancel' | translate}}</button>
+            <button id="submit" class="btn btn-primary" ng-click="accept(formData.cancelRemark)" ng-disabled="flagcancelpayment">{{'label.confirm' | translate}}</button>
+        </div>
+	</script>
+<script type="text/ng-template" id="CloseTicket.html">
+		
+	<div class="modal-header silver">
+    			<h4>{{'label.closeticket' | translate}}</h4>
+    		</div>
+    		<br>
+		<div class="modal-body" >
+		<form class="form-horizontal" ng-submit="submit()">
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="status"> {{'label.status' | translate }} </label>
+						<div class="col-sm-4">
+							<select ng-model="formData.status" class="form-control"
+								ng-options="statusData.id as statusData.mCodeValue for statusData in statusDatas"
+								value="{{statusData.id}}"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="description"> {{'label.resolutiondescription' | translate }}</label>
+						<div class="col-sm-4">
+							    <textarea class="form-control" ng-model="formData.resolutionDescription"></textarea>
+						</div>
+					</div>
+					<div class="col-md-offset3-3">
+						<button type="reset" class="btn btn-warning" ng-click="reset123()">Cancel</button></a>
+						<button id="submit" class="btn btn-primary" ng-click="closeTicket()">Save</button>
+					</div>
+		</form>
+		</div>
+	</div>
+</script>
+</div>

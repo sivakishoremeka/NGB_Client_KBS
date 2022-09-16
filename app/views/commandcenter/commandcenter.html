@@ -1,0 +1,48 @@
+<div class="content-container" data-ng-controller="CommandCenterController" >
+    <ul class="breadcrumb">
+        <li class="active">{{'label.commandcenter' | translate}}</li>
+    </ul>
+    <div class="widget mb30">
+          <div class="row align-items-center">
+              <div class="col-md-3">
+                  <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+              </div>
+              <div class="col-md-9">
+                 <ul class="btn-group-list text-right">
+                  <li>
+                      <a href="#/createcommandcenter" class="btn primary_btn pull-right" has-permission ='CREATE_COMMANDCENTER'><i class="fa fa-plus "></i>{{'label.button.createcommandcenter' | translate }}</a>
+                  </li>
+              </ul>
+            </div>
+          </div>
+      </div>
+
+   
+   <div class="widget">
+     <div class="table-responsive">
+     <!-- <h4 class="ptrbl0">{{'label.plans' | translate}}</h4> -->     
+    <table class="table table-striped" >
+        <thead>
+            <tr class="graybg">
+                <th>{{ 'table.resource_id' | translate }}</th>
+                <th>{{ 'table.made_on_date' | translate }}</th>
+                <th>{{ 'table.command_as_json' | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+           <tr class="pointer-main" data-ng-repeat="groupbyfingerprint in groupbyfingerprints.currentPageItems | filter:filterText">
+                <td>{{groupbyfingerprint.resource_id}}</td>
+            	<td>{{groupbyfingerprint.made_on_date | DateFormat}}</td>
+                <td>{{getRequestType(groupbyfingerprint.command_as_json)}}</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+	<ul class="pager">
+   		<li class="previous"><a ng-click="groupbyfingerprints.previous()" href="" ng-disabled="!groupbyfingerprints.hasPrevious()">&larr; Prev</a></li>
+        <li class="next"><a ng-click="groupbyfingerprints.next()" href="" ng-disabled="!groupbyfingerprints.hasNext()">
+			Next &rarr;</a></li>
+    </ul>
+  </div>
+ 

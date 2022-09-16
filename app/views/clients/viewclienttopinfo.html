@@ -1,0 +1,80 @@
+<!-- <div data-ng-controller="ViewClientTopInfoController">
+	<div class="card mb20">
+		<div class="content ptrbl0">
+			<div class="toolbar">
+	               <div class="client-title" style="height:110px;">
+	                   <span class="col-md-1 prl0 tc avatarDiv">
+	                       <img data-ng-hide="imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar" width="120">
+	                       <img data-ng-show="imagePresent" src="{{image}}" alt="Avatar" width="120" class="avatar">
+	                   	<h3>{{displayName}} <i class="fa fa-circle fs15 {{client.status.code | StatusLookup}}"></i></h3>
+	                   	<small ng-if="client.subStatus.description">
+	                       	[{{subStatus.description}}]
+	                   	</small>
+	                   </span>
+	                   <div class=" from-group acDetails">
+	                       <form><div class=" form-group rform col-md-11"><br>
+	                           <label id="fthin" class="col-md-5">{{ 'label.accountno' | translate }}:<span id="fnormal">{{accountNo}}</span></label>
+	                           <label id="fthin" class="col-md-5">{{ 'link.accounttype' | translate }}:<span id="fnormal" >{{categoryType}}</span></label>
+	                       </div>
+	                       <div class="form-group rform col-md-11">
+	                       	   <label id="fthin" class="col-md-5">{{ 'label.office' | translate }}:<span id="fnormal">{{officeName}}</span>   </label>
+	                       	   <label id="fthin" class="col-md-5">{{ 'label.balance' | translate }}:<span id="fnormal">{{balanceAmount}}</span></label>
+	                       </div>
+	                   </form></div>
+	               </div>
+	           </div>
+		</div>
+	</div>
+</div> -->
+
+<div ng-controller="ViewClientTopInfoController">
+<div class="widget mb30 avatar-wrap">
+        <div class="row align-items-center">
+            <div class="col-md-1">
+                <div class="avatarDiv">
+                    <img data-ng-hide="client.imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar">
+                    <img data-ng-show="client.imagePresent" src="{{image}}" alt="Avatar" class="avatar">
+                    <h3>{{displayName}} </h3>
+                    <i class="fa fa-circle  {{client.status.code | StatusLookup}}"></i>
+                    <small ng-if="client.subStatus.description">
+	               	[{{subStatus.description}}]
+	           	</small>
+                </div>
+            </div>
+            <div class="col-md-11">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label id="fthin">{{ 'label.accountno' | translate }}: <span id="fnormal">{{accountNo}}</span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <label id="fthin">{{ 'link.accounttype' | translate }}: <span id="fnormal">{{categoryType}}</span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <label id="fthin">{{'label.stbserialno' | translate}}: <span id="fnormal">{{stbSerialNo}}</span></label>
+                    </div>
+                    <!-- <div class="col-md-4">
+                        <span class="dropdown">
+	        		 	 	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">OfficeHierarchy &nbsp;&nbsp;<span class="caret"></span></button>
+                        <span class="dropdown-content " id="fnormal">
+                              <a href="#" style="padding:5px;" class="btn dropdown-menu">{{officeHierarchy}}</a>
+                            </span>
+                        </span>
+                    </div> -->
+                    <div class="col-md-4">
+                        <label id="fthin">{{'label.scserialno' | translate}}:<span id="fnormal">{{scSerialNo}}</span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <label id="fthin">{{ 'label.balance' | translate }}({{currencyCode}}): <span id="fnormal">{{balanceAmount}}</span>
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label id="fthin">{{ 'label.noncurrencybalance' | translate }}: <span id="fnormal">{{nonCurrencyAmount}}</span></label>
+                    </div>
+                    <div class="col-md-4">
+                        <label id="fthin">{{'label.OfficeHierarchy' | translate}}:<span id="fnormal">{{officeHierarchy}}</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

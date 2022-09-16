@@ -1,0 +1,66 @@
+<div class="content-container" ng-controller="EditCodeController">
+	<ul class="breadcrumb">
+		<li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+		<li><a href="#/codes">{{'label.anchor.managecodes' | translate}}</a></li>
+		<li><a href="#/viewcode/{{codeId}}">{{code.name}}</a></li>
+		<li class="active">{{'label.anchor.addcodevalue' | translate}}</li>
+	</ul>
+	<div class="widget">
+		<h3>{{'label.editcode' | translate}}</h3>
+		<form class="content-container" name="editcodeform" novalidate="" ng-submit="submit()">
+		<api-validate></api-validate>
+		
+		<div class="row">
+			<div class="col-md-3">
+				<input name="codevalue" ng-model="newEle.name" placeholder="{{ 'label.input.codevalue' | translate }}"
+				type="text" class="form-control"/>
+			</div>
+			<!-- <div class="col-sm-3">
+				<textarea name="description" ng-model="newEle.description" placeholder="{{ 'label.input.description' | translate }}"
+				type="text" class="form-control"/>
+			</div> -->
+			<div class="col-md-3">
+				<input name="position" ng-model="newEle.position" placeholder="{{ 'label.input.position' | translate }}"
+				type="text" class="form-control"/>
+			</div>
+			<!-- <div class="col-sm-3">
+				<label class="control-label col-sm-2">{{'label.input.active' | translate}}</label>
+				<div class="col-sm-3">
+					<input id="activeCheckbox" type="checkbox" ng-model="newEle.isActive">
+				</div>
+			</div> -->
+			<div class="col-md-6">
+				<ul class="btn-group-list text-right">
+					<li><a data-ng-click="addCv()" class="btn primary_btn" has-permission='CREATE_CODEVALUE'><i
+						class="fa fa-plus"></i>{{ 'label.button.add' |
+					translate }}</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div data-ng-repeat="codevalue in codevalues">
+			<div class="table-responsive">
+			 <table class="table table-striped mt30">
+				<tr>
+					<td>
+						<input disabled="" placeholder={{codevalue.name}} type="text" class="form-control" />
+					</td>
+					<td>
+						<input disabled="" placeholder={{codevalue.position}} type="text" class="form-control"/>
+					</td>
+					<td>
+						<a ng-click='deleteCv(codevalue.id)' has-permission='DELETE_CODEVALUE'><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+		</table>
+	 </div>
+	</div>
+		
+		<div class="text-right" data-ng-show="stat">
+			<p>{{ 'label.systemdefinedcodedeletefailed' | translate }}</p>
+		</div>
+		
+	</form>
+	
+</div>
+</div>

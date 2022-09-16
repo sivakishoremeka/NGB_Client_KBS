@@ -1,0 +1,65 @@
+<div class="content-container" ng-controller="RumController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'link.admin.masters' | translate}}</a></li>
+        <li><a href="#/createrum">{{'label.createrum' | translate}}</a>
+    </ul>
+    <div class="row">
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h3>{{'label.createrum(Ratable Usage Metric)' | translate}}</h3>
+            </div>
+            <br>
+            
+            <form name="createrum()" novalidate="" class="form-horizontal" rc-submit="submit()">
+                <api-validate></api-validate>
+                <fieldset>
+                
+                    <div class="form-group">
+                         <label class="control-label col-sm-2" for="chargeCodeId">{{'label.chargecodeid'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="chargeCodeId" class="form-control" name="chargeCodeId" data-ng-model="formData.chargeCodeId" />
+                         </div>
+                     </div>    
+                  <!--  <div class="form-group">
+                         <label class="control-label col-sm-2" for="templateId">{{'label.templateid'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="templateId" class="form-control" name="templateId" data-ng-model="formData.templateId" />
+                         </div>
+                     </div>  -->
+                     
+                  <div class="form-group">
+                     <label class="control-label col-sm-2" for="templateId">{{'label.templatename'| translate }}&nbsp;</label>
+                        <div class="col-sm-3">
+              			  	<select id="templateId" data-ng-model="formData.templateId"  data-ng-options="rum.templateId as rum.templateName for rum in rum"  class="form-control"></select>
+            		   	</div>
+                       </div>        
+                     <div class="form-group">
+                         <label class="control-label col-sm-2" for="rumName">{{'label.rumname'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="rumName" class="form-control" name="rumName" data-ng-model="formData.rumName" />
+                         </div>
+                     </div>    
+                     <div class="form-group">
+                         <label class="control-label col-sm-2" for="rumExpression">{{'label.rumexpression'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="rumExpression" class="form-control" name="rumExpression" data-ng-model="formData.rumExpression" />
+                         </div>
+                         <div class="col-sm-3 col-md-3 col-md-offset-0 " style="margin:-30px 0px 0px 0px"> 
+                        <label class="control-label col-sm-2" for="fieldId">{{ 'label.fieldnames' | translate }}</label>
+                         <select id="fieldId" data-ng-model="fieldId" class="form-control"
+                            data-ng-options="FieldNamesDatas.fieldId as  FieldNamesDatas.fieldName for FieldNamesDatas in FieldNamesDatas"  >
+                         </select>
+                         <div/>
+                     </div>
+              
+                   <div class="col-md-offset-10">
+                       <a href="#/organization"><button id="cancel" type="reset" class="btn btn-warning">{{'button.cancel'| translate}}</button></a>
+                       <button id="save" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+                   </div>
+                </fieldset>
+            </form>
+            </div>
+    	</div>
+	</div>
+</div>

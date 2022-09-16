@@ -1,0 +1,189 @@
+
+<div class="content-container" data-ng-controller="CreateOfficeTicketController">
+    <ul class="breadcrumb">
+		 <li><a href="#/offices">{{'label.manageorganization' | translate}}</a></li>
+		<li class="active">{{'label.creatticket' | translate}}</li>
+	</ul>
+
+	 <div class="widget card mb30 avatar-wrap">
+		<div class="row d-flex align-items-center">
+	       <div class="col-md-2" >
+	           <div class="avatarDiv" >
+	               <img data-ng-hide="client.imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar" >
+	               <img data-ng-show="client.imagePresent" src="{{image}}" alt="Avatar"  class="avatar">
+	           	<h3>{{office.name}} </h3>
+	           	<i class="fa fa-circle fs15 {{client.status.code | StatusLookup}}"></i>
+	           	<small ng-if="client.subStatus.description">
+	               	[{{client.subStatus.description}}]
+	           	</small>
+           </div>
+       </div>
+           <div class="col-md-10">
+           	 <div class="row">
+           	 	<div class="col-md-4">
+					<label id="fthin">{{ 'Entity Code' | translate }}: <span id="fnormal">{{office.externalId}}</span></label>
+           	 	</div>
+           	 	<div class="col-md-4">
+           	 		<label id="fthin" >{{ 'Entity Type' | translate }}: <span id="fnormal">{{office.officeType}}</span></label>
+           	 	</div>
+           	 	<div class="col-md-4">
+           	 		<label id="fthin">{{ 'Parent Entity' | translate }}: <span id="fnormal">{{office.parentName}}</span></label>
+           	 	</div>
+           	 	<div class="col-md-4">
+           	 		 <label id="fthin">{{ 'label.contactperson' | translate }}: <span id="fnormal">{{office.contactPerson}}</span></label>
+           	 	</div>
+          </div>
+		</div>
+	</div>
+  </div>
+
+
+    <div class="widget">
+		<div class="content">
+			<h3>{{'label.creatnewticket' | translate}}</h3>
+			<form name="createnewticketform" class="form-horizontal">
+			<api-validate></api-validate>
+
+	     <div class="row">
+     		<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="Date"> {{'label.ticket.date' | translate }} </label>
+					</div>
+					<div class="col-md-8">
+						<input type="text"  ng-model="dateTime" is-open="opened" min="minDate" max="maxDate" class="form-control"
+							   date-disabled="disabled(date, mode)" required late-Validate style="background-color:#FFFFFF;"  readonly/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="priority">{{'label.ticket.priority' | translate }}<span class="required">*</span></label>
+					</div>
+					<div class="col-md-8">
+							<select class="form-control" name="priority" ng-model="formData.priority"
+									ng-options="priorityType.value as priorityType.value for priorityType in priorityTypes"
+									value="{{priorityType.value}}" required late-Validate>
+						    </select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	  <div class="row">
+		  <div class="col-md-6">
+			<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="Category"> {{'label.ticket.category' | translate }}<span class="required">*</span></label>
+					</div>
+				<div class="col-md-8">
+					<select id ="category" name="category" ng-model="formData.problemCode" class="form-control"
+							ng-options="problemsData.id as problemsData.mCodeValue for problemsData in problemsDatas"   data-ng-change="getSubCategory(formData.problemCode)"
+							value="{{problemsData.problemCode}}" required late-Validate>
+				    </select>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group row">
+				<div class="col-md-4">
+						<label class="control-label" for="subCategory"> {{'label.subcategory' | translate }}<span class="required">*</span></label>
+					</div>
+					  <div class="col-md-8">
+		              		<select id="subCategory" ng-model="formData.subCategory"  class="form-control" ng-options="subCategory.subCategory as subCategory.subCategory for subCategory in subCategory" required late-Validate>
+		             	    </select>		
+	            		</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+	           <div class="col-md-6">
+					<div class="form-group row">
+						 <div class="col-md-4">
+						<label class="control-label" for="chargeCode"> {{'label.assignto' | translate }}<span class="required"></span></label>
+					</div>
+					 <div class="col-md-8">
+							<select ng-model="formData.assignedTo" ng-options="usersData.id as usersData.userName for usersData in usersDatas" class="form-control" value="{{usersData.id}}" required late-Validate></select>
+						</div>
+					</div>
+				</div>
+				 <div class="col-md-6">
+				 	<div class="form-group row">
+				 		 <div class="col-md-4">
+					   <label class="control-label col-sm-2" for="sourceData">{{ 'label.source' | translate }}</label>
+					</div>
+            		 <div class="col-md-8">
+	              		<select ng-model="formData.sourceOfTicket"  class="form-control" ng-options="sourcedata.mCodeValue as sourcedata.mCodeValue for sourcedata in sourceData" value="{{sourcedata.mCodeValue}}">
+	             		</select>
+            		</div>
+            	</div>
+			</div>	
+		</div>
+
+			<div class="row">
+	           <div class="col-md-6">	
+					<div class="form-group row">
+						 <div class="col-md-4">	
+						   <label class="control-label">Due Time</label>
+						</div>
+	                     <div class="col-md-6">	
+		                    <input type="text" id="preferredCallingTime" min="minDate" datepicker-pop="dd MMMM yyyy" ng-model="first.date"  class="form-control" style="background-color:#FFFFFF;" />
+		                </div>
+		                 <div class="col-md-2">	
+						    <input id="timepicker1" type="text" class="form-control" readonly ng-model="first.time" style="background-color:#FFFFFF;">
+	                    </div>
+	                </div>
+	            </div>
+	             <div class="col-md-6">
+	             	<div class="form-group row">
+	             		<div class="col-md-4">
+	                   <label class="control-label col-sm-2" for="Attachments"> {{'label.ticket.file' | translate }}</label>
+	                </div>
+					<div class="col-md-8">
+							<input type= "file" ngf-select="onFileSelect($files)">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+	           <div class="col-md-6">	
+				<div class="form-group row">
+					<div class="col-md-4">	
+					  <label class="control-label" for="Title">{{'label.title' | translate }}</label>
+				   </div>
+					<div class="col-md-8">	
+						<input type="text" class="form-control" name="Title" ng-model="formData.title">
+					</div>
+				</div>
+				<center><i>Please provide as much detail as possible so we can best assist you.</i><span class="required">*</span></center>
+			</div>
+		</div>
+
+	  <div class="row mt20">
+	  		<div class="col-md-12">	
+				<div class="form-group row">
+					  <div class="col-md-2">	
+						<label class="control-label" for="description">{{'label.description' | translate }}<span class="required">*</span></label>
+					</div>
+						<div class="col-md-4">
+						    <textarea ng-model="formData.description" name="description"  class="form-control" required late-Validate>
+							</textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+					
+			<ul class="btn-group-list text-right mt20 mb20">
+				<li>
+					<a id="cancel" href="#/viewoffice/{{officeId}}"><button type="reset" class="btn btn-warning" ng-click="reset123()">Cancel</button></a>
+				</li>
+				<li>
+					<button id="submit" type="submit" data-ng-click="submit()"  class="btn btn-primary">Save</button>
+				</li>
+			</ul>   
+		 </form>			
+		</div>
+	</div>
+</div>

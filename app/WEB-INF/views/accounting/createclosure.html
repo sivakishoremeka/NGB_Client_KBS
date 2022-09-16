@@ -1,0 +1,68 @@
+<div class="content-container">
+	<ul class="breadcrumb">
+		<li><a href="#/accounting">{{'label.anchor.accounting' | translate}}</a></li>
+		<li><a href="#/accounts_closure">{{'label.anchor.accountsclosure' | translate}}</a></li>
+		<li class="active">{{'label.anchor.createclosure' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+		
+		<h3>{{ 'label.heading.createclosure' | translate }}</h3>
+		
+		
+		<form name="createclosureform" novalidate="" class="form-horizontal" ng-controller="AccountingClosureController"
+			ng-submit="submit()">
+		<api-validate></api-validate>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label">{{ 'label.input.office' | translate }}<span class="required">*</span></label>
+					</div>
+					
+					<div class="col-md-8">
+						<select chosen="offices" id="officeId" ng-model="formData.officeId" class="form-control"
+							ng-options="office.id as office.name for office in offices" value="{{office.id}}"
+							ng-change="updateLastClosed(formData.officeId)" required="required">
+							<option class="displaynone" value="">{{'label.selectoffice' | translate}}</option>
+						</select>
+						<span ng-show="lastClosed">{{ 'label.input.previouslyclosedon' | translate }} - {{lastClosed | DateFormat}}</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label">{{ 'label.input.closingdate' | translate }}<span class="required">*</span></label>
+					</div>
+					
+					<div class="col-md-8">
+						<input class="form-control" id="closingDate" type="text" datepicker-pop="dd MMMM yyyy" ng-model="first.date"
+						is-open="opened" min="'2000-01-01'" max="restrictDate" />
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label">{{ 'label.input.comments' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<textarea rows="2" ng-model="formData.comments" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<ul class="btn-group-list text-right mt20 mb20">
+			<li><a id="cancel" href="#/accounts_closure" class="btn btn-warning">{{ 'label.button.cancel' | translate }}</a></li>
+			<li><button id="save" type="submit" class="btn btn-primary " has-permission='CREATE_GLCLOSURE'>{{ 'label.button.save' | translate }}</button></li>
+		</ul>
+		
+	</form>
+	
+</div>
+</div>

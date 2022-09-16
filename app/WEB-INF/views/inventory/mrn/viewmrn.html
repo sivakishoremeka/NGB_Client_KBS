@@ -1,0 +1,53 @@
+<div class="content-container" ng-controller="ViewMrnController">
+		<ul class="breadcrumb">
+	        <li><a href="#/inventory" ng-click="selectedMRN()">{{'link.admin.inventory' | translate}}</a></li>
+	        <li><a href="#/stocktransfer">{{'link.stocktransfer' | translate}}</a></li>
+	        <li class="active">{{mrn.itemDescription}}&nbsp;&nbsp;</li>
+	    </ul>
+	    <div class="widget">
+			<h3>&nbsp;&nbsp;&nbsp;{{mrn.itemDescription}}</h3>
+			<table class="table table-bordered table-striped">
+			<tr  ng-if="isMrn">
+				<td width="20%">{{'label.mrn.id' | translate }}</td>
+				<td width="80%">{{mrn.id}}</td>
+			</tr>
+			<tr  ng-if="!isMrn && !isGrv">
+				<td width="20%">{{'label.Sales.id' | translate }}</td>
+				<td width="80%">{{mrn.id}}</td>
+			</tr>
+			<tr  ng-if="isGrv">
+				<td width="20%">{{'label.grv.id' | translate }}</td>
+				<td width="80%">{{mrn.id}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.requestdate' | translate}}</td>
+				<td>{{mrn.requestedDate  | DateFormat}}</td>
+				
+			</tr>
+			<tr>
+				<td>{{'label.item' | translate }}</td>
+				<td>{{mrn.itemDescription}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.fromoffice' | translate }}</td>
+				<td>{{mrn.fromOffice}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.tooffice' | translate }}</td>
+				<td>{{mrn.toOffice}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.requestedquantity' | translate }}</td>
+				<td>{{mrn.orderdQuantity}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.receivedquantity' | translate }}</td>
+				<td>{{mrn.receivedQuantity}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.status' | translate }}</td>
+				<td>{{mrn.status}}</td>
+			</tr>
+		</table>
+	</div>
+</div>      

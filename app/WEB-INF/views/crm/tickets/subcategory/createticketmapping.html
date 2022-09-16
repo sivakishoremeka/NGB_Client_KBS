@@ -1,0 +1,96 @@
+<div class="content-container" ng-controller="CreateTicketMappingController"> 
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+		</li>
+      	
+        <li class="active">{{'label.createticketmapping' | translate}}</li>
+	</ul>
+	<div class="widget  ">
+		<h3>{{'label.heading.createticketmapping' | translate}}</h3>
+				<form name="createTicketMapping" novalidate="" class="form-horizontal" rc-submit="submit()">
+					<api-validate></api-validate>
+					
+	               <div class="row">
+	                <div class="col-md-6">
+	                    <div class="form-group row">
+	                        <div class="col-md-4">
+	                           <label class="control-label col-sm-2" for="teamId">{{ 'label.teamid' | translate }}</label>
+	                        </div>
+	                        <div class="col-md-8">
+	                            <select type="text" id="teamId" name="teamId" data-ng-model="formData.teamId" 
+			                		ng-options="TicketTeamMappingData.id as TicketTeamMappingData.teamCode for TicketTeamMappingData in TicketTeamMappingDatas" 
+			                		class="form-control"><option value="">{{'label.select.one' | translate}}</option></select>
+	                        </div>
+	                    </div>
+	                </div>
+	               </div>
+
+          <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                           <label class="control-label col-sm-9">{{ 'label.availableusers' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                           <select id="availableusers" ng-model="allowed" name="allowed" class="form-control multiselectmin" multiple >
+			            		<option data-ng-repeat="availableUser in availableUsers" value="{{availableUser.id}}">{{availableUser.username}}</option>
+			            	</select>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                         <label class="control-label col-sm-9">{{ 'label.selectedusers' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                           <select id="selectedusers" name="selectedusers" ng-model="restricted" name="restricted" class="form-control multiselectmin" multiple >
+			            		<option data-ng-repeat="selectedUser in selectedUsers" value="{{selectedUser.id}}">{{selectedUser.name}}</option>
+			            	</select>
+                        </div>
+                    </div>
+                </div>
+            </div>   		
+                <ul class="btn-group-list text-center mt20 mb20" >
+                	<li>
+                		<button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right"></i></button>
+                	</li>
+                	<li>
+                		<button type="button" class="btn btn-primary" data-ng-click="allow()"><i class="fa fa-angle-double-left"></i></button>
+                	</li>  
+                </ul>
+
+		            <ul class="btn-group-list text-right mt20 mb20" >
+	                	<li><a href="#/ticketteamusers"><button id="cancel" type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel'| translate}}</button></a></li>
+	                	<li>
+	                		<button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+	                	</li>
+                	</ul>		
+	        		<!-- <div class="form-group">
+		                <div class="col-sm-3 col-md-3 col-md-offset-2">
+		                	<label class="control-label col-sm-9">{{ 'label.availableplan' | translate }}</label>
+			           	 	<select id="availableplans" ng-model="allowed" name="allowed" class="form-control multiselectmin" multiple >
+			            		<option data-ng-repeat="availablePlan in availablePlans" value="{{availablePlan.id}}">{{availablePlan.username}}</option>
+			            	</select>
+		                </div>
+		               		
+		                <div class="col-sm-1 col-md-1 paddedtop25px" >
+		                	<button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right"></i></button><br/>
+		                	<button type="button" class="btn btn-primary" data-ng-click="allow()"><i class="fa fa-angle-double-left"></i></button>
+		                </div>
+		               		
+		                <div class="col-sm-3 col-md-3">
+		                	<label class="control-label col-sm-9">{{ 'label.selectedplan' | translate }}</label>
+			            	<select id="selectedplans" name="selectedplans" ng-model="restricted" name="restricted" class="form-control multiselectmin" multiple >
+			            		<option data-ng-repeat="selectedPlan in selectedPlans" value="{{selectedPlan.id}}">{{selectedPlan.name}}</option>
+			            	</select>
+		                </div>
+	        		</div> -->
+	        		
+	                	
+             
+				</form>
+		</div>
+	</div>

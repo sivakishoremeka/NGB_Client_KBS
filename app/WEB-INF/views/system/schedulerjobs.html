@@ -1,0 +1,327 @@
+<div class="content-container" ng-controller="SchedulerJobsController">
+    <ul class="breadcrumb">
+        <!-- <li><a href="#/system">{{'label.anchor.system' | translate}}</a></li> -->
+        <li class="active">{{'label.anchor.manageschedulerjobs' | translate}}</li>
+    </ul>
+    <div class="widget mb30">
+        <div class="row">
+            <div class="col-md-3">
+                <input ng-autofocus="true" data-ng-model="filterText" type="text" class="form-control" placeholder="{{'label.filterbyname' | translate}}">
+            </div>
+            <div class="col-md-9">
+                <ul class="btn-group-list text-right">
+                    <li>
+                        <button class="btn btn-warning " ng-show="schedulerstatus=='Active'" ng-click="suspendJobs()" has-permission='UPDATE_SCHEDULER'> <i class="fa fa-times "></i>{{'label.button.suspend' | translate}}</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary " ng-show="schedulerstatus=='Standby'" ng-click="activeJobs()" has-permission='UPDATE_SCHEDULER'> <i class="fa fa-check-sign  "></i>{{ 'label.button.activate' | translate }}</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" ng-click="runSelectedJobs()"><i class="fa fa-play "></i>{{'label.button.runselectedjobs' | translate}}</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" ng-click="refresh()"><i class="fa fa-repeat "></i>{{'label.button.refresh' | translate}}</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- <div class="toolbar ptb15 mrl15 bb1 mb20">
+	            	<h4 class="ptrbl0">{{'label.heading.schedulerjobs' | translate}}</h4>
+	            </div>   -->
+    </div>
+
+    <div class="widget">
+        <h3 class="full-bg-title">{{'label.heading.schedulerstatus' | translate}}:{{schedulerstatus}}</h3>
+        <!--  <table class="table table-condensed">
+            <tr>
+                <td>
+                    <h3></h3>
+                </td>
+                <td>
+	                <button class="btn btn-warning pull-right" ng-show="schedulerstatus=='Active'" ng-click="suspendJobs()" has-permission='UPDATE_SCHEDULER'>
+	                	<i class="fa fa-times pull-right"></i>{{'label.button.suspend' | translate}}</button>
+	           </td>
+	           <td>
+	            <button class="btn btn-success pull-right" ng-show="schedulerstatus=='Standby'" ng-click="activeJobs()" has-permission='UPDATE_SCHEDULER'>
+	                	<i class="fa fa-check-sign  pull-right"></i>{{ 'label.button.activate' | translate }}</button>
+	           </td>
+
+            </tr>
+        </table> -->
+        <table ng-show="sentForExecution" class="table table-condensed ">
+            <tr ng-show="sentForExecution">
+                <th>{{'label.heading.jobssentforexecution' | translate}}
+                    <th>
+            </tr>
+            <tr ng-repeat="jobexecution in sentForExecution">
+                <td><i class="fa fa-check "></i>{{jobexecution}}</td>
+            </tr>
+        </table>
+        <!-- <hr ng-show="sentForExecution" /> -->
+        <!-- <br ng-show="sentForExecution" /> -->
+        <table class="table table-striped jobs-table" >
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-check-inline">
+                            <input type="checkbox" ng-model="activeall" ng-true-value="true" ng-false-value="false" ng-change="selectAll(activeall)">{{'label.selectall' | translate}}
+                        </div>
+                    </th>
+                    <th>{{'table.name' | translate}}</th>
+                    <th>{{'table.nextrun' | translate}}</th>
+                    <th>{{'table.previousrun' | translate}}</th>
+                    <th>{{'table.previousrunstatus' | translate}}</th>
+                    <th>{{'table.currentstatus' | translate}}</th>
+                    <th>{{'table.status' | translate}}</th>
+                    <th>{{'table.active' | translate}}</th>
+                    <th>{{'table.heading.actions' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="pointer-main" ng-repeat="job in jobs | filter:filterText">
+                    <td>
+                        <input type="checkbox" ng-model="active" ng-true-value="true" ng-false-value="false" ng-change="runJobSelected(job, active)">
+                    </td>
+                    <td class="pointer" data-ng-click="routeTo(job.jobId)">{{job.name}}</td>
+                    <td class="pointer" data-ng-click="routeTo(job.jobId)">{{job.nextRunTime}}</td>
+                    <td class="pointer" data-ng-click="routeTo(job.jobId)">{{job.lastRunHistory.jobRunEndTime}}</td>
+                    <td class="pointer" data-ng-click="routeTo(job.jobId)">{{job.lastRunHistory.status}}</td>
+                    <td class="pointer" data-ng-click="routeTo(job.jobId)">{{job.currentlyRunning | YesOrNo}}</td>
+                    <td class="pointer" data-ng-click="routeTo(job.jobId)">{{job.active}}</td>
+                    <!-- <td><input type="checkbox" class="changeStatus" ng-model="job.active" id="changeStatus" ng-change="selectAll(job)"/></td> -->
+                    <td data-ng-show="job.active== true ">
+                        <label class="changeStatus" data-ng-model="job.active" id="changeStatus" data-ng-click="selectAll(job.active=false,job.name,job.cronExpression,job.jobId)"><i class="fa fa-toggle-on" style="font-size: 26px; color: #06a706"></i></label>
+                    </td>
+                    <td data-ng-show="job.active== false ">
+                        <label class="changeStatus" ng-model="job.active" id="changeStatus" data-ng-click="selectAll(job.active=true,job.name,job.cronExpression,job.jobId)"><i class="fa fa-toggle-on fa-rotate-180 inactive" style="font-size: 26px; color: red"></i></label>
+                    </td>
+                    <td>
+                        <ul class="table-icon-list">
+                            <li>
+                                <a has-permission="UPDATE_SCHEDULERJOB" href="#/editschedulerjob/{{job.jobId}}" uib-popover="Edit" popover-trigger="mouseenter"><i class="fa fa-edit"></i></a>
+                            </li>
+                            <li>
+                                <a has-permission="UPDATE_SCHEDULERJOBPARAMETER" ng-show="!(job.displayName == 'REQUESTOR' || job.displayName =='MESSAGING' || job.displayName =='EVENT_ACTIONS' || job.displayName =='AGINGDISTRIBUTION' )" ng-click="editJobParametrsPopUp(job.jobId)" uib-popover="Edit Job Parameter" popover-trigger="mouseenter">
+                                    <i class="fa fa-book"></i></a>
+                            </li>
+                            <li>
+                                <a href="#/viewhistory/{{job.jobId}}" uib-popover="View History" popover-trigger="mouseenter">
+                                    <i class="fa fa-search"></i></a>
+                            </li>
+                        </ul>
+
+                        <!-- <td><a has-permission="UPDATE_SCHEDULERJOBPARAMETER" 
+          				ng-show="!(job.displayName == 'REQUESTOR' || job.displayName =='MESSAGING' || job.displayName =='EVENT_ACTIONS' || job.displayName =='AGINGDISTRIBUTION' )" 
+          					href="#/editjobparameters/{{job.jobId}}" style='color:#000000' uib-popover="Edit Job Parameter" popover-trigger="mouseenter">
+          				<i class="fa fa-book"></i></a></td> -->
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <div class="col-md-offset-4">
+    		        <button class="btn btn-primary" ng-click="runSelectedJobs()">
+    		        	<i class="fa fa-play "></i>{{'label.button.runselectedjobs' | translate}}</button>
+    		        <button class="btn btn-primary" ng-click="refresh()"><i class="fa fa-repeat "></i>{{'label.button.refresh' | translate}}</button>
+    		    </div> -->
+    </div>
+
+    <script type="text/ng-template" id="approve1.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">{{'dialog.invoice.title.job' | translate}}</h3>
+        </div>
+        <div class="modal-body modal-big">
+            <div class="control-group col-sm-4">
+                <div class="col-sm-4">
+                    <label class="control-label" style="color:red;" ng-show="error.length>0">{{error | translate}}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label class="control-label ">{{'label.job.reportname' | translate }}<span class="required">*</span></label>
+                </div>
+                <div class="col-md-8">
+                    <select ng-model="formData.reportName" ng-options="reportData.batchName as reportData.batchName for reportData in reportDatas" value="{{office.id}}"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label class="control-label">{{ 'label.job.messagetemplate' | translate }}<span class="required">*</span></label>
+                </div>
+                <div class="col-md-8">
+                    <select ng-model="formData.messageTemplate" ng-options="billingMessageData.templateDescription as billingMessageData.templateDescription for billingMessageData in billingMessageDatas" value="{{office.id}}">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="reject()">{{'button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="accept(start.date)" ng-disabled="flagapprove1">{{'label.confirm' | translate}}</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="editjobparameters.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">{{'label.editschedulerjobparameters' | translate}}</h3>
+        </div>
+        <div class="modal-body modal-big">
+            <form class="form-horizontal" data-ng-submit="submit()">
+                <api-validate></api-validate>
+                <div class="form-group row" data-ng-show="editJobFormData.name !='Radius Integration' && editJobFormData.name !='Simulator'">
+                    <div class="col-md-4">
+                        <label class="control-label ">{{'label.reportname' | translate }}<span class="required">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                        <select data-ng-model="jobparameters.batchName" class="form-control" data-ng-options="reportData.batchName as reportData.batchName for reportData in reportDatas" data-value="{{office.id}}">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Charging' || editJobFormData.name =='Make PDFs' || editJobFormData.name =='Export Data' || editJobFormData.name =='Reseller Commission'">
+                    <div class="col-md-4">
+                        <label class="control-label" for="processDate">{{'label.processdate' | translate }}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" data-datepicker-pop="dd MMMM yyyy" class="form-control" data-ng-model="date.processDate" data-is-open="opened2" min="minDate" max="'2020-06-22'" data-date-disabled="disabled(date, mode)" />
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='STATEMENT' || editJobFormData.name =='Billing' || editJobFormData.name =='Disconnect Unpaid Customers'">
+                    <div class="col-md-4">
+                        <label class="control-label" for="startDate">{{'label.duedate' | translate }}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" data-datepicker-pop="dd MMMM yyyy" class="form-control" data-ng-model="date.dueDate" data-is-open="opened2" min="minDate" max="'2020-06-22'" data-date-disabled="disabled(date, mode)" />
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Make PDFs'">
+                    <div class="col-md-4">
+                        <label class="control-label" for="promotionalMessage">{{'label.promotionalmessage' | translate}}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <textarea rows="2" cols="2" class="form-control" data-ng-model="editJobFormData.promotionalMessage"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Merge Messages'">
+                    <div class="col-md-4">
+                        <label class="control-label">{{ 'label.messagetemplate' | translate }}<span class="required">*</span> </label>
+                    </div>
+                    <div class="col-md-8">
+                        <select data-ng-model="jobparameters.messageTemplate" class="form-control" data-ng-options="billingMessageData.templateDescription as billingMessageData.templateDescription for billingMessageData in billingMessageDatas" data-value="{{office.id}}">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Auto Exipiry'">
+                    <div class="col-md-4">
+                        <label class="control-label" for="startDate">{{'label.exipirydate' | translate }}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" data-datepicker-pop="dd MMMM yyyy" class="form-control" data-ng-model="date.exipiryDate" data-is-open="opened2" min="minDate" max="'2020-06-22'" data-date-disabled="disabled(date, mode)" />
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Send Report'">
+                    <div class="col-md-4">
+                        <label class="control-label">{{ 'label.emailid' | translate }}<span class="required">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" data-ng-model="jobparameters.emailId">
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Radius Integration'">
+                    <div class="col-md-4">
+                        <label class="control-label">{{ 'label.provsystem' | translate }}<span class="required">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                        <select data-ng-model="jobparameters.provSystem" class="form-control" ng-options="provisionSystemData.billruleOptions as provisionSystemData.billruleOptions for provisionSystemData in provisionSysData" value="{{provisionSystemData.mCodeValue}}">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Radius Integration'">
+                    <div class="col-md-4">
+                        <label class="control-label ">{{ 'label.url' | translate }}<span class="required">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" data-ng-model="jobparameters.url">
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Radius Integration'">
+                    <div class="col-md-4">
+                        <label class="control-label">{{ 'label.username' | translate }}<span class="required">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" data-ng-model="jobparameters.username">
+                    </div>
+                </div>
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Radius Integration'">
+                    <div class="col-md-4">
+                        <label class="control-label">{{ 'label.password' | translate }}<span class="required">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" data-ng-model="jobparameters.password">
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Simulator'">
+                    <div class="col-md-4">
+                        <label class="control-label">{{ 'label.updatestatus' | translate }}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="checkbox">
+                            <input type="checkbox" data-ng-model="editJobFormData.isUpdateStatus">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Simulator'">
+                    <div class="col-md-4">
+                        <label class="control-label ">{{ 'label.createticket' | translate }}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="checkbox">
+                            <input type="checkbox" data-ng-model="editJobFormData.isCreateTicket"> </label>
+                    </div>
+                </div>
+
+                <div class="form-group row" data-ng-hide="editJobFormData.name =='Simulator'">
+                    <div class="col-md-4">
+                        <label class="control-label " for="isDynamic">{{'label.isdynamic' | translate }}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="checkbox">
+                            <input type="checkbox" data-ng-model="editJobFormData.isDynamic">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Auto Exipiry'">
+                    <div class="col-md-4">
+                        <label class="control-label " for="isDynamic">{{'label.isautorenewal' | translate }}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="checkbox">
+                            <input type="checkbox" data-ng-model="editJobFormData.isAutoRenewal">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row" data-ng-show="editJobFormData.name =='Auto Exipiry'">
+                    <div class="col-md-4">
+                        <label class="control-label ">{{ 'label.addon.exipiry' | translate }}</label>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="checkbox">
+                            <input type="checkbox" data-ng-model="editJobFormData.addonExipiry">
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="reject()">{{'button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="editjobaccept()">{{'label.confirm' | translate}}</button>
+        </div>
+    </script>
+</div>

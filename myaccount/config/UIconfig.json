@@ -1,0 +1,7 @@
+{
+	"login":{
+		"socialLogin":true,
+		"secondaryLogin":true,
+		"signUp":"phone"
+	}
+}

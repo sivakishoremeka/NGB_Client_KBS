@@ -1,0 +1,158 @@
+<div class="content-container" ng-controller="CreateBroadCasterController">
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+            <span class="divider"></span>
+        </li>
+        <li>
+            <a href="#/broadcasterchannelmapping">{{'label.broadcasterChannelMapping' | translate}}</a>
+            <span class="divider"></span>
+        </li>
+        <li class="active">{{'label.createbroadcaster' | translate}}</li>
+    </ul>
+    <div class="widget">
+        <h3>{{'label.heading.createbroadcaster' | translate}}</h3>
+
+        <form name="createbroadcaster" novalidate="" class="form-horizontal" rc-submit="submit()">
+            <api-validate></api-validate>
+            <div class="error" data-ng-show="errorStatus || errorDetails">
+                <label data-ng-show="errorStatus">{{errorStatus}}</label>
+                <label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">
+                    {{error.code | translate}}</label>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="broadcasterCode">{{ 'label.broadcastercode' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="broadcasterCode" name="broadcasterCode" data-ng-model="formData.broadcasterCode" class="form-control">
+                            
+                            <span data-ng-show="createbroadcasterform.broadcasterCode.$invalid">
+            				    	 <small class="error" data-ng-show="createbroadcasterform.broadcasterCode.$error.req">
+                                  		{{'label.required.field' | translate}}
+                                  	 </small>
+            				    </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="broadcasterName">{{ 'label.broadcastername' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="broadcasterName" name="broadcasterName" data-ng-model="formData.broadcasterName" class="form-control" required data-ng-minlength=3 data-late-Validate/>
+                            <span data-ng-show="createbroadcasterform.broadcasterName.$invalid">
+	                            	<small class="error" data-ng-show="createbroadcasterform.broadcasterName.$error.req">{{'label.required.field' | translate}}</small>
+	                                <small class="error" data-ng-show="createbroadcasterform.broadcasterName.$error.minlength && !createbroadcasterform.broadcasterName.$error.req">Name is required at least 3 characters</small>
+	                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="address">{{ 'label.address' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="address" name="address" data-ng-model="formData.address" class="form-control" required data-late-Validate/>
+                            <div data-ng-show="createbroadcasterform.address.$invalid">
+                                <small class="error" data-ng-show="createbroadcasterform.address.$error.req">
+                                     	   {{'label.required.field' | translate}}
+                                    </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="pin">{{ 'label.pin' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="pin" name="pin" data-ng-model="formData.pin" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="contactName">{{ 'label.contactname' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="contactName" name="contactName" data-ng-model="formData.contactName" class="form-control" required data-ng-minlength=3 data-late-Validate/>
+                            <span data-ng-show="createbroadcasterform.contactName.$invalid">
+		                        	<small class="error" data-ng-show="createbroadcasterform.contactName.$error.req">
+		                                  {{'label.required.field' | translate}}
+		                            </small>
+		                            <small class="error" data-ng-show="createbroadcasterform.contactName.$error.minlength && !createbroadcasterform.contactName.$error.req">Contact Name is required at least 3 characters</small>
+		                       </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="contactMobile">{{ 'label.contactmobile' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="contactMobile" name="contactMobile" data-ng-model="formData.contactMobile" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/" name="phone" maxlength="15" class="form-control" required data-late-Validate/>
+                            <div data-ng-show="createbroadcasterform.contactMobile.$dirty && createbroadcasterform.contactMobile.$invalid">
+                                <small class="error" data-ng-show="createbroadcasterform.contactMobile.$error.pattern">{{'label.broadcaster.error.mobileno' | translate}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="email">{{ 'label.email' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="email" name="email" data-ng-model="formData.email" data-ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" class="form-control" required />
+                            <div data-ng-show="createbroadcasterform.email.$dirty && createbroadcasterform.email.$invalid">
+                                <small class="error" data-ng-show="createbroadcasterform.email.$error.pattern">{{'label.broadcaster.error.email' | translate}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="contactNumber">{{ 'label.contactnumber' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="contactNumber" name="contactNumber" data-ng-model="formData.contactNumber" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/" name="phone" maxlength="15" class="form-control" required data-late-Validate/>
+                            <div data-ng-show="createbroadcasterform.contactNumber.$dirty && createbroadcasterform.contactNumber.$invalid">
+                                <small class="error" data-ng-show="createbroadcasterform.contactNumber.$error.pattern">{{'label.broadcaster.error.mobileno' | translate}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/broadcasterchannelmapping">
+                        <button id="cancel" type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel'| translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+                </li>
+
+            </ul>
+        </form>
+    </div>
+</div>

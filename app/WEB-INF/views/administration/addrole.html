@@ -1,0 +1,53 @@
+<div class="content-container" ng-controller="CreateRoleController">
+    <ul class="breadcrumb">
+        <li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+        <li><a href="#/admin/roles">{{'label.anchor.viewroles' | translate}}</a></li>
+        <li class="active">{{'label.anchor.addrole' | translate}}</li>
+    </ul>
+    <div class="widget">
+        <form name="addroleform" novalidate="" class="card form-horizontal well " rc-submit="submit()">
+        <api-validate></api-validate>
+        
+        <!-- <legend>{{'label.heading.addrole' | translate}}</legend> -->
+        <h3>Add Role</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label class="control-label" for="name">{{'label.input.name' | translate}}<span
+                        class="required">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                        <input id="name" type="text" name="name" ng-model="formData.name" class="form-control" required late-Validate/>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="addroleform" valattribute="name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" name="" for="description">{{'label.input.description' | translate}}<span
+                            class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea id="description" type="text" rows="2" name="description" ng-model="formData.description"
+                            class="form-control" required late-Validate></textarea>
+                        </div>
+                        <div class="col-sm-3">
+                            <form-validate valattributeform="addroleform" valattribute="description"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="btn-group-list text-right mt20 mb20">
+                    <li><a href="#/admin/roles" ><button id="cancel" class="btn btn-warning">{{'label.button.cancel' | translate}}</button></a></li>
+                    <li><button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_ROLE'>{{'label.button.save' | translate}}</button></li>
+                </ul>
+                
+            </form>
+        </div>
+    </div>

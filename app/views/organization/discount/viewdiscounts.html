@@ -1,0 +1,96 @@
+<div class="content-container" ng-controller="ViewDiscountsController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+	    	<span class="divider"></span>
+	    </li>
+		<li>
+			<a href="#/discounts">{{'label.managediscounts' | translate}}</a> 
+			<span class="divider"></span>
+		</li>
+		<li class="active">{{'label.viewdiscount' | translate}}</li>
+	</ul>
+	<div class="widget">
+		<h3>{{plan.viewdiscount}}</h3>
+				 <ul class="btn-group-list text-right mb20">
+				   	<li>
+				   		<a has-permission = UPDATE_DISCOUNT href="#/editdiscounts/{{discounting.id}}"
+						   class="btn primary_btn"><i class="fa fa-edit"></i>{{'button.edit' | translate}}</a>
+				   	</li>
+				   	<li>
+				   		<a has-permission = DELETE_DISCOUNT data-ng-click="deleteDiscount()" class="btn primary_btn"><i
+						   class="fa fa-trash-o"></i> {{'button.delete' | translate}}</a>
+				   	</li>
+				   </ul>
+					<h4>{{discounting.discountCode}}</h4>	
+					<div class="table-responsive">
+						<table class="table table-bordered table-striped">
+							<tr>
+								<td>{{ 'label.discountCode' | translate }}</td>
+								<td>{{discounting.discountCode}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.discountType' | translate }}</td>
+								<td>{{discounting.discountType}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.discountDescription' | translate }}</td>
+								<td>{{discounting.discountDescription}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.discountRate' | translate }}</td>
+								<td>{{discounting.discountRate}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.startDate' | translate }}</td>
+								<td>{{discounting.discountStartDate|DateFormat}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.status' | translate }}</td>
+								<td>{{discounting.discountStatus}}</td>
+							</tr>
+						</table>
+					</div>
+
+				 <h4>List of Discounts</h4>
+				 <div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr class="graybg">
+								<th>{{ 'table.heading.id' | translate }}</th>
+								<th>{{'table.heading.customerCategory' | translate }}</th>
+								<th>{{'label.discountrate' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="discountDetailData in discountDetailDatas">
+								<td>{{discountDetailData.id}}</td>
+								<td>{{discountDetailData.categoryType}}</td>
+								<td>{{discountDetailData.discountRate}}</td>
+							</tr>
+						</tbody>
+					</table>
+			</div>
+		</div>
+	</div>
+	<script type="text/ng-template" id="deletePopupForDiscount.html">
+    	<div class="modal-header silver">
+        	<h3 class="bolder">Delete Discount</h3>
+        </div>
+
+        <div class="modal-body">
+            <h4 class="text-center">Are you sure?</h4>
+        </div>
+
+        <div class="modal-footer">
+        	<ul class="btn-group-list text-right">
+				   	<li>
+				   		<button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+				   	</li>
+				   	<li>
+				   		<button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+				   	</li>
+				 </ul>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,216 @@
+<div class="content-container" ng-controller="RatingController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' |
+				translate}}</a></li>
+		<li class="active">{{'label.rating' | translate}}</li>
+	</ul>
+
+	<div class="widget mb30">
+		<div class="row align-items-center">
+			<div class="col-md-3">
+				<input ng-autofocus="true" style="margin: -8px -4px;"
+					ng-model="filterText" type="text" ng-keyup="onFilter()"
+					class="form-control"
+					placeholder="{{'label.input.filterbyname' | translate}}">
+			</div>
+		</div>
+	</div>
+	<div class="widget">
+		<uib-tabset tabset-name="templatedefinitionTabset"
+			style="margin:-8px;"> <uib-tab
+			heading="{{'label.heading.templatedefinition' | translate}}"
+			select="templateDefinition()"> <br>
+		<ul class="btn-group-list text-right mb20 ng-scope">
+			<li><a has-permission=CREATE_TEMPLATEDEFINITION
+				style="margin: -38px 14px;" href="#/templatedefinition"
+				class="btn primary_btn pull-right"><i class="fa fa-plus"></i> {{
+					'link.create.new.templatedefinition' | translate }}</a></li>
+		</ul>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr class="graybg">
+						<th>{{ 'label.templatename' | translate }}</th>
+						<th>{{ 'label.delimiter' | translate }}</th>
+						<!--  <th>{{ 'label.fixedlength' | translate }}</th> -->
+						<th>{{ 'label.numberOfFields' | translate }}</th>
+						<th>{{ 'label.headerrecordertype' | translate }}</th>
+						<th>{{ 'label.eventRecordType' | translate }}</th>
+						<th>{{ 'label.actions' | translate }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="pointer-main"
+						data-ng-repeat="templatedf  in templatedfs.currentPageItems | filter:filterText"
+						select="getAllticketteam()">
+						<td class="pointer"
+							data-ng-click="routeTotemplatedf(templatedf.templateId)">{{templatedf.templateName}}</td>
+						<td class="pointer"
+							data-ng-click="routeTotemplatedf(templatedf.templateId)">{{templatedf.delimiter}}</td>
+						<td class="pointer"
+							data-ng-click="routeTotemplatedf(templatedf.templateId)">{{templatedf.numberOfFields}}</td>
+						<td class="pointer"
+							data-ng-click="routeTotemplatedf(templatedf.templateId)">{{templatedf.headerecordtype}}</td>
+						<td class="pointer"
+							data-ng-click="routeTotemplatedf(templatedf.templateId)">{{templatedf.eventrecordtype}}</td>
+
+						<td class="pointer"><a has-permission=UPDATE_TEMPLATE
+							href="#/edittemplate/{{templatedf.templateId}}"
+							uib-popover="Edit Template" data-popover-trigger="mouseenter"
+							class="fa fa-edit"></a>&nbsp; <!-- <a has-permission = DELETE_TICKETTEAM data-ng-click="deleteTicketteam(ticketteam.id)"
+						                uib-popover="Delete Ticketteam" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a> --></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</uib-tab> <uib-tab heading="{{'label.heading.uom' | translate}}" select="uom()">
+		<br>
+		<ul class="btn-group-list text-right mb20 ng-scope">
+			<li><a has-permission=CREATE_UOM style="margin: -38px 14px;"
+				href="#/createuom" class="btn primary_btn pull-right"><i
+					class="fa fa-plus"></i> {{ 'link.create.new.uom' | translate }}</a></li>
+		</ul>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr class="graybg">
+
+						<th>{{ 'label.id' | translate }}</th>
+						<th>{{ 'label.name' | translate }}</th>
+						<th>{{ 'label.description' | translate }}</th>
+						<th>{{ 'label.action' | translate }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="pointer-main"
+						data-ng-repeat="uom in uoms.currentPageItems | filter:filterText ">
+						<td class="pointer" data-ng-click="routeTouom(uom.id)">{{uom.id}}</td>
+						<td class="pointer" data-ng-click="routeTouom(uom.id)">{{uom.Name}}</td>
+						<td class="pointer" data-ng-click="routeTouom(uom.id)">{{uom.Description}}</td>
+
+
+						<td class="pointer"><a has-permission=UPDATE_TICKETMAPPING
+							href="#/edituom/{{uom.id}}" uib-popover="Edit UOM"
+							data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp; <!-- <a has-permission = DELETE_TICKETMAPPING data-ng-click="deleteticketmapping(ticketMapping.teamId)"
+						                uib-popover="Delete TicketMapping" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a> --></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</uib-tab> <uib-tab heading="{{'label.heading.rum' | translate}}" select="rum()">
+		<br>
+		<ul class="btn-group-list text-right mb20 ng-scope">
+			<li><a has-permission=CREATE_RUM style="margin: -38px 14px;"
+				href="#/createrum" class="btn primary_btn pull-right"><i
+					class="fa fa-plus"></i> {{ 'link.create.new.rum' | translate }}</a></li>
+		</ul>
+		<div class="table-responsive">
+			<table class="table table-striped" style="width: 99%; margin: 0 8px;">
+				<thead>
+					<tr class="graybg">
+
+						<th>{{ 'label.id' | translate }}</th>
+						<th>{{ 'label.chargeName' | translate }}</th>
+						<th>{{ 'label.templateName' | translate }}</th>
+						<th>{{ 'label.rumname' | translate }}</th>
+						<th>{{ 'label.rumexpression' | translate }}</th>
+						<th>{{ 'label.action' | translate }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="pointer-main"
+						data-ng-repeat="rum in rums.currentPageItems | filter:filterText ">
+						<td class="pointer" data-ng-click="routeTorum(rum.id)">{{rum.id}}</td>
+						<td class="pointer" data-ng-click="routeTorum(rum.id)">{{rum.chargeName}}</td>
+						<td class="pointer" data-ng-click="routeTorum(rum.id)">{{rum.templateName}}</td>
+						<td class="pointer" data-ng-click="routeTorum(rum.id)">{{rum.rumName}}</td>
+						<td class="pointer" data-ng-click="routeTorum(rum.id)">{{rum.rumExpression}}</td>
+
+
+						<td class="pointer"><a has-permission=UPDATE_TICKETMAPPING
+							href="#/editrum/{{rum.id}}" uib-popover="Edit RUM"
+							data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp; <!-- <a has-permission = DELETE_TICKETMAPPING data-ng-click="deleteticketmapping(ticketMapping.teamId)"
+						                uib-popover="Delete TicketMapping" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a> --></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</uib-tab> <uib-tab heading="{{'label.heading.timeperiod' | translate}}"
+			select="timemodel()"> <br>
+
+		<ul class="btn-group-list text-right mb20 ng-scope">
+			<li><a has-permission=CREATE_TIMEPERIOD
+				style="margin: -38px 14px;" href="#/createtimeperiod"
+				class="btn primary_btn pull-right"><i class="fa fa-plus"></i> {{
+					'link.create.new.timeperiod' | translate }}</a></li>
+		</ul>
+		<div class="table-responsive">
+			<table class="table table-striped" style="width: 99%; margin: 0 8px;">
+				<thead>
+					<tr class="graybg">
+
+						<!--  <th>{{ 'label.id' | translate }}</th> -->
+						<th>{{ 'label.timemodelName' | translate }}</th>
+						<th>{{ 'label.timeperiodName' | translate }}</th>
+						<th>{{ 'label.startyear' | translate }}</th>
+						<th>{{ 'label.endyear' | translate }}</th>
+						<!-- <th>{{ 'label.startmonth' | translate }}</th>
+					                <th>{{ 'label.endmonth' | translate }}</th>
+					                <th>{{ 'label.startday' | translate }}</th>
+					                 <th>{{ 'label.endday' | translate }}</th> -->
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="pointer-main"
+						data-ng-repeat="timemodel in availableTimePeriodes.pageItems | filter:filterText ">
+						<!-- <td class="pointer"  data-ng-click="routeTotimeperiod(timeperiod.id)">{{timeperiod.id}}</td> -->
+						<td class="pointer" data-ng-click="routeTotimemodel(timemodel.id)">{{timemodel.timeModelName}}</td>
+						<td class="pointer" data-ng-click="routeTotimemodel(timemodel.id)">{{timemodel.timeperiodName}}</td>
+						<td class="pointer" data-ng-click="routeTotimemodel(timemodel.id)">{{timemodel.startYear}}</td>
+						<td class="pointer" data-ng-click="routeTotimemodel(timemodel.id)">{{timemodel.endYear}}</td>
+
+						<!-- <td class="pointer">
+					                 <a has-permission = UPDATE_TICKETMAPPING href="#/editrum/{{rum.id}}"
+					                    uib-popover="Edit RUM" data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;
+						             <a has-permission = DELETE_TICKETMAPPING data-ng-click="deleteticketmapping(ticketMapping.teamId)"
+						                uib-popover="Delete TicketMapping" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a></td>          -->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</uib-tab> <uib-tab heading="{{'label.heading.usagerateplan' | translate}}"
+			select="rateplan()"> <br>
+		<ul class="btn-group-list text-right mb20 ng-scope">
+			<li><a has-permission=CREATE_USAGERATEPLAN
+				style="margin: -38px 14px;" href="#/createusagerateplan"
+				class="btn primary_btn pull-right"><i class="fa fa-plus"></i> {{
+					'link.create.new.usagerateplan' | translate }}</a></li>
+		</ul>
+		<div class="table-responsive">
+			<table class="table table-striped" style="width: 99%; margin: 0 8px;">
+				<thead>
+					<tr class="graybg">
+
+						<th>{{ 'label.id' | translate }}</th>
+						<th>{{ 'label.timemodelName' | translate }}</th>
+						<th>{{ 'label.RatingType ' | translate }}</th>
+						<th>{{ 'label.rumName ' | translate }}</th>
+						<th>{{ 'table.heading.actions' | translate }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="pointer-main"
+						data-ng-repeat="rateplan in rateplans.currentPageItems | filter:filterText ">
+						<td class="pointer" data-ng-click="routeTorateplan(rateplan.id)">{{rateplan.id}}</td>
+						<td class="pointer" data-ng-click="routeTorateplan(rateplan.id)">{{rateplan.timeModelName}}</td>
+						<td class="pointer" data-ng-click="routeTorateplan(rateplan.id)">{{rateplan.ratingType}}</td>
+						<td class="pointer" data-ng-click="routeTorateplan(rateplan.id)">{{rateplan.rumName}}</td>
+						<td><a has-permission = "CREATE_RATEBALANCE" href="#/createratebalance/{{rateplan.id}}" uib-popover="Details" title="Details"
+                       data-popover-trigger="mouseenter" class="fa fa-plus-circle"></a>&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</uib-tab> </uib-tabset>
+	</div>
+</div>

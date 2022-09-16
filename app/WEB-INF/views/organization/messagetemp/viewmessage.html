@@ -1,0 +1,77 @@
+<div class="content-container" ng-controller="ViewMessageController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/organization">{{'link.admin.masters' | translate}}</a> 
+			<span class="divider"></span>
+		</li>
+		<li>
+			<a href="#/message">{{'label.managemessage' | translate}}</a> 
+			<span class="divider"></span>
+		</li>
+		<li class="active">{{'label.viewmessage' | translate}}</li>
+	</ul>
+	<div class="widget">
+      <h3>{{plan.ViewPlan}}</h3>
+				<ul class="btn-group-list text-right  mb20">
+	                <li>
+	                   	<a has-permission = UPDATE_BILLINGMESSAGE href="#/editmessage/{{messaging.id}}" class="btn primary_btn"><i class="fa fa-edit"></i> Edit</a>	 
+	                </li>
+                <li>
+                 	<a has-permission = DELETE_BILLINGMESSAGE data-ng-click="deletemessage()" class="btn primary_btn"><i class="fa fa-trash-o"></i> Delete</a>
+                </li>
+            </ul>
+
+		<h4>Message</h4>
+		<div class="table-responsive">
+			   		<table  class="table table-bordered table-striped" >                     
+                        <tr>
+	                        <td>{{'label.message.id' | translate}}</td>
+	                        <td>{{messaging.id}}</td>
+                        </tr>
+                        <tr>
+	                        <td>{{'label.message.templateDescription' | translate}}</td>
+	                        <td>{{messaging.templateDescription}}</td>
+                        </tr>
+                        <tr>
+	                        <td>{{ 'label.message.subject' | translate }}</td>
+	                        <td>{{messaging.subject}}</td>
+                        </tr>
+                        <tr>
+	                        <td>{{ 'label.message.messageType' | translate }}</td>
+	                        <td>{{messaging.messageType}}</td>
+                        </tr>
+                        <tr>
+	                        <td>{{'label.message.header' | translate}}</td>
+	                        <td>{{messaging.header}}</td>
+                        </tr>
+                        <tr>
+	                        <td>{{ 'label.message.body' | translate }}</td>
+	                        <td>{{messaging.body}}</td>
+                        </tr>                          
+                        <tr>
+	                        <td>{{ 'label.message.footer' | translate }}</td>
+	                        <td>{{messaging.footer}}</td>
+                        </tr>                                                                                                 
+                    </table>
+			     </div>
+			  </div>
+		</div>
+	<script type="text/ng-template" id="messagetemplate.html">
+    	<div class="modal-header silver">
+    		<h3 class="bolder">Delete</h3>
+    	</div>
+    	<div class="modal-body style="height:60px;">
+    		<h4>Are you sure?</h4>
+    	</div>
+    	<div class="modal-footer">
+    		<ul class="btn-group-list text-right">
+                <li>
+                   <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                </li>
+                <li>
+                  <button class="btn btn-primary" ng-click="messagetemplate()">{{'label.confirm' | translate}}</button>
+                </li>
+            </ul>
+    	</div>
+    </script>
+</div>

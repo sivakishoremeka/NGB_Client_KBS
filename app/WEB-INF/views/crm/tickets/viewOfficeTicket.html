@@ -1,0 +1,143 @@
+<div class="content-container" ng-controller="ViewOfficeTicketController">
+    <ul class="breadcrumb">
+		<li><a href="#/offices">{{'label.Entity' | translate}}</a></li>
+		<li><a ng-click="reset123()">{{'viewoffice' | translate}}</a></li>
+		<li class="active">{{'label.viewofficeticket' | translate}}</li>
+	</ul>
+
+    <div class="card">
+        <div class="content">
+        	<div class="toolbar">
+        		<h4>{{employee.displayName}}</h4>
+        		<div class="pull-right">
+        		    <div class="btn-group">
+        		       <!--  <a  href="#/editTicket/{{clientId}}/{{ticket.id}}" ng-show="(ticket.status == 'OPEN')" has-permission="UPDATE_TICKET"  
+        		        	class="btn btn-primary"><i class="fa fa-edit"></i>Add Comment</a>
+	          			<a href="#/closeTicket/{{clientId}}/{{ticket.id}}" ng-show="(ticket.status == 'OPEN')" has-permission="CLOSE_TICKET" 
+	          				class="btn btn-primary"><i class="fa fa-trash"></i> Close</a> --> 
+	          				<span ng-show="(status != 'CLOSED')">
+	          				<a has-permission = UPDATE_OFFICETICKET data-ng-click="editOfficeTicket()"  class="btn primary_btn"><i class="fa fa-trash-o"></i> EditOfficeTicket</a>
+	          				<!-- <a has-permission = CLOSE_OFFICETICKET data-ng-click="closeOfficeTicket()"  class="btn btn-primary"><i class="fa fa-trash-o"></i> CloseOfficeTicket</a> -->
+        		    		</span>
+        		    </div>
+        		</div>
+        	</div>
+      			<div class="row">
+      				<div class="col-md-12">
+      			        <!-- <table class="table table-bordered table-striped">
+             				<tr>
+                 					<td>{{ 'label.id' | translate}}</td>
+                 					<td>{{ticket.id}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.priority' | translate}}</td>
+                 					<td>{{ticket.priority}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.status' | translate }}</td>
+                 					<td>{{ticket.status}}</td>
+               				</tr>
+               				
+             				<tr>
+                 					<td>{{ 'label.ticketdate' | translate }}</td>
+                 					<td>{{ticket.ticketDate | DateFormat}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.lastComment' | translate }}</td>
+                 					<td>{{ticket.lastComment}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.problemdescription' | translate}}</td>
+                 					<td>{{ticket.problemDescription}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.team' | translate }}</td>
+                 					<td>{{ticket.teamCode}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.teamuser' | translate }}</td>
+                 					<td>{{ticket.assignedTo}}</td>
+               				</tr>
+               				
+               				<tr>
+               				       <td>{{ 'label.subcategory' | translate }}</td>
+                 					<td>{{ticket.subCategorys}}</td>
+                 			</tr>
+                 			<tr>
+               				       <td>{{ 'label.Commentdate' | translate }}</td>
+                 					<td>{{ticket.Comment_date}}</td>
+                 			</tr>
+               				
+                        	</table> -->
+      				
+      				
+      		
+
+	   	<!-- <h3>&nbsp;&nbsp;&nbsp;List of Team and Team users</h3> -->
+
+			<table class="table table-striped">
+				<thead>
+					<tr class="graybg">
+					    <th>{{ 'label.ticketNumber' | translate}}</th>
+						<th>{{ 'label.id' | translate }}</th>
+						<th>{{'label.priority' | translate }}</th>
+						<th>{{'label.status' | translate}}</th>
+						<th>{{ 'label.title' | translate}}</th>
+						<th>{{'label.ticketdate' | translate}}</th>
+						<th>{{'label.lastcomment' | translate}}</th>
+						<th>{{'label.problemdescription' | translate}}</th>
+						<th>{{'label.subcategory' | translate}}</th>
+						<th>{{'label.Commentdate' | translate}}</th>
+						<th>{{ 'label.FileName' | translate }}</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>{{officeTickets.ticketNumber}}</td>
+					<td>{{officeTickets.id}}</td>
+					<td>{{officeTickets.priority}}</td>
+					<td>{{officeTickets.status}}</td>
+					<td>{{officeTickets.title}}</td>
+					<td>{{officeTickets.ticketDate | DateFormat}}</td>
+					<td>{{officeTickets.lastComment}}</td>
+					<td>{{officeTickets.problemDescription}}</td>
+					<td>{{officeTickets.subCategoryStatus}}</td>
+					<td>{{officeTickets.Comment_date | DateFormat}}</td>
+					<td>{{officeTickets.fileName}}</td>
+					</tr>
+				</tbody>
+			</table> 
+			</div>
+       </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="CloseTicket.html">
+	<div class="modal-header silver">
+    			<h4>{{'label.closeticket' | translate}}</h4>
+    		</div>
+    		<br>
+		<div class="modal-body" >
+		<form class="form-horizontal" ng-submit="submit()">
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="status"> {{'label.status' | translate }} </label>
+						<div class="col-sm-4">
+							<select ng-model="formData.status" class="form-control"
+								ng-options="statusData.id as statusData.mCodeValue for statusData in statusDatas"
+								value="{{statusData.id}}"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="description"> {{'label.resolutiondescription' | translate }}</label>
+						<div class="col-sm-4">
+							    <textarea class="form-control" ng-model="formData.resolutionDescription"></textarea>
+						</div>
+					</div>
+					<div class="col-md-offset3-3">
+						<button type="reset" class="btn btn-warning" ng-click="reset123()">Cancel</button></a>
+						<button id="submit" class="btn btn-primary" ng-click="closeTicket()">Save</button>
+					</div>
+		</form>
+		</div>
+	</div>
+</script>
+</div>      

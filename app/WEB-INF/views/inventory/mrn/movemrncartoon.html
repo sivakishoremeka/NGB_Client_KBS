@@ -1,0 +1,71 @@
+ <div class="content-container" ng-controller="MoveMrnCartoonController">
+    <ul class="breadcrumb">
+      <li><a href="#/inventory" ng-click="reset123()">{{'link.admin.inventory' | translate}}</a></li>
+      <li><a href="#/stocktransfer">{{'link.stocktransfer' | translate}}</a></li>
+      <li class="active">{{'label.create.move.mrn' | translate}}</li>
+    </ul>
+      <div class="widget ">
+        <h3>{{'label.heading.movemrncartoon' | translate}}</h3>
+    			 
+	      <form class="form-horizontal">
+	       	<api-validate></api-validate>
+	       	 	<div class="row">
+	       	 		<div class="col-md-6">
+	       	 			<div class="form-group row">
+	       	 				<div class="col-md-4">
+	       	 					<label class="control-label " for="mrnId">{{'label.type' | translate}}&nbsp;<span 
+	   								class="required">*</span></label>
+	       	 				</div>
+	       	 				<div class="col-md-8">
+	       	 					<select id="mrnId" ng-model="formData.type" class="form-control">
+					    	  		<option value="">--select id--</option>
+					    	  		<option>mrn</option>
+					    	  	</select>
+	       	 				</div>
+	       	 			</div>
+	       	 		</div>
+	       	 		<div class="col-md-6">
+	       	 		  <div class="form-group" ng-show="formData.type=='mrn'">
+	       	 			<div class="form-group row">
+	       	 				<div class="col-md-4">
+	       	 					<label class="control-label " for="mrnId">{{'label.mrn.id' | translate }}&nbsp;<span 
+		           						class="required">*</span></label>
+	       	 				</div>
+	       	 				<div class="col-md-8">
+	       	 					<select id="mrnId" ng-model="formData.mrnId" class="form-control" ng-options="mrnId.mrnId as getBoth(mrnId.mrnId,mrnId.itemDescription) for mrnId in mrnIds" value="{{mrnId.mrnId}}" ng-change="getCartoonNumbers(formData.mrnId)">
+	       	 					 <option value="">{{'label.select.one' | translate}}</option>
+										</select>&nbsp;&nbsp;&nbsp;<span ng-show="serialNumbers.length < 1"><i 
+											class="fa fa-exclamation-triangle"></i>Serial numbers are not associated with this Mrn Id.</span>
+	       	 				</div>
+	       	 			</div>
+	       	 		 </div>
+	       	 	  </div>
+	       	 	</div>
+
+	       	 	<div class="row">
+	       	 		<div class="col-md-6">
+	       	 		 <div class="form-group" ng-show="formData.type=='mrn'">
+	       	 			<div class="form-group row">
+	       	 				<div class="col-md-4">
+	       	 					<label class="control-label " for="cartoonNumber">{{'label.CartoonNumber' | translate }}&nbsp;<span 
+	            						class="required">*</span></label>
+	       	 				</div>
+	       	 				<div class="col-md-8">
+	       	 					<input type="text" class="form-control" name="cartoonNumber" ng-model="formData.cartoonNumber">
+	       	 				</div>
+	       	 			</div>
+	       	 		</div>
+	       	 	</div>
+	       	 </div>
+
+	       	 <ul class="btn-group-list text-right mt20 mb20">
+	       	 	<li>
+	       	 		<a href="#/stocktransfer"><button id="cancel"  type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel' | translate}}</button></a>
+	       	 	</li>
+	       	 	<li>
+	       	 		<button  id="submit" ng-click="mrncartoonSubmit()" class="btn btn-primary">{{'label.save' | translate}}</button>
+	       	 	</li>
+	       	 </ul> 		
+	   </form>
+     </div>
+  </div>

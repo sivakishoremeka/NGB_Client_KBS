@@ -1,0 +1,125 @@
+<div class="content-container" ng-controller="CreateEventActionMappingController">
+	<ul class="breadcrumb">
+		<!-- <li><a href="#/system">{{'link.admin.system' | translate}}</a></li> -->
+		<!-- <li><a href="#/eventaction">{{'label.serviceMapping' | translate}}</a></li> -->
+		<li><a href="#/global">{{'label.global' | translate}}</a></li>
+		<li class="active">{{'label.create.new.EventMapping' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+		
+		<h3>{{'label.heading.createeventactionmapping' | translate}}</h3>
+		
+		
+		<form name="createeventactionmapping" novalidate=""  class="form-horizontal" rc-submit="submit()">
+		<api-validate></api-validate>
+		<div class="error" data-ng-show="errorStatus || errorDetails">
+			<label data-ng-show="errorStatus">{{errorStatus}}</label>
+			<label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="event">{{'table.eventactionmapping.event' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<select id="event" data-ng-model="formData.event" class="form-control" data-ng-options="ad.mCodeValue as ad.mCodeValue for ad in eventDatas">
+							<option value="">{{'label.select.one' | translate}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+				
+				<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+					<label class="control-label" for="action">{{'table.eventactionmapping.action' | translate }}</label>
+				</div>
+					<div class="col-md-8">
+						<select id="action" data-ng-model="formData.action" class="form-control" data-ng-options="ed.mCodeValue as ed.mCodeValue for ed in actionDatas">
+							<option value="">{{'label.select.one' | translate}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+				<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+					<label class="control-label" for="process">{{'table.eventactionmapping.process' | translate }}</label>
+				</div>
+					<div class="col-md-8">
+						<input type="text" id="process" data-ng-model="formData.process" class="form-control" data-ng-init="formData.process='workflow_events'">
+					</div>
+				</div>
+			</div>
+				
+				<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+					<label class="control-label" for="orderBy">{{'table.eventactionmapping.orderby' | translate }}</label>
+				</div>
+					<div class="col-md-8">
+						<select id="orderBy" data-ng-model="formData.orderBy" class="form-control" data-ng-options="orderByValue.value as orderByValue.value for orderByValue in orderbys">
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+				<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+					<label class="control-label" for="prePost">{{'table.eventactionmapping.prepost' | translate }}</label>
+				</div>
+					<div class="col-md-8">
+						<select id="prePost" data-ng-model="formData.prePost" class="form-control" data-ng-options="prepost.value as prepost.name for prepost in preposts">
+							<option value="">{{'label.select.one' | translate}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+				
+				<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+					<label class="control-label" for="isSelector">isSynchronous</label>
+				</div>
+					<div class="col-md-8">
+						<label class="checkbox">
+							<input type="checkbox" id="issynchronous"  data-ng-model="formData.issynchronous">
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+				<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+					<label class="control-label" for="processParams">{{'table.eventactionmapping.processparams' | translate }}</label>
+				</div>
+					<div class="col-md-8">
+						<textarea rows="2" cols="2" id="processParams" class="form-control" ng-model="formData.processParams"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+				
+				<ul class="btn-group-list text-right mt20 mb20">
+					<li><a href="#/global"><button type="reset" class="btn btn-warning" data-ng-click="reset123()">{{'button.cancel'| translate}}</button></a></li>
+					<li><button type="submit" class="btn btn-primary">{{'button.save'| translate}}</button></li>
+				</ul>
+				
+				
+			</form>
+			
+		</div>
+	</div>

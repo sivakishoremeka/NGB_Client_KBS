@@ -1,0 +1,97 @@
+<div class="content-container" ng-controller="EditTicketTeamController">
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+        </li>
+
+        <li class="active">{{'label.editticketteam' | translate}}</li>
+    </ul>
+    <div class="widget">
+        <h3>{{'label.heading.editticketteam' | translate}}</h3>
+
+        <form name="editticketteam" novalidate="" class="form-horizontal" rc-submit="submit()">
+            <api-validate></api-validate>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="userId">{{ 'label.teamhead' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="userId" name="userId" data-ng-model="formData.userId" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="teamCode">{{ 'label.teamcode' | translate }}</label>
+                        </div>
+                            <div class="col-md-8">
+                                <input type="text" id="teamCode" name="teamCode" data-ng-model="formData.teamCode" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="teamDescription">{{ 'label.teamdescription' | translate }}</label>
+                        </div>
+                            <div class="col-md-8">
+                                <input type="text" id="teamDescription" name="teamDescription" data-ng-model="formData.teamDescription" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="teamCategory">{{ 'label.teamcategory' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="teamCategory" name="teamCategory" data-ng-model="formData.teamCategory" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="status">{{ 'label.status' | translate }}</label>
+                        </div>
+                            <div class="col-md-8">
+                                <input type="text" id="status" name="status" data-ng-model="formData.status" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="teamemail">{{ 'label.teamEmail' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="teamemail" name="teamemail" data-ng-model="formData.teamEmail" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/ticketteamusers">
+                        <button id="cancel" type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel'| translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

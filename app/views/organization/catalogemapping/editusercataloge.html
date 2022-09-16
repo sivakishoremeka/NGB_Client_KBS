@@ -1,0 +1,91 @@
+<div class="content-container" ng-controller="EditUserCatalogeController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+			<span class="divider"></span>
+		</li>
+		<li>
+			<a href="#/catalogemapping">{{'label.catalogemapping' | translate}}</a>
+			<span class="divider"></span>
+		</li>
+		<li class="active">{{'label.editusercataloge' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+		
+		<h3>{{'label.heading.editusercataloge' | translate}}</h3>
+		
+		
+		<form name="editusercatalogeform" novalidate="" class="form-horizontal" rc-submit="submit()">
+		<api-validate></api-validate>
+		
+		<!-- <div class="form-group">
+					<label class="control-label col-sm-2" for="userId">{{'label.createusercataloge.userid'| translate }}&nbsp;<span class="required">*</span></label>
+						<div class="col-sm-3">
+										<select id="userId" ng-model="formData.userId" ng-options="appUserData.id as appUserData.username for appUserData in appUserDatas" class="form-control">
+										</select>
+					</div>
+		</div> -->
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="userId">{{ 'label.createusercataloge.userid' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<input type = "text" id="userId" class="form-control" data-ng-model="userName" value="userName" readonly/>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- <div class="form-group">
+						<label class="control-label col-sm-2" for="catalogeId">{{'label.createusercataloge.catalogeId'| translate }}&nbsp;<span class="required">*</span></label>
+							<div class="col-sm-3">
+											<select id="catalogeId" ng-model="formData.catalogeId" ng-options="salesCatalogeData.id as salesCatalogeData.name for salesCatalogeData in salesCatalogeDatas" class="form-control">
+											</select>
+						</div>
+		</div> -->
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label">{{ 'label.availablesalescataloge' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<select id="availablesalescataloges" ng-model="allowed" name="allowed" class="form-control multiselectmin" multiple >
+							<option data-ng-repeat="availableSalesCataloge in availableSalesCataloges" value="{{availableSalesCataloge.id}}">{{availableSalesCataloge.name}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label">{{ 'label.selectedsalescataloge' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<select id="selectedsalescataloges" name="selectedsalescataloges" ng-model="restricted" name="restricted" class="form-control multiselectmin" multiple  >
+							<option data-ng-repeat="selectedSalesCataloge in selectedSalesCataloges" value="{{selectedSalesCataloge.id}}">{{selectedSalesCataloge.name}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<ul class="btn-group-list text-center mt20 mb20">
+			<li><button type="button" class="btn btn-primary" data-ng-click="allow()"><i class="fa fa-angle-double-left"></i></button></li>
+			<li><button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right"></i></button></li>
+		</ul>
+		
+		<ul class="btn-group-list text-right mt20 mb20">
+			<li><a href="#/catalogemapping"><button id="cancel" type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel'| translate}}</button></a></li>
+			<li><button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button></li>
+		</ul>
+		
+	</form>
+	
+</div>
+</div>

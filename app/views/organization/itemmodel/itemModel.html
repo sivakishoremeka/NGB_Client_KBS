@@ -1,0 +1,63 @@
+<div class="content-container" data-ng-controller="ItemModelController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li class="active">{{'label.items' | translate}}&nbsp;&nbsp;</li>
+	</ul>
+	<div class="widget mb30">
+			<div class="row align-items-center">
+				<div class="col-md-3">
+					<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+				</div>
+				<div class="col-md-9">
+					<ul class="btn-group-list text-right">
+						<li>
+							<a has-permission = CREATE_MODELPROVISIONMAPPING  href="#/createmodelprovisionmapping" class="btn primary_btn pull-right"><i class="fa fa-plus"></i>{{'label.createitemmodel' | translate}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+	</div>
+	<div class="widget">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>{{'label.provision' | translate}}</th>
+						<th>{{'label.model' | translate}}</th>
+						<th>{{'label.itemtype' | translate}}</th>
+						<th>{{'label.make' | translate}}</th>
+						<th>{{'label.action' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="modelProvisionData in modelProvisionDatas.currentPageItems  | filter:filterText">
+						<td>{{modelProvisionData.provisioningName}}</td>
+						<td>{{modelProvisionData.model}}</td>
+						<td>{{modelProvisionData.itemType}}</td>
+						<td>{{modelProvisionData.make}}</td>
+						<td>
+							<ul class="table-icon-list">
+								<li><a has-permission = UPDATE_MODELPROVISIONMAPPING href="#/editmodelprovisionmapping/{{modelProvisionData.id}}"uib-popover="Edit Model Provision" data-popover-trigger="mouseenter" class="fa fa-edit"></a></li>
+								<li>
+									<a has-permission = DELETE_MODELPROVISIONMAPPING data-ng-click="deleteModelProvisionMapping(modelProvisionData.id)"uib-popover="Delete Contract" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a> 
+								</li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+		</div>
+		<script type="text/ng-template" id="deleteModelProvisionMapping.html">
+		<div class="modal-header silver">
+			<h3 class="bolder">Delete Model Provision Mapping</h3>
+		</div>
+		<div class="modal-body modal-small">
+			<h4 class="text-center">Are you sure?</h4>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+			<button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+		</div>
+		</script>
+	</div></div>

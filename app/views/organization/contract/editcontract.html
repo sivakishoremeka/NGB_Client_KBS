@@ -1,0 +1,69 @@
+<div class="content-container">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li><a href="#/contract">{{'label.manage.contracts' | translate}}</a></li>
+        <li class="active">{{'label.editcontract' | translate}}</li>
+    </ul>
+    <div class="widget">
+    	<h3>{{'label.heading.editcontract' | translate}}</h3>
+    	<form name="editcontractform" novalidate="" class="form-horizontal" ng-controller="EditContractController" rc-submit="submit()">
+    			<api-validate></api-validate>
+                    <div class="row">
+                       <div class="col-md-6">
+                           <div class="form-group row">
+                              <div class="col-md-4">
+                               <label class="control-label" for="subscriptionPeriod">{{ 'label.contract.contractperiod' | translate }}</label></div>
+                                 <div class="col-md-8">
+                                 <input type="text" id="subscriptionPeriod" name="subscriptionPeriod" class="form-control" data-ng-model="formData.subscriptionPeriod" data-ng-pattern="/^[a-zA-Z0-9\s]+$/"/>
+                            </div>
+                             <div class="col-md-12">
+                                 <span data-ng-show="createcontractform.subscriptionPeriod.$invalid"> 
+                                    <small class="error" data-ng-show="editcontractform.subscriptionPeriod.$error.pattern">alphanumeric and spaces only!</small>
+                                 </span>
+                            </div>    
+                         </div>
+                       </div>
+                       <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="subscriptionType">{{ 'label.contract.contractype' | translate }}</label>
+                            </div>
+                                <div class="col-md-8">
+                                    <select class="form-control" data-ng-model="formData.subscriptionType"  data-ng-options="allowedperiods.durationTypeCode as allowedperiods.durationTypeCode for allowedperiods in allowedperiods">
+                                    </select>
+                                </div>
+                            </div>
+                       </div>
+                  </div>
+
+                   <div class="row">
+                       <div class="col-md-6">
+                           <div class="form-group row">
+                              <div class="col-md-4">
+                               <label class="control-label" for="units">{{ 'label.contract.units' | translate }}</label>
+                            </div>
+                                 <div class="col-md-8">
+                                   <input type="text" id="units" name="units" class="form-control" data-ng-model="formData.units" data-ng-pattern="/^[1-9\s]+$/" data-ng-maxlength="3" data-late-Validate>
+                              </div>
+                             <div class="col-md-12">
+                                 <span data-ng-show="editcontractform.units.$dirty && editcontractform.units.$invalid">
+                                    <small class="error" data-ng-show="editcontractform.units.$error.pattern && !editcontractform.units.$error.maxlength">Units should not be 0 and not less than 0</small>
+                                    <small class="error" data-ng-show="!editcontractform.units.$error.pattern && editcontractform.units.$error.maxlength">{{'error.code.definition.length.validation' | translate}}</small>  
+                                </span>
+                            </div>    
+                         </div>
+                       </div>
+                  </div>
+		        <ul class="btn-group-list text-right mt20 mb20">
+                    <li>
+                        <a href="#/contract"><button id="cancel" type="reset" class="btn btn-warning">{{'button.cancel' | translate}}</button></a>
+                    </li>
+                    <li>
+                        <button id="submit" type="submit" data-ng-disabled="editcontractform.$dirty && editcontractform.$invalid" class="btn btn-primary">{{'button.save' | translate}}</button>
+                    </li>
+                </ul>
+    		</form>
+    	</div>
+    </div>
+
+

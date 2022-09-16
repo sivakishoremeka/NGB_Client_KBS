@@ -1,0 +1,89 @@
+<div class="content-container" ng-controller="EditMediaController">
+  <ul class="breadcrumb">
+    <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+    <li><a href="#/mediadetailseventpricing">{{'label.mediadetailseventpricing' | translate}}</a></li>
+    <li class="active">{{'label.media.editmedia' | translate}}</li>
+  </ul>
+  <div class="widget">
+    <h3>{{'label.media.editmedia' | translate}}</h3>
+    <form class="form-horizontal" name="editmediaform" novalidate="" ng-submit="submit()">
+    <api-validate></api-validate>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label class="control-label" for="mediaTitle">{{ 'label.media.title' | translate }}<span class="required">*</span></label>
+          </div>
+          <div class="col-md-8">
+            <input type="text" id="mediaTitle" class="form-control" ng-model="formData.mediaTitle">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label class="control-label" for="mediaCategoryId">{{ 'table.mediadetails.categeory' | translate }}<span class="required">*</span></label>
+          </div>
+          <div class="col-md-8">
+          <select ng-model="formData.catageoryId" class="form-control" id="catageoryId" ng-options="mediaCategeorydata.id as mediaCategeorydata.mCodeValue for mediaCategeorydata in mediaCategeorydatas" value="{{mediaCategeorydata.id}}"></select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <div class="col-md-4">
+          <label class="control-label" for="contentProvider">{{ 'label.media.contentprovider' | translate }}</label>
+        </div>
+        <div class="col-md-8">
+        <select   id="contentProvider" class="form-control" ng-model="formData.contentProvider" ng-options="contentProviderData.id as contentProviderData.mCodeValue for contentProviderData in contentProviderDatas " value="{{contentProviderData.id}}"></select>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group row">
+      <div class="col-md-4">
+        <label class="control-label" for="cpShareValue">Share(%)</label>
+      </div>
+      <div class="col-md-8">
+        <input type="text" id="cpShareValue" class="form-control" name="cpShareValue" ng-model="formData.cpShareValue"  ng-pattern="/^\d{0,2}(\.\d{0,2})?$/" >
+        <div ng-show="editmediaform.cpShareValue.$dirty && editmediaform.cpShareValue.$invalid">
+          <span class="error" ng-show="editmediaform.cpShareValue.$error.pattern">Numbers below 100 only !</span>
+          <span class="error" ng-show="editmediaform.cpShareValue.$error.maxlength">Exceeded max limit!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <div class="col-md-4">
+        <label class="control-label" for="medialocation">Media Location<span class="required">*</span></label>
+      </div>
+      <div class="col-md-8">
+        <input type="text" class="form-control"  ng-model="formData.location">
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group row">
+      <div class="col-md-4">
+        <label class="control-label" for="status">{{ 'label.media.status' | translate }}<span class="required">*</span></label>
+      </div>
+      <div class="col-md-8">
+      <select ng-model="formData.status" class="form-control" id="status" ng-options="mediaStatus.value as mediaStatus.value for mediaStatus in mediaStatus" value="{{mediaStatus.value}}"></select>
+    </div>
+  </div>
+</div>
+</div>
+ <ul class="btn-group-list text-right mt20 mb20">
+          <li> <a href="#/mediadetailseventpricing"><button id="cancel" type="reset" class="btn btn-warning">{{ 'button.cancel' | translate }}</button></a></li>
+          <li><button id="submit" type="submit" class="btn btn-primary">{{ 'button.save' | translate }}</button></li>
+        </ul>
+</form>
+
+</div>
+</div>

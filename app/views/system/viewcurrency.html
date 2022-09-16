@@ -1,0 +1,57 @@
+<div class="content-container" ng-controller="ViewCurrencyController">
+	<ul class="breadcrumb">
+		<li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+		<!-- <li><a href="#/mappingconfig">{{'label.provisioningMapping' | translate}}</a></li> -->
+		<li><a href="#/currencyconfig">{{'label.currencyconfiguration' | translate}}</a></li>
+		<li class="active">{{'label.viewcurrency' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+		
+		<h3>{{currency.name}}</h3>
+		<ul class="btn-group-list text-right mt20 mb20">
+			
+			<li><a has-permission='UPDATE_CURRENCY' href="#/editcurrency/{{currency.id}}" class="btn primary_btn"><i
+			class="fa fa-edit"></i>{{'button.edit' | translate}}</a></li>
+			<li><a has-permission='DELETE_CURRENCY' data-ng-click="deleteCurrency()" class="btn primary_btn"><i
+			class="fa fa-trash-o"></i>{{'button.delete' | translate}}</a></li>
+			
+		</ul>
+		
+		<div class="table-responsive">
+			
+			<table class="table table-bordered table-striped">
+				<tr>
+					<td>{{'label.code' | translate }}</td>
+					<td>{{currency.code}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.internationalnamecode' | translate }}</td>
+					<td>{{currency.nameCode}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.decimalplaces' | translate }}</td>
+					<td>{{currency.decimalPlaces}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.countrycode' | translate }}</td>
+					<td>{{currency.countryCode}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.name' | translate }}</td>
+					<td>{{currency.name}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.countryname' | translate }}</td>
+					<td>{{currency.countryName}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.displaysymbol' | translate }}</td>
+					<td>{{currency.displaySymbol}}</td>
+				</tr>
+			</table>
+			
+		</div>
+		
+	</div>
+</div>

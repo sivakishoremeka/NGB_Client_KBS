@@ -1,0 +1,92 @@
+<div class="content-container" ng-controller="EditOfficeTicketController">
+       <ul class="breadcrumb">
+       <li><a href="#/offices">{{'label.Entity' | translate}}</a></li>
+	   <li><a ng-click="reset123()">{{'viewoffice' | translate}}</a></li>
+	   <li class="active">{{'label.editticket' | translate}}</li>
+	</ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h3>{{'label.addcomment' | translate}}</h3>
+            </div>
+           
+            <form name="editticketform" class="form-horizontal" ng-submit="submit()">
+				<api-validate></api-validate>
+				<fieldset>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="TicketNumber">{{'label.ticketNumber' | translate }}</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="TicketNumber" ng-model="formData.ticketNumber" disabled>
+						</div>
+						</div>
+				
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="status"> {{'label.status' | translate }} </label>
+						<div class="col-sm-3">
+							<select ng-model="formData.status" class="form-control"
+								ng-options="statusData.mCodeValue as statusData.mCodeValue for statusData in statusTypes"
+								value="{{statusData.statusCode}}"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="assignedTo">{{'label.assignto' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select ng-model="formData.userId" class="form-control"
+								ng-options="users.id as users.userName for users in usersData"
+								value="{{users.id}}" required late-Validate></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="priority">{{'label.priority' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select name="priority" ng-model="formData.priority" class="form-control"
+								ng-options="priorityType.value as priorityType.value for priorityType in priorityTypes"
+								value="{{priorityType.value}}" required late-Validate></select>
+						
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="Category"> {{'label.category' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select name="category" ng-model="formData.problemCode" class="form-control"
+								ng-options="problemsData.id as problemsData.mCodeValue for problemsData in problemsDatas"  data-ng-change="getSubCategory(formData.problemCode)"
+								value="{{problemsData.problemCode}}" required late-Validate></select>
+						</div>
+						<label class="control-label col-sm-2" for="subCategory"> {{'label.subcategory' | translate }}<span class="required">*</span></label>
+					    <div class="col-sm-3">
+		              		<select id="subCategory" ng-model="formData.subCategory"  class="form-control"
+		              				ng-options="subCategorys.subCategory as subCategorys.subCategory for subCategorys in subCategory" 
+		              				value="{{subCategorys.subCategory}}" required late-Validate>
+		             	    </select>		
+	            		</div>
+					</div>
+					
+					<div class="form-group">
+					<label class="control-label col-sm-2" for="Title">{{'label.title' | translate }}</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="Title" ng-model="formData.title">
+						</div>
+						</div>
+					<div class="form-group">
+						<label style="margin-top:15px;" class="control-label col-sm-2" for="description"> {{
+							'label.comments' | translate }}</label>
+						<div class="col-sm-9">
+						<i>&nbsp;Please provide as much detail as possible so we can best assist you.</i><span class="required">*</span>
+							    <textarea ng-model="formData.comments" style="width:98%; height:8em;" required late-Validate></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="Attachments"> {{'label.ticket.file' | translate }}</label>
+						<div class="col-sm-3">
+							<input type= "file" ng-file-select="onFileSelect($files)">
+						</div>
+					</div>
+					<div class="pull-right">
+						<a href="#/viewpartner/{{officeId}}/{{officeId}}"><button type="reset" class="btn btn-warning" ng-click="reset123()">Cancel</button></a>
+						<button type="submit" class="btn btn-primary">Save</button> <!-- ng-disabled="!editticketform.$valid" -->
+					</div>
+				</fieldset>
+			</form>
+        </div>
+    </div>
+</div>

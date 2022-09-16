@@ -1,0 +1,327 @@
+<div class="content-container"
+	ng-controller="GlobalConfigurationController">
+	<ul class="breadcrumb">
+		<li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+		<li class="active">{{'label.anchor.globalconfigurations' |
+			translate}}</li>
+	</ul>
+
+	<div class="widget mb30">
+		
+			<div class="row">
+				<div class="col-md-3">
+					<input ng-autofocus="true" data-ng-model="filterText"
+						 type="text" class="form-control"
+						placeholder="{{'label.filterbyname' | translate}}">
+				</div>
+			</div>
+		
+	</div>
+
+	<!-- <div class="toolbar">
+            <h4>Configuration</h4>
+        </div> -->
+	<div class="widget">
+		
+			<uib-tabset> <uib-tab
+				heading="Global Configuration">
+			<!-- <div class="row"> -->
+				<ul class="btn-group-list text-right mb20">
+					<li><a href="#/createsmtp/0" data-ng-show="showSmtp"
+						class="btn btn-primary"><i class="fa fa-plus"></i>Create SMTP</a></li>
+				</ul>
+
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr class="graybg">
+							<th>{{'label.module' | translate}}</th>
+							<th width=12%>{{'label.form.name' | translate}}</th>
+							<th width=22%>{{'label.description' | translate}}</th>
+							<th width=22%>{{'label.value' | translate}}</th>
+							<th>{{'label.enabled' | translate}}</th>
+                            <th>{{'label.flag' | translate}}</th>
+                            <th>{{'table.action' | translate}}</th>
+
+							<!-- <th width=1%></th>
+							<th width=1%></th> -->
+							<!-- <th width=2%></th>	 -->
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="config in configs  | filter:filterText">
+							<td>{{config.module}}</td>
+							<td style="word-break: break-all;">{{config.name}}</td>
+							<td style="word-break: break-all;">{{config.description}}</td>
+							<td style="word-break: break-all;">{{config.value}}</td>
+							<td>{{config.enabled}}</td>
+
+							<td><label data-ng-hide="config.enabled"
+								data-ng-click="enable(config.id,config.name)"> <i
+									class="fa fa-toggle-on fa-rotate-180 inactive"
+									style="font-size: 30px; color: red"></i></label> <label
+								data-ng-show="config.enabled"
+								data-ng-click="disable(config.id,config.name)"> <i
+									class="fa fa-toggle-on active"
+									style="font-size: 30px; color: green"></i></label></td>
+							<!-- <td><button type="button" class="btn btn-success" data-ng-hide="config.enabled" data-ng-click="enable(config.id,config.name)">
+					            	<i class="fa fa-flag-o"></i>Enable</button>
+					                <button type="button" class="btn btn-danger" data-ng-show="config.enabled" data-ng-click="disable(config.id,config.name)">
+					                	<i class="fa fa-times"></i>Disable</button>
+					            </td> -->
+							<td>
+								<ul class="table-icon-list">
+									<li>
+										<a data-ng-hide="config.name == 'smtp'"data-ng-click="edit(config.id)" data-uib-popover="Edit"data-popover-trigger="mouseenter"> <i class="fa fa-edit"></i></a>
+									</li>
+									<li>
+										<a data-ng-show="config.name=='smtp'"href="#/createsmtp/{{config.id}}" data-uib-popover="Edit"data-popover-trigger="mouseenter"> <i class="fa fa-edit"></i></a></li>
+								</ul>
+							</td> 
+								
+								
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- </div> -->
+			</uib-tab> <!-- <uib-tab heading="Client Configuration"  active="clientConfigTab" select="getClientConfiguration()">  select="getConfigLookUp()"
+                   <div class="col-md-6"> 	
+						<input data-ng-model="filterText1" type="text" class="form-control" placeholder="{{'label.filterbyname' | translate}}">
+    				</div>
+    				<table class="table">
+        				<thead>
+					        <tr class="graybg">
+					            <th>{{'label.form.name' | translate}}</th>
+					            <th>{{'label.value' | translate}}</th>	
+					            <th>{{ 'label.actions' | translate }}</th>
+					        </tr>
+        				</thead>
+        				<tbody>
+					        <tr data-ng-repeat="lookup in myData | filter:filterText1">
+					            <td>{{lookup.name}}</td>
+					            <td  style="word-break:break-all;">{{lookup.value}}</td> 
+					            <td><button type="button" class="btn btn-success flag" data-ng-show="lookup.value == 'false' " 
+					            		data-ng-click="clientConfigChange(lookup.name,lookup.value,0)"><i class="fa fa-flag-o"></i></button>
+					                <button type="button" class="btn btn-danger flag" data-ng-show="lookup.value == 'true'" 
+					                	data-ng-click="clientConfigChange(lookup.name,lookup.value,0)"><i class="fa fa-times"></i></button>
+					                <a data-ng-show="(lookup.name == 'deviceAgrementType')||(lookup.name == 'date_format')" 
+					                	data-ng-click="editClientConfigs(lookup.name,lookup.value)" data-uib-popover="Edit {{lookup.name}}" 
+					                       data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a>
+					                <a data-ng-show="(lookup.name == 'clientListing')" data-ng-click="editClientListing(lookup.name,lookup.value)" 
+					                	data-uib-popover="Edit {{lookup.name}}" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a>
+					                <a data-ng-show="(lookup.name == 'registrationListing')" data-ng-click="editRegistrationListing()" 
+					                	data-uib-popover="Edit {{lookup.name}}" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a>
+					                <a data-ng-show="(lookup.name == 'orderActions')" data-ng-click="editOrderActions(lookup.name,lookup.value)" 
+					                	data-uib-popover="Edit {{lookup.name}}" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a> 
+					            </td>
+					        </tr>
+        				</tbody>
+    				</table>
+    			</uib-tab> --> <uib-tab heading="Paymentgateway Configuration"
+				select="getpaymentgatewayData()" active="paymentConfigTab">
+			
+			<!-- <div class="col-md-3">
+    				<input data-ng-model="filterText2" type="text" class="form-control" placeholder="{{'label.filterbyname' | translate}}">
+    			 </div> --> <!-- <div class="col-md-3 pull-right" style="marign:24px;">
+			        	<a has-permission = CREATE_SMTP href="#/createsmtp/0" class="btn btn-primary"><i class="fa fa-plus"></i>Create SMTP</a>
+			      </div> -->
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr class="graybg">
+							<th>{{'label.form.name' | translate}}</th>
+							<th>{{'label.enabled' | translate}}</th>
+							<th>{{'label.value' | translate}}</th>
+							<th>{{'table.action' | translate}}</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="config in paymentConfigs  | filter:filterText">
+							<td>{{config.name}}</td>
+							<td>{{config.enabled}}</td>
+							<td style="word-break: break-all;">{{config.value}}</td>
+							<td style="width: 10%;">
+								<!-- <button type="button" class="btn btn-success flag"
+									data-ng-hide="config.enabled"
+									data-ng-click="enablePaymentGateway(config.id)">
+									<i class="fa fa-flag-o">Enable</i>
+								</button>
+								<button type="button" class="btn btn-danger flag"
+									data-ng-show="config.enabled"
+									data-ng-click="disablePaymentGateway(config.id)">
+									<i class="fa fa-times"></i>Disable
+								</button> -->
+								<ul class="table-icon-list">
+									<li>
+										<label data-ng-hide="config.enabled"data-ng-click="enablePaymentGateway(config.id)"> <i class="fa fa-toggle-on fa-rotate-180 inactive"
+									style="font-size: 30px; color: red"></i></label>
+								</li>
+									<li>
+										 <label data-ng-show="config.enabled"data-ng-click="disablePaymentGateway(config.id)"> <i class="fa fa-toggle-on active"style="font-size: 30px; color: green"></i></label>
+									</li>
+									<li>
+										 <a data-ng-show="config.value"data-ng-click="editPaymentGateway(config.id,config.name,config.value)"data-uib-popover="Edit" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a>
+									</li>
+								</ul>
+							</td>
+							<td><a data-ng-click="viewPaymentGateway(config.id)"
+								data-uib-popover="Help" data-popover-trigger="mouseenter"> <i
+									class="fa fa-question"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			</uib-tab> <uib-tab heading="Hooks" select="geteventactionmapping()"
+				active="hooksTab">
+			<!-- <div class="col-md-3">
+    				<input data-ng-model="filterText1" type="text" class="form-control" placeholder="{{'label.filterbyname' | translate}}">
+    			 </div> -->
+
+			<ul class="btn-group-list text-right mt20 mb20">
+				<li><a has-permission=CREATE_EVENTACTIONMAP href="#/createeventactionmapping"
+					class="btn primary_btn pull-right"><i class="fa fa-plus"></i>{{
+					'button.add' | translate }}</a></li>
+			</ul>
+
+			<!-- <div class="row"> -->
+			<div class="table-responsive">
+				<table class="table mywrap table-striped"
+					style="table-layout: fixed; margin: auto;">
+					<thead>
+						<tr class="graybg">
+							<th class="mywrap">{{'table.eventactionmapping.event' |
+								translate}}</th>
+							<th>{{'table.eventactionmapping.action' | translate}}</th>
+							<th>{{'table.eventactionmapping.process' | translate}}</th>
+							<th>{{'table.eventactionmapping.orderby' | translate}}</th>
+							<th>{{'table.eventactionmapping.prepost' | translate}}</th>
+							<th>{{'table.eventactionmapping.processparams' | translate}}</th>
+							<th>{{'table.eventactionmapping.is_synchronous' |
+								translate}}</th>
+							<th>{{'label.enabled' | translate}}</th>
+							<th>{{'label.flag' | translate}}</th>
+							<th>{{'table.heading.actions' | translate }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="data in datas  | filter:filterText">
+							<td class="mywrap"><a
+								href="#/vieweventactionmapping/{{data.id}}">{{data.eventName}}</a></td>
+							<td>{{data.actionName}}</td>
+							<td>{{data.process}}</td>
+							<td>{{data.orderBy}}</td>
+							<td ng-show="data.prePost">Post</td>
+							<td ng-show="!data.prePost">Pre</td>
+							<td>{{data.processParams}}</td>
+							<td>{{data.is_synchronous}}</td>
+							<td data-ng-show="data.isDeleted=='Y'">False</td>
+							<td data-ng-show="data.isDeleted=='N'">True</td>
+							<!-- <td data-ng-show="data.isDeleted=='Y'">
+								<button type="button" class="btn btn-success flag"
+									data-ng-click="isDeletedEventAction(data.id,data.isDeleted)">
+									<i class="fa fa-flag-o"></i>Enable
+								</button>
+							</td>
+							<td data-ng-show="data.isDeleted=='N'">
+								<button type="button" class="btn btn-danger flag"
+									data-ng-click="isDeletedEventAction(data.id,data.isDeleted)">
+									<i class="fa fa-times"></i>Disable
+								</button>
+							</td>  -->
+						    <td data-ng-show="data.isDeleted=='Y'">
+							<label data-ng-click="isDeletedEventAction(data.id,data.isDeleted)"> <i
+								class="fa fa-toggle-on fa-rotate-180 inactive"
+								style="font-size: 30px; color: red"></i></label>
+							</td>
+							<td data-ng-show="data.isDeleted=='N'">
+							<label data-ng-click="isDeletedEventAction(data.id,data.isDeleted)"> <i
+								class="fa fa-toggle-on active"
+								style="font-size: 30px; color: green"></i></label>
+							</td>
+							<td><a has-permission='UPDATE_EVENTACTIONMAP'
+								href="#/editeventactionmapping/{{data.id}}" uib-popover="Edit "
+								data-popover-trigger="mouseenter" class="fa fa-edit"></a></td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+			<!-- </div> -->
+			</uib-tab>
+		
+		</uib-tabset>
+	</div>
+	<!-- content -->
+</div>
+<!-- card -->
+<script type="text/ng-template" id="editglobal.html">
+
+	<form class="form-horizontal" ng-submit="submit()">
+	 <api-validate></api-validate>
+	<div class="modal-header silver">
+		<h3 class="bolder">{{'label.edit' | translate}}</h3>
+	</div>
+<div class="widget" style="box-shadow: none;">
+	
+		<div class="form-group row align-items-center">
+			<div class="col-md-4">
+				<label class="control-label" for="value">{{ 'label.value' | translate }}</label>
+			</div>
+			<div class="col-md-8">
+				<input type="text" id="value" ng-model="formData.value" class="form-control">
+			</div>
+		
+</div>
+</div>
+
+	</form>
+   <div class="modal-footer">
+         <button id="cancel" class="btn btn-warning" ng-click="reject()">{{'button.cancel' | translate}}</button>
+         <button id="submit" class="btn btn-primary" ng-click="accept()">{{'label.confirm' | translate}}</button>
+   </div>
+
+</script>
+<script type="text/ng-template" id="editconfig.html">
+	   <div class="modal-header silver">
+          <h3 class="bolder">{{'label.pgconfig.editconfig' | translate}}</h3>
+       </div>
+       <div class="modal-body">
+		<api-validate></api-validate>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<tr>
+					<th>key</th>
+					<th></th>
+					<th>Value</th>
+					<th></th>
+				</tr>
+				<!-- <tr>
+					<td colspan="4"><hr style="margin:10px 0"></td>
+				</tr> -->
+				<tr data-ng-show="keyValues.length == 0">
+					<td colspan="4" align="center" class="required">No Key Value Pairs</td>
+				</tr>
+				<tr data-ng-repeat="keyValue in keyValues">
+					<td><input type="text" class="configParam{{keyValue.key}} form-control" name="url" ng-model="keyValue.key" placeholder="enter key here" input-disabled="{{keyValue.disable}}"/></td>
+					<td valign="top"><strong>:</strong></td>
+            		<td><input  type="text" class="configParam{{keyValue.key}} form-control" name="url" ng-model="keyValue.value" placeholder="enter value here" input-disabled="{{keyValue.disable}}"/></td>
+					<td  valign="top">
+						<a data-ng-click="editConfigParams($index,keyValue.key)" data-ng-hide="!keyValue.disable"><i class="fa fa-edit fa fa-white"></i></a>
+						<a data-ng-click="deleteConfigParams($index)" ><i class="fa fa-remove fa fa-white"></i></a>
+						<a data-ng-click="createConfigParams()" ng-show="$last"><i class="fa fa-plus fa fa-white"></i></a>
+					</td>
+		  		</tr>
+			</table>
+		</div>
+	</div>
+            <div class="modal-footer">
+          		<button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  		<button id="submit" type="submit" class="btn btn-primary" ng-click="submit()">{{'button.save' | translate}}</button>
+			</div>
+        </div>
+        
+	</script>
+
+

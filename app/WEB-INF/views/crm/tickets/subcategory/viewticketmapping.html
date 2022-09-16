@@ -1,0 +1,51 @@
+<div class="content-container" ng-controller="ViewTicketMappingController">
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+        </li>
+        <li class="active">{{'label.viewticketmapping' | translate}}</li>
+    </ul>
+    <div class="widget">
+        <h3>{{teamId}}</h3>
+        <ul class="btn-group-list text-right mt20 mb20">
+            <li>
+                <a has-permission=U PDATE_TICKETMAPPING href="#/editticketmapping/{{teamId}}" class="btn primary_btn"><i class="fa fa-edit"></i> Edit</a>
+            </li>
+            <li>
+                <a has-permission=D ELETE_TICKETMAPPING data-ng-click="deleteTicketmapping()" class="btn primary_btn"><i class="fa fa-trash-o"></i> Delete</a>
+            </li>
+        </ul>
+
+        <div class="table-responsive">
+            <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th>{{'label.userId' | translate}}</th>
+                        <th>{{'label.userName' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="selectedUsers in selectedUserss | filter:filterText">
+                        <td>{{selectedUsers.userId}}</td>
+                        <td>{{selectedUsers.username}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="ticketmapping.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">Delete TicketMapping</h3>
+        </div>
+        <div class="modal-body">
+           <h4>Are you sure?</h4>
+        </div>
+        <div class="modal-footer ">
+        	<ul class="btn-group-list text-right mt20 mb20 ">
+	            <li>  <button class="btn btn-warning " ng-click="cancel() ">{{'button.cancel' | translate}}</button></li>
+	             <li><button class="btn btn-primary " ng-click="approve() ">{{'label.confirm' | translate}}</button></li>
+	            </ul>
+        </div>
+    </script>
+	 </div>

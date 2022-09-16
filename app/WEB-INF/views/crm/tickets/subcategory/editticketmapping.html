@@ -1,0 +1,75 @@
+<div class="content-container" ng-controller="EditTicketMappingController">
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+        </li>
+
+        <li class="active">{{'label.editticketmapping' | translate}}</li>
+    </ul>
+    <div class="widget">
+        <h3>{{'label.heading.editticketmapping' | translate}}</h3>
+
+        <form name="editTicketMapping" novalidate="" class="form-horizontal" rc-submit="submit()">
+            <api-validate></api-validate>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="teamId">{{ 'label.teamid' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select type="text" id="teamId" name="teamId" data-ng-model="formData.teamId" ng-options="TicketTeamMappingData.id as TicketTeamMappingData.teamCode for TicketTeamMappingData in TicketTeamMappingDatas" class="form-control" disabled></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.availableusers' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="availableUserss" ng-model="allowed" name="allowed" class="form-control multiselectmin" multiple>
+                                <option data-ng-repeat="availableUsers in availableUserss" value="{{availableUsers.id}}">{{availableUsers.username}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.selectedusers' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="selectedUserss" name="selectedusers" ng-model="restricted" name="restricted" class="form-control multiselectmin" multiple>
+                                <option data-ng-repeat="selectedUsers in selectedUserss" value="{{selectedUsers.id}}">{{selectedUsers.username}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="btn-group-list text-center mt20 mb20">
+                    <li>
+                        <button type="button" class="btn btn-primary" data-ng-click="allow()"><i class="fa fa-angle-double-left"></i></button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right"></i></button>
+                    </li>
+                </ul>
+
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/ticketteamusers">
+                        <button id="cancel" type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel'| translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

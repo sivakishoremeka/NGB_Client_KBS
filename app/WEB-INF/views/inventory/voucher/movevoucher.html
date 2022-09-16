@@ -1,0 +1,64 @@
+<div class="content-container" data-ng-controller="MoveVoucherController">
+	<ul class="breadcrumb">
+		<li><a href="#/inventory" data-ng-click="reset123()">{{'link.admin.inventory'
+				| translate}}</a></li>
+		<li><a href="#/stocktransfer">{{'link.stocktransfer' |
+				translate}}</a></li>
+		<li class="active">{{'label.move.vouchers' | translate}}</li>
+	</ul>
+	<div class="widget">
+		<h3>{{'label.heading.movevouchers' | translate}}</h3>
+		<form class="form-horizontal">
+			<api-validate></api-validate>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label " for="voucherId">{{'label.type'
+								| translate }}&nbsp;<span class="required">*</span>
+							</label>
+						</div>
+						<div class="col-md-4">
+							<input type="text" class="form-control"
+								data-ng-model="formData.type" disabled>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label" for="itemId">{{'label.itemid'
+								| translate }}&nbsp;<span class="required">*</span>
+							</label>
+						</div>
+						<div class="col-md-4">
+							<input type="text" class="form-control"
+								data-ng-model="itemDescription" disabled>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label " for="quantity1">{{'label.quantity'
+								| translate }}&nbsp;<span class="required">*</span>
+							</label>
+						</div>
+						<div class="col-md-4">
+							<input type="text" data-ng-model="formData.quantity"
+								class="form-control" disabled>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pull-right">
+				            <a href="#/stocktransfer"><button id="cancel"  type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel' | translate}}</button></a>
+				            <button id="submit" ng-click="voucherSubmit()" class="btn btn-primary">{{'label.save' | translate}}</button>
+				          </div>
+		</form>
+	</div>
+</div>

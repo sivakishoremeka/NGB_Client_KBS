@@ -1,0 +1,54 @@
+<div class="content-container" ng-controller="EditUomController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'link.admin.masters' |
+				translate}}</a></li>
+		<li><a href="#/rating">{{'label.rating' | translate}}</a></li>
+		<li><a href="#/edituom">{{'label.edituom' | translate}}</a>
+	</ul>
+	<div class="widget">
+		<h3>{{'label.edituom' | translate}}</h3>
+		<br>
+
+		<form name="edituom" novalidate="" class="form-horizontal"
+			rc-submit="submit()">
+			<api-validate></api-validate>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label col-sm-2" for="Name">{{'label.name'|
+								translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" id="Name" class="form-control" name="Name"
+								data-ng-model="formData.Name" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label col-sm-2" for="Description">{{'label.description'|
+								translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" id="Description" class="form-control"
+								name="Description" data-ng-model="formData.Description" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<ul class="btn-group-list text-right mt20 mb20">
+				<li><a href="#/rating"><button id="cancel" type="reset"
+							class="btn">{{'button.cancel'| translate}}</button></a></li>
+				<li>
+					<button id="submit" type="submit" class="btn btn-primary">{{'button.save'|
+						translate}}</button>
+				</li>
+			</ul>
+		</form>
+	</div>
+</div>

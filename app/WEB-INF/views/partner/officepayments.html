@@ -1,0 +1,203 @@
+
+<div class="content-container" ng-controller="OfficePaymentsController">
+	<ul class="breadcrumb">
+		<li><a href="#/offices" data-ng-click="partnersTab()">{{'label.manageorganization' | translate}}</a></li>
+		<!-- <li><a href="#/viewpartner/{{partnerId}}/{{officeId}}">{{partnerName}}</a></li> -->
+		<li class="active">Make Payment</li>
+	</ul>
+
+	  <div class="widget card mb30 avatar-wrap">
+		  <div class="row d-flex align-items-center">
+			<div class="col-md-1">
+	             <div class="avatarDiv">
+                   <img data-ng-hide="client.imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar" >
+                   <img data-ng-show="client.imagePresent" src="{{image}}" alt="Avatar"  class="avatar">
+               	<h3>{{office.name}}</h3>
+               	 <i class="fa fa-circle fs15 {{client.status.code | StatusLookup}}"></i>
+               	<small ng-if="client.subStatus.description">
+                   	[{{client.subStatus.description}}]
+               	</small>
+               </div>
+           </div>
+           <div class="col-md-11">
+           	  <div class="row">
+           		<div class="col-md-4">
+                   <label id="fthin">{{ 'Entity Code' | translate }}: <span id="fnormal">{{office.externalId}}</span></label>
+               </div>
+               <div class="col-md-4">
+	                   <label id="fthin">{{ 'Entity Type' | translate }}:<span id="fnormal">{{office.officeType}}</span></label>
+	               </div>
+	             <div class="col-md-4">
+	             	 <label id="fthin">{{ 'Parent Entity' | translate }}:<span id="fnormal">{{office.parentName}}</span></label>
+	             </div>
+	               <div class="col-md-4">
+	               	  <label id="fthin">{{ 'label.contactperson' | translate }}:<span id="fnormal">{{office.contactPerson}}</span></label>
+	               </div>
+	             </div>
+           </div>
+       </div>
+      </div>
+
+	   <div class="widget card">
+        <div class="content">
+				<h3>{{'label.heading.createpayments' | translate}}</h3>
+			<form name="createpayments" novalidate=""  class="form-horizontal" rc-submit="submit()">
+				<api-validate></api-validate>
+             <div class="row">
+             	 <div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+				           <label class="control-label">Collection By<span class="required">*</span></label>
+				        </div>
+					        <div class="col-md-8">
+							    <input type="text"placeholder="Enter Entity Code"data-ng-model="formData.officeDetails" name="serialNumber"class="form-control" uib-typeahead=" officeDetails as groupByOffice(officeDetails.externalId, officeDetails.name) for officeDetails in getOfficeData($viewValue)"autocomplete="off" data-typeahead-min-length="1">
+							<div>
+				    			<h4>
+				    				<span  style="color:red" data-ng-show="error" > Enter Entity Code </span> 
+				    			</h4>
+			    			  </div>
+					        </div>
+		             </div>
+		         </div>
+		         <div class="col-md-6">
+					<div class="form-group row">
+					<div class="col-md-4">
+	           	      <label class="control-label" for="paymentDate">{{ 'label.paymentdate' | translate }}</label>
+	              	</div>
+		                <div class="col-md-8 date-picker">
+			             	<input type="text" datepicker-pop="dd MMMM yyyy" data-ng-model="start.date" is-open="opened2" min="minDate" max="maxDate" 
+			             		   date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;"  readonly class="form-control "/>
+				           		</div>
+				           	 </div>
+				           </div>
+				       </div>
+
+		           		
+		           <div class="row">
+		           	 <div class="col-md-6">
+		           	 	<div class="form-group row">
+	                       <div class="col-md-4">
+	                       	 <label class="control-label" for="paymentCode">{{ 'label.paymentType' | translate }}</label>
+	                       </div>
+	                        <div class="col-md-8">
+                                <select id="paymentCode" data-ng-model="formData.paymentCode" class="form-control"
+		             				data-ng-options="data.id as data.mCodeValue for data in data" data-ng-change="paymentTypeData(formData.paymentCode)">
+		             		  </select>
+	                        </div>
+	                     </div>
+	                      <div class="row">
+	                      	<div class="col-md-12">
+	                      	<div data-ng-show="paymentType == 'Cheque'">
+	                      		<div class="form-group row">
+	                      			<div class="col-md-4">
+	                      				 <label class="control-label" for="chequeNo">{{ 'label.chequeno' | translate }}<span class="required">*</span></label>
+	                      			</div>
+	                      			<div class="col-md-8">
+	                      				<input type="text" id="chequeNo" class="form-control" data-ng-model="formData.chequeNo">
+	                      			</div>
+	                      		</div>
+	                      		<div class="form-group row">
+	                      			<div class="col-md-4">
+	                      				<label class="control-label" for="chequeDate">{{ 'label.chequedate' | translate }}</label>
+	                      			</div>
+	                      			<div class="col-md-8">
+	                      				<input type="text" id="chequeDate" datepicker-pop="dd MMMM yyyy" class="form-control" is-open="opened2" min="minDate" max="maxDate" data-ng-model="start.date" data-datepicker-pop="dd MMMM yyyy" 
+		              		          date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;"  readonly class="form-control">  
+	                      			</div>
+	                      		</div>
+	                      		<div class="form-group row">
+	                      			<div class="col-md-4">
+	                      				<label class="control-label" for="bankName">{{ 'label.bankname' | translate }}<span class="required">*</span></label>
+	                      			</div>
+	                      			<div class="col-md-8">
+	                      				<input type="text" id="bankName" class="form-control" data-ng-model="formData.bankName">
+	                      			</div>
+	                      		</div>
+	                      		<div class="form-group row">
+	                      			<div class="col-md-4">
+	                      				<label class="control-label" for="branchName">{{ 'label.branchname' | translate }}</label>
+	                      			</div>
+	                      			<div class="col-md-8">
+	                      				<input type="text" id="branchName" class="form-control" data-ng-model="formData.branchName">
+	                      			</div>
+	                      		</div>
+	                      	</div>
+	                      </div>
+	                   </div>
+	                  </div>
+                      <div class="col-md-6">
+                      	<div class="form-group row">
+                      		<div class="col-md-4">
+		                         <label class="control-label" for="amountPaid">{{ 'label.amount' | translate }}</label>
+		                      </div>
+		                      <div class="col-md-8">
+		                      	<input type="text" id="amountPaid" data-ng-model="formData.amountPaid" class="form-control">
+		                      </div>
+		                  </div>
+		              </div>
+	         		</div>
+
+   
+
+		           		<!-- <div data-ng-show="paymentType == 'Cheque'">
+							<div class="form-group row">
+								<div class="col-md-4">
+			           	    	  <label class="control-label" for="chequeNo">{{ 'label.chequeno' | translate }}<span class="required">*</span></label>
+			           	       </div>
+				            	<div class="col-md-8">
+				             		
+				           		</div>
+			         		</div>
+	         			</div> -->
+	   
+   			<div class="row">
+	           	 <div class="col-md-6">
+         			<div class="form-group row">
+         				<div class="col-md-4">
+           				  <label class="control-label" for="receiptNo">{{ 'label.receiptno' | translate }}<span class="required">*</span></label>
+           			    </div>
+	            		 <div class="col-md-8">
+	             			<input type="text" id="receiptNo" name="receiptno" data-ng-model="formData.receiptNo" class="form-control">
+	             		</div>
+	             	</div>
+	             </div>
+ 	             <div class="col-md-6">
+ 	             	 <div class="form-group row">
+ 	             	 	 <div class="col-md-4">
+ 	             	 	 	<label class="control-label" for="isSelector">Is Wallet</label>
+ 	             	 	 </div>
+ 	             	 	  <div class="col-md-8">
+ 	             	 	  	<label class="checkbox">
+		                		<input type="checkbox" id="isWallet"  data-ng-model="formData.isWallet">
+		              		</label>
+ 	             	 	  </div>
+ 	             	 </div>
+ 	             </div>	
+         	</div>
+
+         	<div class="row">
+         		 <div class="col-md-6">
+         		 	 <div class="form-group row">
+         		 	 	<div class="col-md-4">
+         		 	 		<label class="control-label">{{'label.notes' | translate}}</label>
+         		 	 	</div>
+         		 	 	<div class="col-md-8">
+         		 	 		<textarea data-ng-model="formData.remarks" class="form-control"></textarea>
+         		 	 	</div>
+         		 	 </div>
+         		 </div>
+         	</div>
+
+         	<ul class="btn-group-list text-right mt20 mb20">  
+		      	 	<li> 
+		      	 		<a href='#/partner' class="btn btn-warning">{{'button.cancel'  | translate}}</a>
+				    </li>
+				    <li>
+			    	  <button id="submit" type="submit" class="btn btn-primary" 
+							class="btn btn-primary" >{{'button.save'| translate}}</button>
+				    </li>
+		      	 </ul>
+			</form>
+		</div>
+	</div>
+</div>

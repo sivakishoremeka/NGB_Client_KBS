@@ -1,0 +1,51 @@
+<div class="content-container" ng-controller="ViewRegionController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+			<li><a href="#/regions">{{'label.regions' | translate}}</a></li>
+			<li class="active">{{region.regionCode}}</li>
+    </ul>
+    <div class="widget">
+        <h3>{{region.regionName}}</h3>
+        <ul class="btn-group-list text-right mb20">
+            <li><a has-permission='UPDATE_REGION' && region.regionCode !='Default' href="#/editRegions/{{region.id}}" class="btn btn-primary"><i class="fa fa-edit"></i> {{'label.edit' | translate}} </a></li>
+            <li>
+               <a has-permission='DELETE_REGION' && region.regionCode !='Default' data-ng-click="deleteRegion()" 
+            class="btn btn-primary"><i class="fa fa-trash-o"></i> {{'label.delete' | translate}} </a> 
+            </li>
+        </ul>
+        	
+      <div class="table-responsive">
+	     <table class="table table-bordered table-striped">
+				<tr>
+					<td>Id</td>
+					<td>{{region.id}}</td>
+				</tr>
+				<tr>
+					<td>Region Code</td>
+					<td>{{region.regionCode}}</td>
+				</tr>
+				<tr>
+					<td>Region Name</td>
+					<td>{{region.regionName}}</td>
+				</tr>
+			</table>
+		</div>
+    </div>
+        <script type="text/ng-template" id="deleteregion.html">
+        <div class="modal-header silver">
+			<h3 class="bolder">{{'dialog.region.message' | translate}}</h3>
+        </div>
+		<div class="modal-body ">
+            <h4 align="center">{{'label.confirm.msg' | translate}}</h4>
+        </div>
+        <div class="modal-footer">
+             <ul class="btn-group-list text-right">
+            <li> <button class="btn btn-warning" ng-click="cancel()">{{'label.cancel' | translate}}</button></li>
+            <li>
+               <button class="btn btn-primary" ng-click="regionDelete()">{{'label.confirm' | translate}}</button>
+            </li>
+        </ul>
+        </div>
+    </script>
+    </div>
+

@@ -1,0 +1,181 @@
+<div class="content-container" ng-controller="EditEventController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li><a href="#/mediadetailseventpricing">{{'label.mediadetailseventpricing' | translate}}</a></li>
+		<li><a href="#/viewEvent/{{formData.id}}">{{'label.viewevent' | translate}}</a></li>
+		<li class="active">{{'label.editevent' | translate}}</li>
+	</ul>
+	
+	<div class="widget">
+		
+		
+		<h3>{{'label.editevent' | translate}}</h3>
+		
+		<form name="editeventform" class="form-horizontal" ng-submit="submit()">
+		<api-validate></api-validate>
+		
+		<div class="row">
+			<div class="col-md-6">
+		<div class="form-group row">
+			<div class="col-md-4">
+			<label class="control-label" for="eventName"> {{'label.eventcode' | translate }}</label>
+		</div>
+			<div class="col-md-8">
+				<input type="text" class="form-control" id="eventName" name="eventName" data-ng-model="formData.eventName" data-ng-maxlength="{{'code' | CodeValidate }}" required data-late-Validate>
+				<span data-ng-show="editeventform.eventName.$dirty && editeventform.eventName.$invalid">
+					<small class="error" data-ng-show="editeventform.eventName.$error.maxlength">{{'error.eventname.definition.length.validation'| translate}}</small>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="form-group row">
+			<div class="col-md-4">
+			<label class="control-label" for="eventDescription">{{'label.eventdescription' | translate }}</label>
+		</div>
+			<div class="col-md-8">
+				<input type="text" class="form-control" id="eventDescription" ng-model="formData.eventDescription">
+			</div>
+		</div>
+	</div>
+</div>
+
+		<div class="row">
+			<div class="col-md-6">
+		<div class="form-group row">
+			<div class="col-md-4">
+			<label class="control-label" for="eventCategory">{{'label.eventcategory' | translate }}</label>
+		</div>
+			<div class="col-md-8">
+			<select  id="eventcategory" class="form-control" ng-model="formData.eventCategory"   ng-options="eventCategeorydata.mCodeValue as eventCategeorydata.mCodeValue for eventCategeorydata in eventCategeorydatas" value="{{eventCategeorydata.id}}"></select>
+		</div>
+	</div>
+</div>
+
+			<div class="col-md-6">
+		<div class="form-group row">
+			<div class="col-md-4">
+		<label class="control-label" for="chargeCode">{{'label.chargedata' | translate }}</label>
+	</div>
+		<div class="col-md-8">
+			<select ng-model="formData.chargeCode" class="form-control"
+				ng-options="chargeData.chargeCode as chargeData.chargeDescription for chargeData in chargeData"
+			value="{{chargeData.chargeCode}}"></select>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="row">
+			<div class="col-md-6">
+		<div class="form-group row">
+			<div class="col-md-4">
+	
+		<label class="control-label" for="eventStartDate"> {{'label.startdate' | translate }}</label>
+	</div>
+		<div class="col-md-8">
+			<!-- <input type="text" datepicker-pop="dd MMMM yyyy" ng-model="date.startDate" is-open="opened" min="minDate" max="'2020-06-22'" date-disabled="disabled(date, mode)"/> -->
+			<!-- <input type="text" id="eventStartDate" ng-model="formData.eventStartDate"> -->
+			<input type="text" class="form-control" ng-hide="formData.eventCategory == 'Live Event'"  datepicker-pop="dd MMMM yyyy" ng-model="date.startDate" is-open="opened" min="minDate" max="maxDate" date-disabled="disabled(date, mode)" required late-Validate  style="background-color:#FFFFFF;"  readonly/>
+			<input type="text" class="form-control" ng-show="formData.eventCategory == 'Live Event'"  datepicker-pop="dd MMMM yyyy" ng-model="date.startDate" is-open="opened" min="minDate" max="maxDate" date-disabled="disabled(date, mode)" required late-Validate  style="width:130px;background-color:#FFFFFF;"  readonly/>
+			<input id="timepicker1" class="form-control" ng-show="formData.eventCategory == 'Live Event'" type="text" readonly ng-model="first.starttime" style="width:60px;background-color:#FFFFFF;">
+		</div>
+	</div>
+</div>
+
+			<div class="col-md-6">
+		<div class="form-group row">
+			<div class="col-md-4">
+		<label class="control-label" for="eventEndDate"> {{'label.enddate' | translate }}</label>
+	</div>
+		<div class="col-md-8">
+			<!-- <input type="text" datepicker-pop="dd MMMM yyyy" ng-model="date.endDate" is-open="opened" min="minDate" max="'2020-06-22'" date-disabled="disabled(date, mode)"/> -->
+			<input type="text" class="form-control" ng-hide="formData.eventCategory == 'Live Event'"  datepicker-pop="dd MMMM yyyy" ng-model="date.eventEndDate" is-open="opened2" min="minDate" max="'2020-06-22'" date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;"  readonly/>
+			<input type="text" class="form-control" ng-show="formData.eventCategory == 'Live Event'" datepicker-pop="dd MMMM yyyy" ng-model="date.eventEndDate" is-open="opened2" min="minDate" max="'2020-06-22'" date-disabled="disabled(date, mode)"  style="width:130px;background-color:#FFFFFF;"  readonly/>
+			<input id="timepicker2" class="form-control" ng-show="formData.eventCategory == 'Live Event'" type="text" readonly ng-model="first.endtime" style="width:60px;background-color:#FFFFFF;">
+		</div>
+	</div>
+</div>
+</div>
+	
+
+	<div class="row">
+			<div class="col-md-6">
+		<div class="form-group row">
+			<div class="col-md-4">
+		<label class="control-label" for="eventValidity"> {{'label.eventvalidity' | translate }}</label>
+	</div>
+		<div class="col-md-8">
+			<input type="text" class="form-control" datepicker-pop="dd MMMM yyyy" ng-model="date.eventValidity" is-open="opened" min="minDate" max="'2020-06-22'" date-disabled="disabled(date, mode)"/>
+		</div>
+	</div>
+</div>
+
+			<div class="col-md-6">
+		<div class="form-group row">
+			<div class="col-md-4">
+		<label class="control-label" for="status"> {{'label.status' | translate }} </label>
+	</div>
+		<div class="col-md-8">
+			<select ng-model="formData.statusId" class="form-control"
+				ng-options="status.id as status.value for status in eventStatus"
+			value="{{status.id}}"></select>
+		</div>
+	</div>
+</div>
+</div>
+	
+<div class="row">
+			<div class="col-md-6">
+		<div class="form-group row">
+		<div class="col-md-4">
+			<label class="control-label">{{ 'label.availablemedia'| translate }}</label>
+		</div>
+		<div class="col-md-8">
+			<select multiple ng-model="allowed" class="form-control">
+				<option ng-repeat="availableService in availableServices"
+					value="{{availableService.mediaId}}">{{availableService.mediaTitle}}
+				</option>
+			</select>
+		</div>
+	</div>
+</div>
+		
+
+		<div class="col-md-6">
+		<div class="form-group row">
+		<div class="col-md-4">
+			<label class="control-label">{{ 'label.selectedmedia' |translate }}</label>
+		</div>
+		<div class="col-md-8">
+			<select multiple ng-model="restricted" class="form-control">
+				<option ng-repeat="selectedService in selectedServices"
+					value="{{selectedService.mediaId}}">{{selectedService.mediaTitle}}
+				</option>
+			</select>
+		</div>
+	</div>
+</div>
+</div>
+
+<ul class="btn-group-list text-center mt20 mb20" >
+	<li>
+		<button type="button" class="btn btn-primary" data-ng-click="allow()"> <i class="fa fa-angle-double-left"></i></button>
+	</li>
+	<li>
+		<button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right"></i></button>
+	</li>
+</ul>
+
+
+	<ul class="btn-group-list text-right mt20 mb20">
+		<li><a href="#/mediadetailseventpricing"><button id="cancel" type="reset" class="btn btn-warning">{{'button.cancel'| translate}}</button></a></li>
+		<li><button  id="submit" type="submit" data-ng-disabled="editeventform.$dirty && editeventform.$invalid"
+		class="btn btn-primary">{{'button.save'| translate}}</button></li>
+	</ul>
+	
+</form>
+
+</div>
+</div>

@@ -1,0 +1,124 @@
+<div class="content-container" ng-controller="CreateFeeMasterController">
+  <ul class="breadcrumb">
+    <li><a href="#/organization">{{'link.admin.masters' | translate}}</a></li>
+    <li><a href="#/feemaster">{{'label.feemaster' | translate}}</a></li>
+    <li class="active">{{'label.create.feemaster' | translate}}</li>
+  </ul>
+  <div class="widget">
+    
+    
+    <h3>{{'label.create.new.FeeMaster' | translate}}</h3>
+    
+    <form name="createfeemasterform" novalidate class="form-horizontal"  data-ng-submit="submit()">
+    <api-validate></api-validate>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label class="control-label" for="feeCode">{{'label.feemaster.code' | translate }}<span class="required">*</span></label>
+          </div>
+          <div class="col-md-8">
+            <input type="text" id="feeCode" class="form-control" name="feeCode" data-ng-model="formData.feeCode" required data-ng-maxlength="10"  data-late-Validate><br/>
+            <span data-ng-show = "createfeemasterform.feeCode.$invalid">
+              <small class="error" data-ng-show="createfeemasterform.feeCode.$error.req"> {{'label.required.field' | translate}}</small>
+              <small class="error"  data-ng-show="createfeemasterform.feeCode.$error.maxlength">{{'error.code.definition.length.validation'| translate}}</small>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label class="control-label" for="feeDescription">{{'label.feemaster.description' | translate }}<span class="required">*</span></label>
+          </div>
+          <div class="col-md-8">
+            <input type="text" id="feeDescription" class="form-control" name="feeDescription" data-ng-model="formData.feeDescription"  required data-late-Validate>
+            <span data-ng-show ="createfeemasterform.feeDescription.$invalid">
+              <small class="error" data-ng-show="createfeemasterform.feeDescription.$error.req">{{'label.required.field' | translate}}</small>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label class="control-label" for="transactionType">{{'label.feemaster.transactiontype' | translate }}<span class="required">*</span></label>
+          </div>
+          <div class="col-md-8">
+            <select id="transactionType" class="form-control" data-ng-model="formData.transactionType" name="transactionType" class="form-control"
+              data-ng-options="transactionTypeData.mCodeValue as transactionTypeData.mCodeValue for transactionTypeData in transactionTypeDatas"  required data-late-Validate>
+            </select>
+            <span data-ng-show = "createfeemasterform.transactionType.$invalid">
+              <small class="error" data-ng-show="createfeemasterform.transactionType.$error.req">{{'label.required.field' | translate}}
+              </small>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label class="control-label"  for="chargeCode">{{'label.chargecode' | translate }}<span class="required">*</span></label>
+          </div>
+          <div class="col-md-8">
+            <select id="chargeCode" class="form-control" name="chargeCode" data-ng-model="formData.chargeCode"  data-ng-options="chargesData.chargeCode as chargesData.chargeDescription for chargesData in chargeDatas"   required data-late-Validate>
+            </select>
+            <span data-ng-show = "createfeemasterform.chargeCode.$invalid">
+              <small class="error" data-ng-show="createfeemasterform.chargeCode.$error.req">{{'label.required.field' | translate}}
+              </small>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <h4>{{'label.regionalprice' | translate}}</h4>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tr>
+          <td>
+            
+            <select  class="form-control" data-ng-model="regionalPriceFormData.regionId" data-ng-options="regionData.id as regionData.regionName for regionData in regionDatas" >
+              <option value="">selete one</option>
+            </select>
+          </td>
+          
+          <td><input type="text" name="amount" data-ng-model="regionalPriceFormData.amount" class="form-control"  placeholder="Price" data-ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"></td>
+          
+          <td><a data-ng-click="addReginalPrice()"><i class="fa fa-plus"></i></a></td>
+          
+          <td><span data-ng-show="createfeemasterform.amount.$dirty && createfeemasterform.amount.$invalid">
+            <small class="error" data-ng-show="createfeemasterform.amount.$error.pattern">{{'error.not.decimal.validation' | translate}}</small>
+          </span></td>
+        </tr>
+        
+        <table class="table fullwidth " data-ng-show="regionPrices.length>0">
+          <tr class="graybg">
+            <th>{{'table.heading.regionName' | translate}}</th>
+            <th>{{'label.amount' | translate}}</th>
+          </tr>
+          <tr data-ng-repeat="regionPrice in regionPrices" >
+            <td>
+              <select data-ng-model="regionPrice.regionId" class="form-control" data-ng-options="regionData.id as regionData.regionName for regionData in regionDatas">
+              </select>
+            </td>
+            <td>
+              <input type="text" data-ng-model="regionPrice.amount" placeholder="amount" class="form-control">
+            </td>
+            <td><a data-ng-click="removeRegionPrices($index)"><i class="fa fa-times"></i></a></td>
+          </tr>
+        </table>
+      </table>
+    </div>
+    <ul class="btn-group-list text-right mt20 mb20">
+      <li><a href="#/feemaster">
+      <button id="cancel" type="reset" class="btn btn-warning">{{'button.cancel' | translate}}</button></a></li>
+      <li><button id="submit" type="submit" class="btn btn-primary">{{'button.save' | translate}}</button></li>
+    </ul>
+    
+  </form>
+  
+</div>
+</div>

@@ -1,0 +1,80 @@
+<div class="content-container" ng-controller="CreateModelProvisionmappingController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'link.admin.masters' | translate}}</a></li>
+		<li><a href="#/itemmodel">{{'label.itemmodel' | translate}}</a>
+		<li class="active">{{'label.createitemmodel' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+		
+		<h3>{{'label.createitemmodel' | translate}}</h3>
+		
+		
+		<form name="createmodelprovisionmappingform" novalidate="" class="form-horizontal" rc-submit="submit()">
+		<api-validate></api-validate>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="make">{{'label.make'| translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="make" class="form-control" name="make" data-ng-model="formData.make" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="itemType">{{'label.itemtype'| translate }}<span class="required">*</span></label>
+					</div>
+					<div class="col-md-8">
+						<select id="itemType" class="form-control" data-ng-model="formData.itemType"
+							data-ng-options="itemType for itemType in itemTypes">
+							<option value="">{{'label.select.one' | translate}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="model">{{'label.model'| translate }}<span class="required">*</span></label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="model" class="form-control" name="model" data-ng-model="formData.model" />
+						<!-- <span data-ng-show="createmodelprovisionmappingform.model.$invalid">
+								<small class="error" data-ng-show="createmodelprovisionmappingform.model.$error.minlength && !createmodelprovisionmappingform.model.$error.req">Name is required at least 3 characters</small>
+						</span> -->
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="provisionId">{{'label.provision'| translate }}<span class="required">*</span></label>
+					</div>
+					<div class="col-md-8">
+						<select id="provisionId" class="form-control" ng-model="formData.provisioningId"
+							ng-options="provisionData.id as provisionData.systemcode for provisionData in provisionDatas">
+							<option value="">{{'label.select.one' | translate}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<ul class="btn-group-list text-right mt20 mb20">
+			<li><a href="#/itemmodel"><button id="cancel" type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel'| translate}}</button></a></li>
+			<li><button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button></li>
+		</ul>
+		
+	</form>
+	
+</div>
+</div>

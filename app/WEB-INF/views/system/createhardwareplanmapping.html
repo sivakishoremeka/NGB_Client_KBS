@@ -1,0 +1,69 @@
+<div class="content-container" ng-controller="CreateHardwarePlanMappingController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/system">{{'link.admin.system' | translate}}</a>
+		</li>
+	    <li>
+	    	<a href="#/mappingconfig">{{'label.managemappingconfigurations' | translate}}</a> 
+	    </li>
+	    <li class="active">{{'label.createhardwareplanmapping' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+			
+				<h3>{{'label.heading.createhardwareplan' | translate}}</h3>
+			
+			
+				<form class="form-horizontal" novalidate=""  rc-submit="submit()">
+					<api-validate></api-validate>
+					<div class="error" data-ng-show="errorStatus || errorDetails">
+					    <label data-ng-show="errorStatus">{{errorStatus}}</label>
+					    <label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+					</div>
+					
+						<!-- <div class="form-group">
+		            		<label class="control-label" for="planCode">{{ 'table.plan.code' | translate }}</label>
+		            		<div class="col-sm-3">
+			             		<select id="planCode" data-ng-model="formData.planCode" class="form-control" data-ng-options="planData.planCode as planData.planCode for planData in planDatas">
+			             		</select>
+		            		</div>
+	        			</div> -->
+	        			<div class="row">
+	        				<div class="col-md-6">
+	        			<div class="form-group row">
+	        				<div class="col-md-4">
+	           				<label class="control-label" for="provisioningId">{{ 'label.provision.provisioningsystem' | translate }}</label>
+	           			</div>
+	          				<div class="col-md-8">
+		           				<select id="provisioningId" data-ng-model="formData.provisioningId" class="form-control" data-ng-options="provisioningData.id as provisioningData.systemcode for provisioningData in provisioning">
+		             					<option value="">{{'label.select.one' | translate}}</option>
+		             			</select>
+	           				</div>
+        				</div>
+        			</div>
+	        			
+	        			<div class="col-md-6">
+	        			<div class="form-group row">
+	        				<div class="col-md-4">
+	           				<label class="control-label" for="itemClass">{{'label.itemclass' | translate }}</label>
+	           			</div>
+	           				<div class="col-md-8">
+		           				<select id="itemClass" data-ng-model="formData.itemClass" class="form-control" data-ng-options="itemClassData.id as itemClassData.value for itemClassData in itemClassDatas">
+		             					<option value="">{{'label.select.one' | translate}}</option>
+		             			</select>
+		             			<!-- <select id="itemCode" data-ng-model="formData.itemCode" class="form-control" data-ng-options="itemData.itemCode as getBothItem(itemData.itemCode,itemData.itemDescription) for itemData in itemDatas">
+		             			</select> -->
+	          				</div>
+        			    </div>
+        			</div>
+        		</div>
+        				
+        				 <ul class="btn-group-list text-right mt20 mb20">
+	            	 	 	<li><a href="#/mappingconfig"><button type="reset" class="btn btn-warning" data-ng-click="reset123()">{{'button.cancel'| translate}}</button></a></li>
+            			 	<li><button type="submit" class="btn btn-primary">{{'button.save'| translate}}</button></li>
+	          	        </ul>
+					
+				</form>
+		
+	</div>
+</div>

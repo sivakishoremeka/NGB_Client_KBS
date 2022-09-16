@@ -1,0 +1,41 @@
+<div class="content-container" ng-controller="ViewUomController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+		</li>
+	    <li><a href="#/rating">{{'label.rating' | translate}}</a></li>
+	    <li class="active">{{'label.viewuom' | translate}}&nbsp;&nbsp;</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h3>{{uom.Name}}</h3>
+				<div class="pull-right">
+	      			<div class="btn-group">
+	          			<a has-permission = UPDATE_UOM href="#/edituom/{{uom.id}}" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a>
+	     			</div>
+	    		</div>
+			</div>
+			<br/>
+				<div class="row">
+					<div class="col-md-6">
+						<table class="table table-bordered table-striped"> 
+							<tr>
+								<td>{{ 'label.id' | translate }}</td>
+								<td>{{uom.id}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.name' | translate }}</td>
+								<td>{{uom.Name}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.description' | translate }}</td>
+								<td>{{uom.Description}}</td>
+							</tr>
+						</table>
+						
+					</div>
+				</div>
+		 </div>
+	</div>
+</div>

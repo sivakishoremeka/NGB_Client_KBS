@@ -1,0 +1,83 @@
+<div class="content-container" ng-controller="ViewReportsController">
+	<ul class="breadcrumb">
+		<li class="active">{{type}}</li>
+	</ul>
+	<div class="widget mb30">
+		<div class="row">
+			<div class="col-md-3">
+				<input ng-autofocus="true" ng-model="filterText" type="text"
+					ng-keyup="addLocaleReportName();"
+					class="span marginbottom0px form-control"
+					placeholder="{{ 'label.input.filterbyname' | translate }}">
+			</div>
+			<div class="col-md-3">
+				<div class="form-group row align-items-center m-0">
+					<div class="col-md-4 p-0">
+				<label class="control-label m-0" for="reportsType">{{'label.reportsType'
+					| translate }}</label></div>
+                  <div class="col-md-8">
+					 <select ng-model="reportType" class="form-control" id="reportType" ng-change="reportstyp()">
+					<option value="">{{'label.select.one' | translate}}</option>
+					<option name="all" value="all">{{'label.anchor.reports'
+						| translate}}</option>
+					<option name="clients" value="clients">{{'label.anchor.clients'
+						| translate}}</option>
+					<option name="orders" value="orders">{{'label.anchor.orders'
+						| translate}}</option>
+					<option name="tickets" value="tickets">{{'link.reports.tickets'
+						| translate}}</option>
+					<option name="inventory" value="inventory">{{'link.reports.inventory'
+						| translate}}</option>
+					<option name="leads" value="leads">{{'link.reports.leads'
+						| translate}}</option>
+					<option name="broadcaster" value="broadcaster">{{'link.reports.broadcaster'
+						| translate}}</option>
+					<option name="AccessProfile" value="accessProfile">{{'link.reports.AccessProfile'
+						| translate}}</option>
+					<option name="invoice&collections" value="invoice&collections">{{'link.reports.invoice&collections'
+						| translate}}</option>
+					<option name="organization" value="organization">{{'link.reports.Organization'
+						| translate}}</option>
+
+				</select>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+	<!-- <div class="borderMain" style="margin:10px;"> -->
+	<div class="widget" id="viewtab">
+		<!-- <div class="toolbar ptb15 mrl15 bb1 mb20">
+           	<h4 class="ptrbl0">{{'link.reports' | translate}}</h4>
+       	</div> -->
+
+		<!--  <div class="card" style="height:54px;margin:15px;width:1360px;">
+        <input ng-model="filterText" type="text" style="width:25%;" ng-keyup="addLocaleReportName();" class="span marginbottom0px form-control" placeholder="{{ 'label.input.filterbyname' | translate }}">
+        </div> -->
+		<!-- <div class="borderMain" style="margin:10px;">
+		 <div class="borderBottom"></div> -->
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{ 'label.heading.name' | translate }}</th>
+					<th>{{ 'label.heading.type' | translate }}</th>
+					<th>{{ 'label.heading.category' | translate }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="pointer-main"
+					ng-repeat="report in reports| orderBy:'report_name':reverse | filter:filterText | filter:filterByReportSubType">
+					<td class="pointer" data-ng-click="routeTo(report)">{{''+report.report_name+''
+						| translate}}</td>
+					<td class="pointer" data-ng-click="routeTo(report)">{{report.report_type}}</td>
+					<td class="pointer" data-ng-click="routeTo(report)">{{report.report_category}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<div ng-hide="true" ng-repeat="report in reports">
+			<input type="hidden" id="locale_name_{{$index}}" name="locale_name"
+				ng-model="report.report_locale_name"
+				value="{{report.report_name | translate}}" />
+		</div>
+	</div>
+</div>

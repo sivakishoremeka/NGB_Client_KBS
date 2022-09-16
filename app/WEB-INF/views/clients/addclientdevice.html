@@ -1,0 +1,172 @@
+<div class="content-container" ng-controller="AddClientDeviceController">
+    <ul class="breadcrumb">
+        <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+        <li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+        <li class="active">{{'label.add.device' | translate}}</li>
+    </ul>
+    <div class="widget">
+        <h3>{{'label.add.device' | translate}}</h3>
+        <form class="form-horizontal">
+            <api-validate></api-validate>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label " for="officeId">{{'label.heading.office' | translate}}&nbsp;<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select data-ng-model="formData.officeId" class="form-control" data-ng-options="office.id as office.name for office in offices" ng-change="officeDetailsFun()">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label ">{{ 'label.saleDate' | translate }}&nbsp;<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" data-datepicker-pop="dd MMMM yyyy" data-ng-model="date.saleDate" data-is-open="opened2" min="minDate" class="form-control" max="maxDate" data-date-disabled="disabled(date, mode)" style="background-color: #FFFFFF;" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tr>
+                        <td>
+                            <label class="control-label" for="serialNumber">{{'label.serialNumber' | translate }}&nbsp;
+                                <span class="required">*</span></label>
+                            <input type="text" data-ng-model="itemDetail" name="serialNumber" class="input-small form-control" uib-typeahead="itemDetail as itemDetail for itemDetail in getData($viewValue)" autocomplete="off" data-typeahead-on-select="getItemData($item, $model, $label)" data-typeahead-min-length="0">
+                        </td>
+                        <td>
+                            <label class="control-label" for="itemId">{{'label.item' | translate }}&nbsp;<span class="required">*</span></label>
+                            <select id="itemId" data-ng-model="formData.itemId" disabled class="input-small form-control" data-ng-options="itemData.id as itemData.itemCode for itemData in itemDatas">
+                            </select>
+                        </td>
+                        <td>
+                            <label class="control-label" for="discountId">{{'label.discountCode' | translate }}</label>
+                            <select data-ng-model="formData.discountId" class="input-small form-control" data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+                            </select>
+                        </td>
+                        <td>
+                            <label class="control-label" for="totalPrice">{{'label.totalPrice' | translate }}</label>
+                            <input type="text" id="totalPrice" class="input-small form-control" data-ng-model="formData.totalPrice" style="background-color: #FFFFFF;" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped" ng-if="isPairable">
+                    <tr>
+                        <td>
+                            <label class="control-label" for="pairableSerialNo">{{'label.pairedserialnumber' | translate}}<span class="required">*</span></label>
+                            <input type="text" id="pairableSerialNo" name="pairableSerialNo" data-ng-model="pairableSerialNo" class="input-small form-control" autocomplete="off" list="pairableItemlist" data-ng-change="selectPairableItemDetails(pairableSerialNo)" required />
+                            <datalist id="pairableItemlist">
+                                <option data-ng-repeat="pairableItemDetail in pairableItemDetails" value="{{pairableItemDetail}}"></option>
+                            </datalist>
+                        </td>
+                        <td>
+                            <label class="control-label" for="pairableItemId">{{'label.paireditem' | translate }}&nbsp;<span class="required">*</span></label>
+                            <select id="pairableItemId" data-ng-model="pairableFormData.itemId" disabled class="input-small form-control" data-ng-options="pairableItemData.id as pairableItemData.itemCode for pairableItemData in itemDatas">
+                            </select>
+                        </td>
+                        <td>
+                            <label class="control-label" for="pairableDiscountId">{{'label.discountCode' | translate }}</label>
+                            <select data-ng-model="pairableFormData.discountId" class="input-small form-control" data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+                            </select>
+                        </td>
+                        <td>
+                            <label class="control-label" for="totalPrice">{{'label.totalPrice' | translate }}</label>
+                            <input type="text" id="totalPrice" class="form-control" data-ng-model="pairableFormData.totalPrice" style="background-color: #FFFFFF;" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a id="cancel" href="#/viewclient/id/{{clientId}}">
+                        <button type="reset" class="btn btn-warning" data-ng-click="reset123()">{{'button.cancel' | translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit1" class="btn btn-primary" data-ng-click="newSaleSaveBtnFun()">{{'button.save' | translate}}</button>
+                </li>
+            </ul>
+
+            <div data-ng-show="secondSaleType">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="totalPrice">{{ 'label.totalPrice' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="totalPrice" class="form-control" data-ng-model="formData.totalPrice" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="btn-group-list text-right">
+                            <li>
+                                <a id="cancel" href="#/viewclient/id/{{clientId}}">
+                                    <button type="reset" class="btn btn-warning" data-ng-click="reset123()">{{'button.cancel' | translate}}</button>
+                                </a>
+                            </li>
+                            <li>
+                                <button id="submit2" class="btn btn-primary" data-ng-click="secondSaleSaveBtnFun()">{{'button.save' | translate}}</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div data-ng-show="deviceRentalType">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label " for="totalPrice">{{ 'label.price' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="totalPrice" class="form-control" data-ng-model="formData.totalPrice" style="background-color:#FFFFFF;" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label " for="discountId">{{ 'label.discountCode' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <select data-ng-model="formData.discountId" class="form-control" data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas"> </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label " for="contractPeriod">{{ 'label.contract' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <select data-ng-model="formData.contractPeriod" class="form-control" data-ng-options="contractPeriod.id as contractPeriod.subscriptionPeriod for contractPeriod in contractPeriods"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a id="cancel" href="#/viewclient/id/{{clientId}}">
+                        <button type="reset" class="btn btn-warning" data-ng-click="reset123()">{{'button.cancel' | translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit3" type="submit" class="btn btn-primary" data-ng-click="deviceRentalSaveBtnFun()"> {{'button.save' | translate}}</button>
+                </li>
+             </ul>
+            </div>
+        </form>
+    </div>
+</div>

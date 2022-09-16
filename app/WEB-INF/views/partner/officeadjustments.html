@@ -1,0 +1,121 @@
+<div class="content-container" ng-controller="OfficeAdjustmentsController">
+	<ul class="breadcrumb">
+		<li><a href="#/offices" data-ng-click="partnersTab()">{{'label.manageorganization' | translate}}</a></li>
+		<!-- <li><a href="#/viewpartner/{{partnerId}}/{{officeId}}">{{partnerName}}</a></li> -->
+		<li class="active">Create Adjustment</li>
+	</ul>
+
+	<div class="widget card mb30 avatar-wrap">
+		 <div class="row d-flex align-items-center">
+			<div class="col-md-1">
+               <div class="avatarDiv" >
+                   <img data-ng-hide="client.imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar" >
+                   <img data-ng-show="client.imagePresent" src="{{image}}" alt="Avatar"  class="avatar">
+               	<h3>{{office.name}} </h3>
+               	<i class="fa fa-circle fs15 {{client.status.code | StatusLookup}}"></i>
+               	<small ng-if="client.subStatus.description">
+                   	[{{client.subStatus.description}}]
+               	</small>
+               </div>
+           </div>
+           <div class="col-md-11">
+           	<div class="row">
+           		<div class="col-md-4">
+           			 <label id="fthin">{{ 'Entity Code' | translate }}: <span id="fnormal">{{office.externalId}}</span></label>
+           		</div>
+           		<div class="col-md-4">
+           			  <label id="fthin">{{ 'Entity Type' | translate }}:<span id="fnormal">{{office.officeType}}</span></label>
+           		</div>
+           		<div class="col-md-4">
+           			 <label id="fthin">{{ 'Parent Entity' | translate }}:<span id="fnormal">{{office.parentName}}</span></label>
+           		</div>
+           		<div class="col-md-4">
+           			 <label id="fthin">{{ 'label.contactperson' | translate }}:<span id="fnormal">{{office.contactPerson}}</span></label>
+           		</div>
+            </div>
+           </div>
+	       </div>
+		</div>
+
+	<div class="widget card">
+        <div class="content">
+		   <h3>{{'label.heading.createadjustment' | translate}}</h3>
+			<form name="createadjustment" novalidate=""  class="form-horizontal" rc-submit="submit()">
+				<api-validate></api-validate>
+			  <div class="row">
+             	 <div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+		          		     <label class="control-label" for="adjustmentDate">{{ 'label.adjustmentdate' | translate }}</label>
+		          		 </div>
+		           		<div class="col-md-8">
+			              	<input type="text" datepicker-pop="dd MMMM yyyy" data-ng-model="start.date" is-open="opened2" min="minDate" max="maxDate" 
+			                  	   date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;" class="form-control" readonly/>
+			           		</div>
+		    			</div>
+		    		</div>
+	             <div class="col-md-6">
+	         		<div class="form-group row">
+	         			 <div class="col-md-4">
+							<label class="control-label" for="adjustmentCode">{{ 'label.adjustmentcode' | translate }}</label>
+						</div>
+						 <div class="col-md-8">
+				            <select id="adjustmentCode" data-ng-model="formData.adjustmentCode" data-ng-options="data.id as data.adjustmentCode for data in data" class="form-control">
+				            	<option value="">{{'label.select.one' | translate}}</option>
+				            </select>
+		                </div>
+					</div>
+				</div>
+			</div>
+			
+			 <div class="row">
+			 	 <div class="col-md-6">
+				    <div class="form-group row">
+				    	 <div class="col-md-4">
+			               	<label class="control-label">{{ 'label.adjustmentamount' | translate }}</label>
+			               </div>
+		           	 	 <div class="col-md-8">
+			              	<input id="amountPaid" class="form-control" type="text" data-ng-model="formData.amountPaid" >
+			            </div>
+			        </div>
+			    </div>
+			    <div class="col-md-6">
+			        <div class="form-group row">
+			        	<div class="col-md-4">
+				             <label class="control-label">Adjustment Type</label>
+				         </div>
+			            <div class="col-md-8">
+			              	<select id="adjustmentCode" data-ng-model="formData.adjustmentType" class="form-control"
+			              			data-ng-options="discountOpt.discountType as discountOpt.discountType for discountOpt in discountOptions">
+				            	<option value="">{{'label.select.one' | translate}}</option>
+				            </select>
+		           	    </div>
+	        	    </div>
+	        	</div>
+	        </div>
+
+	         <div class="row">
+	        	  <div class="col-md-6">
+	        	   	<div class="form-group row">
+	        	   		 <div class="col-md-4">
+						        <label class="control-label">{{'label.notes' | translate}}</label>
+						    </div>
+						<div class="col-md-8">
+							<textarea data-ng-model="formData.remarks" class="form-control"></textarea>
+						</div>
+			        </div>
+			    </div>
+			</div>
+               
+			    <ul class="btn-group-list text-right mt20 mb20">  
+		      	 	<li> 
+		      	 		<a href="#/partner"><button type="reset" class="btn btn-warning" data-ng-click="reset(partnerId,officeId)">{{'button.cancel'| translate}}</button></a>
+				    </li>
+				    <li>
+				    	<button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+				    </li>
+		      	 </ul>
+			</form>
+		</div>
+	</div>
+</div>

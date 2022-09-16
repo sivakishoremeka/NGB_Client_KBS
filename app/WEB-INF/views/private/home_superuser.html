@@ -1,0 +1,206 @@
+<div class="content-container">
+  <div id="expertsearch" data-ng-controller="ExpertSearchController" class="admin-wrap">
+    <div class="widget card mb30">
+        <h3>{{'label.heading.welcome' | translate}}, {{currentSession.user.name}}</h3>
+      
+      <div class="row d-flex align-items-center">
+        <div class="col-sm-4"><input id="expert" type="text" data-ng-model="formData.search"
+	    placeholder="{{'label.input.searchactivities' | translate}}" class="col-md-10 form-control" typeahead-on-select="search()"
+	    ng-autofocus="true" uib-typeahead="param as param for param in searchParams | filter:$viewValue | limitTo:8"/></div>
+        <div class="col-sm-8">
+          <ul class="btn-group-list pull-right">
+             <!-- <li>
+              <label class="btn primary_btn" ng-model="dashModel" btn-radio="'dashboard'"><i class="fa fa-home" aria-hidden="true"></i> &nbsp;&nbsp; {{'label.heading.home' | translate}}</label>
+            </li>  -->
+            <li>
+                <label class="btn primary_btn ml20" ng-click="switch()" ng-model="dashModel" btn-radio="'rich-dashboard'"><i class="fa fa-tachometer" aria-hidden="true"></i> &nbsp;&nbsp; {{'label.heading.dashboard' | translate}}</label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+     <div class="col-sm-3 layout-spacing">
+     <div class="card crdh crd1 icon-box" >
+     <div>
+     <!-- <img src="images/active.png" class="gly_img" ></img> -->
+      <span class="gly_txt2" >{{deviceData.c_active}}</span>
+      <span class="gly_txt1" >{{ 'label.active'| translate }}</span>
+      <i class="fa fa-check"></i>
+      </div>
+     </div>
+     </div>
+     <div class="col-sm-3 layout-spacing">
+     <div class="card crdh crd2 icon-box" >
+     <div>
+      <!-- <img src="images/inactive.png" class="gly_img" ></img> -->
+      <span class="gly_txt2" >{{deviceData.c_inactive}}</span>
+      <span class="gly_txt1" >{{ 'label.inactive' | translate }}</span>
+      <i class="fa fa-times-circle"></i>
+     </div>
+     </div>
+     </div>
+     <div class="col-sm-3 layout-spacing">
+     <div class="card crdh crd3 icon-box">
+     <div>
+      <!-- <img src="images/allocated.png" class="gly_img" ></img> -->
+      <span class="gly_txt2" >{{deviceData.c_allocated}}</span>
+      <span class="gly_txt1" >{{ 'label.allocated'| translate }}</span>
+      <i class="fa fa-plus"></i>
+     </div>
+     </div>
+     </div>
+     <div class="col-sm-3 layout-spacing">
+     <div class="card crdh crd4 icon-box">
+     <div>
+      <!-- <img src="images/instock.png" class="gly_img" ></img> -->
+      <span class="gly_txt2" >{{deviceData.c_instock}}</span>
+      <span class="gly_txt1" >{{ 'label.stock'| translate }}</span>
+      <i class="fa fa-download"></i>
+     </div>
+     </div>
+     </div>
+     </div>
+    <div id="home">
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="widget viewbgclient user-profile-wrap" style="min-height:400px;">
+                <h3 class="full-bg-title"><i class="icon-bolt"></i>{{'label.heading.userprofile' | translate}}</h3>
+               <div class="user-profile">
+                  <div class="img-box">
+                     <img data-ng-hide="client.imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar"> 
+                  </div>
+                 <table class="table tablestyles ">
+                <!-- <tr>
+                                <th>{{ 'label.heading.userid' | translate }}</th>
+                                <td>{{userDetails.userId}}</td>
+                            </tr> -->
+                            <tr>
+                                <th><i class="fa fa-user"></i>{{ 'label.heading.username' | translate }}</th>
+                                <td>{{userDetails.username}}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="fa fa-home"></i>{{ 'label.heading.office' | translate }}</th>
+                                <td>{{user.officeName}}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="fa fa-check-circle"></i>{{ 'label.heading.status' | translate }}</th>
+                                <td>{{status}}</td>
+                            </tr>
+
+                            <!-- <tr>
+                                <th>{{ 'label.heading.language' | translate }}</th>
+                                <td>{{optlang.name}}</td>
+                            </tr> -->
+                            <tr>
+                                <th style="width:280px;"><i class="fa fa-envelope"></i>{{ 'label.heading.primaryemail' | translate }}</th>
+                                <td>{{user.email}}</td>
+                            </tr>
+                  </table>     
+               </div>
+
+
+               
+            </div>
+        </div>
+        
+        <!-- <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="viewbgclient  mt10">
+                <h3 class="pb10 ng-binding"><i class="icon-bolt"></i>{{'label.heading.deviceoverview' | translate}}</h4>
+                <table class="table table-striped tablestyles">
+						<tr>
+                                <td bgcolor="#7fff7f">{{ 'label.active'| translate }}</td>
+                                <td>{{deviceData.c_active}}</td>
+                            </tr>
+                            
+                            <tr>
+                                <td bgcolor="#ff7f7f">{{ 'label.inactive' | translate }}</td>
+                                <td>{{deviceData.c_inactive}}</td>
+                            </tr>
+                            
+                            <tr>
+                                <td bgcolor="#7f7fff">{{ 'label.allocated'| translate }}</td>
+                                <td>{{deviceData.c_allocated}}</td>
+                            </tr>
+                            
+                             
+                            <tr>
+                                <td bgcolor="#ffff7f" style="width:280px;">{{ 'label.stock'| translate }}</td>
+                                <td>{{deviceData.c_instock}}</td>
+                            </tr>
+              </table>
+            </div>
+        </div>
+     -->
+ 
+      
+    
+    
+    <!--<div class="card well minHeight pb20">
+      <div id="home" class="row">
+        <div class="col-md-12">
+        	<div class="toolbar ptb15 mrl15 bb1 mb20">
+                <h4 class="ptrbl0 ng-binding">{{'label.heading.navigation.guide' | translate}}: </h4>
+              </div>
+           </div>
+         <div class="col-md-6 col-md-offset-3">
+			<img src="./images/mifos_lg-logo.png" alt="MifosX" class="img-responsive" ng-if="!isLargeLogoPath">
+			<img src="{{largeLogoPath}}" alt="MifosX" class="img-responsive" ng-if="isLargeLogoPath">
+	    </div> 
+      </div>
+      <div class="row">
+      <div class="col-md-12">
+      	<p class="shortcutsCode"><i class="fa fa-arrow-left"></i>{{'label.heading.left.shortcuts' | translate}} &nbsp;&nbsp; <i class="fa fa-arrow-up"></i>{{'label.heading.top.menu' | translate}} &nbsp;&nbsp; <i class="fa fa-arrow-up top-right"></i>{{'label.heading.right.search' | translate}}</p>
+        <div class="col-md-6">
+          <table class="table table-striped table-bordered">
+            <tr>
+              <td ><strong><i class="icon-bolt"></i>{{'label.heading.recent.frequent.activities' | translate}}</strong></td>
+            </tr>
+            <tr>
+              <td ng-hide="frequent.length==0" ><a href="#{{freq}}" data-ng-repeat="freq in frequent track by $index" class="list-group-item"> {{freq | UrlToString | translate}}</a></td>
+              <td ng-show="frequent.length==0"><span class="required offset3">None</span></td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table table-striped table-bordered activity_color">
+            <tr>
+              <td ><strong style="font-size:15px;"><i class="icon-laptop"></i>{{'label.heading.visited.clients' | translate}}</strong></td>
+            </tr>
+            <tr>
+              <td ng-hide="recentClients.length==0" ><a href="#{{recentClient.href}}" data-ng-repeat="recentClient in recentClients" class="list-group-item"> {{recentClient.accountNo}} --- {{recentClient.displayName}}</a></td>
+              <td ng-show="recentClients.length==0"><span class="required offset3">None</span></td>
+            </tr>
+          </table>
+        </div>
+        </div>
+      </div>
+    </div> -->
+    
+    <!-- <div id="home" class="card bgnone row"> -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="widget viewbgclient frequent-tabel" style="min-height:400px;">
+                <h3 class="full-bg-title"><i class="icon-bolt"></i>{{'label.heading.recent.frequent.activities' | translate}}</h3>
+                <table class="table table-striped tablestyles colorB ">
+                <tr >
+                  <td ng-hide="frequent.length==0" class="ptrbl0" ><a href="#{{freq}}" data-ng-repeat="freq in frequent track by $index" class="list-group-item" id="td_text" > {{freq | UrlToString | translate}}</a></td>
+                  <td ng-show="frequent.length==0" class="tc"><span class="required offset3">None</span></td>
+                </tr>
+              </table>
+            </div>
+        </div>
+        
+        <!-- <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="viewbgclient minHeight240 mt10">
+                <h3 class="pb10 ng-binding"><i class="icon-laptop"></i>{{'label.heading.visited.clients' | translate}}</h4>
+                <table class="table table-striped">
+                <tr>
+                  <td ng-hide="recentClients.length==0" class="ptrbl0" ><a href="#{{recentClient.href}}" data-ng-repeat="recentClient in recentClients" class="list-group-item"> {{recentClient.accountNo}} --- {{recentClient.displayName}}</a></td>
+                  <td ng-show="recentClients.length==0" class="tc"><span class="required offset3">None</span></td>
+                </tr>
+              </table>
+            </div>
+        </div> -->
+    </div>
+</div></div>
+

@@ -1,0 +1,468 @@
+<div class="content-container"
+	ng-controller="CreateUsageRatePlanController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'link.admin.masters' |
+				translate}}</a></li>
+		<li><a href="#/rating">{{'label.rating' | translate}}</a></li>
+		<li><a href="#/createusagerateplan">{{'label.createusagerateplan'
+				| translate}}</a>
+	</ul>
+	<div class="widget">
+		<h3>{{'label.createusagerateplan' | translate}}</h3>
+		<br>
+
+		<form name="createusagerateplan" novalidate="" class="form-horizontal">
+			<api-validate></api-validate>
+			<div class="error" data-ng-show="errorStatus || errorDetails">
+				<label data-ng-show="errorStatus">{{errorStatus}}</label> <label
+					data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code
+					| translate}}</label>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label" for="planPriceId">{{
+								'label.planPrice' | translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<select type="text" id="planPriceId" class="form-control"
+								name="planPriceId" data-ng-model="formData.planPriceId"
+								data-ng-options="PlanpriceDatas.planId as getBothPlanprice(PlanpriceDatas.planDesc,PlanpriceDatas.productDesc) for PlanpriceDatas in PlanpriceData">
+								<option value="">{{'label.select.one' | translate}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label" for="rumId">{{ 'label.rum' |
+								translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<select type="text" id="rumId" class="form-control" name="rumId"
+								data-ng-model="formData.rumId"
+								data-ng-options="RumDatas.rumId as  RumDatas.rumName for RumDatas in RumData">
+								<option value="">{{'label.select.one' | translate}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label" for="ratingType">{{
+								'label.ratingType' | translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<select type="text" id="ratingType" class="form-control"
+								name="ratingType" data-ng-model="formData.ratingType"
+								data-ng-options="ratingType for ratingType in ratingTypes">
+								<option value="">{{'label.select.one' | translate}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label" for="timeModelId">{{
+								'label.timeModel' | translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<select type="text" id="timeModelId" class="form-control"
+								name="timeModelId" data-ng-model="formData.timeModelId" data-ng-change="getTimePeriods(formData.timeModelId)"
+								data-ng-options="timemdelDatas.timemodelId as timemdelDatas.timeModelName for timemdelDatas in timemdelData">
+								<option value="">{{'label.select.one' | translate}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div>
+			<table class="table" data-ng-show="timePeriodData.length>0" style="width: 1200px;">
+			    <thead>
+						<tr class="graybg">
+						    <th>{{ 'label.select' | translate}}</th>
+							<th>{{ 'label.timeperiodId' | translate }}</th>
+							<th>{{ 'label.timeperiodName' | translate }}</th>
+							<th>{{ 'label.startYear' | translate }}</th>
+							<th>{{ 'label.endYear' | translate }}</th>
+							<th>{{ 'label.startMonth' | translate }}</th>
+							<th>{{ 'label.endMonth' | translate }}</th>
+							<th>{{ 'label.startDay' | translate }}</th>
+							<th>{{ 'label.endDay' | translate }}</th>
+							<th>{{ 'label.startTime' | translate }}</th>
+							<th>{{ 'label.endTime' | translate }}</th>
+						</tr>
+				</thead>
+				<tbody>
+						<tr data-ng-repeat="timePeriod in timePeriodData">
+						    <td><input type="checkbox" ng-model="active" ng-true-value="true" 
+						        ng-false-value="false" ng-change="runJobSelected(job, active)"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.timeperiodId" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.timeperiodName" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.startYear" type="text"></td>
+								<td><input class="input-small form-control"
+								data-ng-model="timePeriod.endYear" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.startMonth" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.endMonth" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.startDay" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.endDay" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.startTime" type="text"></td>
+							<td><input class="input-small form-control"
+								data-ng-model="timePeriod.endTime" type="text"></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</div> -->
+			<ul class="btn-group-list text-right mt20 mb20">
+				<li>
+					<button id="submit" type="submit" data-ng-click="submit();show()"
+						class="btn btn-primary">{{'button.save'| translate}}</button>
+				</li>
+			</ul>
+			<div class="row" ng-hide=show>
+				<table class="table">
+					<tr>
+						<td style="width: 352px;"><label for="tierName">{{'label.tiername'|
+								translate }}&nbsp;</label> <input type="text" id="tierName"
+							class="form-control" name="tierName" data-ng-model="tierName" />
+						</td>
+						<td style="width: 352px;"><label for="startRange">{{'label.startrange'|
+								translate }}&nbsp;</label> <input type="text" id="startRange"
+							class="input-small form-control" name="startRange"
+							data-ng-model="startRange" /></td>
+						<td style="width: 352px;"><label class="control-label"
+							for="endRange">{{'label.endrange'| translate }}&nbsp;</label> <input
+							type="text" id="endRange" class="input-small form-control"
+							name="endRange" data-ng-model="endRange" /></td>
+						<td><a
+							data-ng-click="!(createrateqtytier.createrateqtytier.$error.pattern)&&addCreateRateQtyTierData()"
+							style="margin-left: 25px;"> <i class="fa fa-plus"
+								style="margin-top: 30px;"></i>
+						</a>&nbsp;</td>
+					</tr>
+				</table>
+
+				<div data-ng-show="range.length>0">
+
+					<table class="table">
+						<tr class="graybg">
+							<th style="width: 352px;">{{ 'label.tiername' | translate }}</th>
+							<th style="width: 352px;">{{ 'label.startrange' | translate }}</th>
+							<th style="width: 352px;">{{ 'label.endrange' | translate }}</th>
+
+						</tr>
+						<tr
+							data-ng-repeat="existsTemplateDefinition in range track by $index">
+
+							<td style="width: 352px;"><input class="input-small form-control"
+								data-ng-model="existsTemplateDefinition.tierName" type="text"></td>
+							<td style="width: 352px;"><input class="input-small form-control"
+								data-ng-model="existsTemplateDefinition.startRange" type="text"></td>
+							<td style="width: 352px;"><input class="input-small form-control"
+								data-ng-model="existsTemplateDefinition.endRange" type="text"></td>
+							<!--  <td>
+                                         <button ng-click="show()">{{' button.addprice'| translate }}</button>
+                                      </td> -->
+							<td><span> <a class="btn primary_btn"
+									data-ng-click="addprice(usageRateplanId,usageRateQuantityTierId)">{{'button.addprice'
+										| translate}}</a></span></td>
+
+
+							<!--  <td>
+				                  <a data-ng-click="removeRange($index)"><i class="fa fa-times"></i>
+				                  </a>
+				               </td> -->
+						</tr>
+					</table>
+
+					<!-- <div class="col-md-offset-9 pull-right">
+                       <a href="#/organization"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+                       <button id="save" type="submit1" class="btn btn-primary" data-ng-click="submit1()">{{'button.save'| translate}}</button>
+                   </div> -->
+				</div>
+			</div>
+			<!-- <div class="row" >
+                        <table class="table">
+                             <tr>
+                                 <td style="width:352px">
+                                 <label class="control-label col-sm-2" for="currencyId">{{ 'label.currency' | translate }}</label>
+	              		    	  <select id="currencyId" data-ng-model="currencyId" data-ng-options="currencyData.id as getBothCurrency(currencyData.code,currencyData.name) for currencyData in currencyDatas" class="form-control">
+				   				</select>
+                                </td>
+                                <td style="width:116px">
+                                <label class="control-label " for="glId">{{ 'label.glid' | translate }}</label>
+	                      		<select  id="glId" class="form-control" data-ng-model="glId" data-ng-options="glRealatedDatas.id as glRealatedDatas.mCodeValue for glRealatedDatas in glRealatedDatas" >
+                                </select>
+                                </td> 
+                                
+                                 <td style="width:116px">
+                                  <label class="control-label col-sm-2" for="rumId">{{'label.rum'| translate }}&nbsp;</label>
+                                    <select id="rumId" data-ng-model="rumId"  class="form-control"
+                                    data-ng-options="RumDatas.rumId as  RumDatas.rumName for RumDatas in RumDatas">
+                                    </select>
+                                 </td>
+                                 <td style="width:116px">
+                                  <label class="control-label col-sm-2" for="uomId">{{'label.uom'| translate }}&nbsp;</label>
+                                    <select id="uomId" data-ng-model="uomId"  class="form-control"
+                                       data-ng-options="UomDatas.uomId as  UomDatas.uomName for UomDatas in UomDatas">
+                                    </select>
+                                 </td>
+                                <td style="width:116px">
+                                    <label class="control-label col-sm-2" for="timeperiodId">{{ 'label.timeperiod' | translate }}</label>
+                                    <select id="timeperiodId" data-ng-model="timeperiodId" class="form-control"
+                                      data-ng-options="TimeperiodDatas.timeperiodId as  TimeperiodDatas.timeperiodName for TimeperiodDatas in TimeperiodDatas"  >
+                                    </select>
+                                </td>
+                                <td style="width:116px">
+                                    <label for="Unit">{{ 'label.unit' | translate }}</label>
+                                    <input type="text" id="Unit" class="input-small form-control" data-ng-model="unit"/>
+                                </td>
+                                <td style="width:116px">
+                                    <label for="Rate">{{ 'label.rate' | translate }}</label>
+                                    <input type="text" id="rate" class="input-small form-control" name="rate" data-ng-model="rate"/>
+                                </td>
+                                <td>
+                                   <a data-ng-click="addCreateRateQtyTierNewData()" style="margin-left:25px;">
+                                       <i class="fa fa-plus" style="margin-top: 30px;"></i>
+                                   </a>&nbsp;
+                                </td>
+                            </tr>
+                          </table>
+                           
+                     <div data-ng-show="ratebalance.length>0">
+                     
+                            <h3>{{'label.existsUsageRate' | translate}}</h3>
+                            <table class="table table-striped">
+                                   <tr class="graybg">
+                                       <th>{{ 'label.glid' | translate }}</th>
+                                       <th>{{ 'label.currency' | translate }}</th>
+                                       <th>{{ 'label.Rum' | translate }}</th>
+                                       <th>{{ 'label.uom' | translate }}</th>
+                                       <th>{{ 'label.timeperiod' | translate }}</th>
+                                       <th>{{ 'label.unit' | translate }}</th>
+                                       <th>{{ 'label.rate' | translate }}</th>
+                                   </tr>
+                                 <tr data-ng-repeat="existsUsageRateBalance in ratebalance track by $index">
+                                       
+                                      <td>
+                                        <select class="input-small form-control"  data-ng-model="existsUsageRateBalance.currencyId"
+                                         data-ng-options="currencyData.id as getBothCurrency(currencyData.code,currencyData.name) for currencyData in currencyDatas">
+				   				       </select>
+                                      </td> 
+                                      <td>
+                                      <select  class="input-small form-control" data-ng-model="existsUsageRateBalance.glId" 
+                                      data-ng-options="glRealatedDatas.id as glRealatedDatas.mCodeValue for glRealatedDatas in glRealatedDatas" >
+                                      </select>
+                                      </td>
+                                      <td><select class="input-small form-control" data-ng-model="existsUsageRateBalance.rumId" 
+                                              data-ng-options="RumDatas.rumId as  RumDatas.rumName for RumDatas in RumDatas">
+                                            </select>
+                                       </td>
+                                        <td><select class="input-small form-control" data-ng-model="existsUsageRateBalance.uomId" 
+                                              data-ng-options="UomDatas.uomId as  UomDatas.uomName for UomDatas in UomDatas">
+                                            </select>
+                                       </td>
+                                       <td><select class="input-small form-control" data-ng-model="existsUsageRateBalance.timeperiodId" 
+                                             data-ng-options="TimeperiodDatas.timeperiodId as  TimeperiodDatas.timeperiodName for TimeperiodDatas in TimeperiodDatas"> 
+                                           </select>
+                                       </td>
+                                       <td><input  class="input-small form-control" data-ng-model="existsUsageRateBalance.unit" type="text" ></td>
+                                       <td><input  class="input-small form-control" data-ng-model="existsUsageRateBalance.rate" type="text" ></td> 
+                                           
+                                     
+                                      <td><a data-ng-click="removeTemplateDefinitionData(existsTemplateDefinition.id)" data-popover="Delete TemplateDefinition" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>&nbsp;</td>
+                                <td>
+				                  <a data-ng-click="removeRateBalance($index)"><i class="fa fa-times"></i>
+				                  </a>
+				               </td>
+                                 </tr>
+                            </table>
+                     
+                   <div class="col-md-offset-9 pull-right">
+                       <a href="#/organization"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+                       <button id="save" type="submit2" class="btn btn-primary" data-ng-click="submit2()">{{'button.save'| translate}}</button>
+                   </div>
+                   </div>
+                  </div> -->
+
+		</form>
+	</div>
+	<script type="text/ng-template" id="AddpriceData.html">
+ <div class="widget"> 
+		<form name="quotationform" novalidate="" class="form-horizontal well">
+	 		<api-validate></api-validate>
+
+             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                          <label class="control-label " for="currencyId">{{ 'label.currency' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                         <select id="currencyId" data-ng-model="currencyId" data-ng-options="currencyData.id as getBothCurrency(currencyData.code,currencyData.name) for currencyData in currencyDatas" class="form-control">
+				   			<option value="">{{'label.select.one' | translate}}</option>		
+						 </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                        <label class="control-label " for="glId">{{ 'label.glid' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                         <select  id="glId" class="form-control" data-ng-model="glId" data-ng-options="glRealatedDatas.id as glRealatedDatas.mCodeValue for glRealatedDatas in glRealatedDatas" >
+                    		<option value="">{{'label.select.one' | translate}}</option>           
+						 </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			<div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                          <label class="control-label " for="rumId">{{ 'label.rum' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+						<select id="rumId" data-ng-model="rumId"  class="form-control" data-ng-options="RumDatas.rumId as  RumDatas.rumName for RumDatas in RumDatas">
+                        	<option value="">{{'label.select.one' | translate}}</option>
+						</select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                        <label class="control-label " for="uomId">{{ 'label.uom' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                         <select id="uomId" data-ng-model="uomId"  class="form-control" data-ng-options="UomDatas.uomId as  UomDatas.uomName for UomDatas in UomDatas">
+                         	<option value="">{{'label.select.one' | translate}}</option>           
+						 </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			<div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                          <label class="control-label " for="timeperiodId">{{ 'label.timeperiod' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+						<select id="timeperiodId" data-ng-model="timeperiodId" class="form-control" data-ng-options="TimeperiodDatas.timeperiodId as TimeperiodDatas.timeperiodName for TimeperiodDatas in TimeperiodDatas">
+                        	<option value="">{{'label.select.one' | translate}}</option>            
+						</select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+			<div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                          <label class="control-label " for="Unit">{{ 'label.unit' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+						<input type="text" id="Unit" class="input-small form-control" data-ng-model="unit"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                        <label class="control-label " for="Rate">{{ 'label.rate' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                         <input type="text" id="rate" class="input-small form-control" name="rate" data-ng-model="rate"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+				<ul class="btn-group-list text-right mt20 mb20">
+				<li>
+					<button id="submit" type="submit" data-ng-click="addCreateRateQtyTierNewData()"
+						class="btn btn-primary">{{'button.save'| translate}}</button>
+				</li>
+			</ul>
+                <div class="row" >
+                           
+                     <div data-ng-show="ratebalance.length>0">
+                     
+                            <h3>{{'label.existsUsageRate' | translate}}</h3>
+                            <table class="table table-striped" width="100%">
+                                   <tr class="graybg">
+                                       <th>{{ 'label.glid' | translate }}</th>
+                                       <th>{{ 'label.currency' | translate }}</th>
+                                       <th>{{ 'label.Rum' | translate }}</th>
+                                       <th>{{ 'label.uom' | translate }}</th>
+                                       <th>{{ 'label.timeperiod' | translate }}</th>
+                                       <th>{{ 'label.unit' | translate }}</th>
+                                       <th>{{ 'label.rate' | translate }}</th>
+                                   </tr>
+                                 <tr data-ng-repeat="existsUsageRateBalance in ratebalance track by $index">
+                                       
+                                      <td>
+                                        <select class="input-small form-control"  data-ng-model="existsUsageRateBalance.currencyId"
+                                         data-ng-options="currencyData.id as getBothCurrency(currencyData.code,currencyData.name) for currencyData in currencyDatas">
+				   				       </select>
+                                      </td> 
+                                      <td>
+                                      <select  class="input-small form-control" data-ng-model="existsUsageRateBalance.glId" 
+                                      data-ng-options="glRealatedDatas.id as glRealatedDatas.mCodeValue for glRealatedDatas in glRealatedDatas" >
+                                      </select>
+                                      </td>
+                                      <td><select class="input-small form-control" data-ng-model="existsUsageRateBalance.rumId" 
+                                              data-ng-options="RumDatas.rumId as  RumDatas.rumName for RumDatas in RumDatas">
+                                            </select>
+                                       </td>
+                                        <td><select class="input-small form-control" data-ng-model="existsUsageRateBalance.uomId" 
+                                              data-ng-options="UomDatas.uomId as  UomDatas.uomName for UomDatas in UomDatas">
+                                            </select>
+                                       </td>
+                                       <td><select class="input-small form-control" data-ng-model="existsUsageRateBalance.timeperiodId" 
+                                             data-ng-options="TimeperiodDatas.timeperiodId as  TimeperiodDatas.timeperiodName for TimeperiodDatas in TimeperiodDatas"> 
+                                           </select>
+                                       </td>
+                                       <td><input  class="input-small form-control" data-ng-model="existsUsageRateBalance.unit" type="text" ></td>
+                                       <td><input  class="input-small form-control" data-ng-model="existsUsageRateBalance.rate" type="text" ></td> 
+                                           
+                                     
+                                     <!--  <td><a data-ng-click="removeTemplateDefinitionData(existsTemplateDefinition.id)" data-popover="Delete TemplateDefinition" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>&nbsp;</td> -->
+                                <td>
+				                  <a data-ng-click="removeRateBalance($index)"><i class="fa fa-times"></i>
+				                  </a>
+				               </td>
+                                 </tr>
+                            </table>
+				  <div class="col-md-offset-9 pull-right">
+                       <a href="#/createusagerateplan"><button id="cancel" class="btn btn-warning" ng-click="reject()">{{'button.cancel'| translate}}</button></a>
+                       <button id="save" type="submit" class="btn btn-primary" data-ng-click="submit()">{{'button.save'| translate}}</button>
+                  </div>
+                          </div>
+                       </div>
+                      
+	</form>
+ </div>
+</script>
+</div>

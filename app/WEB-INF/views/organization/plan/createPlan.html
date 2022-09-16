@@ -1,0 +1,232 @@
+<div class="content-container">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li><a href="#/plans">{{'label.plans' | translate}}</a>
+		</li>
+		<li class="active">{{'label.createplan' | translate}} </li>
+	</ul>
+	<div class="widget">
+	<h3>{{'label.heading.createplan' | translate}}</h3>
+		  	<form name="createplan" novalidate=""  class="form-horizontal"  ng-controller="CreatePlanController"   rc-submit="submit()">
+		      	 	<api-validate></api-validate>
+	       	  		  <!-- <div class="error" data-ng-show="errorStatus || errorDetails" >
+					     <label>{{'label.contract.error' | translate}}</label>
+					     <label data-ng-show="errorStatus">{{errorStatus}}</label>
+					     <label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">
+					               {{error.code | translate}}</label>
+	                </div> --> 
+
+	           <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                           <label class="control-label " for="isPrepaid">{{ 'label.plan.isprepaid' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                        <label class="checkbox">
+             				<input type="checkbox" data-ng-model="formData.isPrepaid" >
+           				</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                 <span ng-show="formData.isPrepaid==true">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                       <label class="control-label " for="status">{{ 'label.plan.duration' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                       <select id="contract" data-ng-model="contract"  data-ng-options="contract as contract.subscriptionPeriod for contract in contracts" class="form-control">
+              		 	 	<option value="">{{'label.select.one' | translate}}</option>
+              		 	 </select>
+                        </div>
+                    </div>
+                 </span>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                        <label class="control-label " for="planCode">{{ 'label.plan.plancode' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                         <input type="text" id="planCode" name="planCode" data-ng-model="formData.planCode" class="form-control" data-ng-maxlength="10" >
+		 					  <span data-ng-show="createplan.planCode.$dirty && createplan.planCode.$invalid">
+								<!-- <small class="error-row" >{{'error.code.definition.length.validation'| translate}}</small>  -->
+								  <small class="error" data-ng-show="createplan.planCode.$error.maxlength">{{'error.plancode.definition.length.validation'| translate}}</small>
+	  					 </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                         <label class="control-label " for="status">{{ 'label.plan.status' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                         <select id="status" data-ng-model="formData.status"  data-ng-options="planStatus.id as planStatus.value for planStatus in planStatus" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                          <label class="control-label " for="planDescription">{{ 'label.plan.plandescription' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                         <input type="text" id="planDescription" data-ng-model="formData.planDescription" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                          <label class="control-label " for="billRule">{{ 'label.plan.billingrule' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                        <select id="billRule" data-ng-model="formData.billRule"  data-ng-options="billRuleData.id as billRuleData.billruleOptions for billRuleData in billRuleDatas" class="form-control">
+	              		 <option value="">{{'label.select.one' | translate}}</option>
+	              		  		</select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                          <label class="control-label " for="startDate">{{ 'label.plan.startdate' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                       <input type="text" datepicker-pop="dd MMMM yyyy" readonly data-ng-model="start.date"  is-open="opened" min="minDate" 
+	              	   	  		date-disabled="disabled(date, mode)" style="background-color:#FFFFFF;" class="form-control" required date-Validate />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                         <label class="control-label " for="endDate">{{ 'label.plan.enddate' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                          <input type="text" datepicker-pop="dd MMMM yyyy" data-ng-model="end.date" is-open="opened" min="minendDate"  date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;" class="form-control" readonly  />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                          <label class="control-label " for="planTypeData">{{ 'label.plan.plantype' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                        <select id="planTypeData" data-ng-model="formData.planType"  data-ng-options="planTypeDatas.id as planTypeDatas.mCodeValue for planTypeDatas in planTypeData" class="form-control">
+	              		 	 	<option value="">{{'label.select.one' | translate}}</option>
+	              		 	 </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                         <label class="control-label " for="currencyId">{{ 'label.plan.currency' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                         <select data-ng-model="formData.currencyId" class="form-control" data-ng-options="currencyData.id as getBothcurrency(currencyData.code,currencyData.name) for currencyData in currencydatas"><option value="">{{'label.select.one' | translate}}</option>
+	              		 	</select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                          <label class="control-label " for="provisioingSystem">{{ 'label.plan.isprovision' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                         <label class="checkbox">
+	                	  		 <input type="checkbox" data-ng-model="formData.provisioingSystem" ng-checked="true">
+	              		  	</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                        <label class="control-label " for="serviceId">{{ 'label.plan.serviceCode' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                         <select id="serviceId" data-ng-model="formData.serviceId" data-ng-change="serviceChangeFun()"
+                            data-ng-options="serviceCodes.id as serviceCodes.serviceCode for serviceCodes in serviceCodes" class="form-control">
+      		 	 		<option value="">{{'label.select.one' | translate}}</option>
+      		 	    </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  
+
+           <div ng-if="formData.serviceId" >
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row" >
+                        <div class="col-md-4">
+                         <label class="control-label ">{{ 'label.availableproduct' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                        	<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+                        </div>
+                        <div class="col-md-12">
+                        	<select id="availableproducts" ng-model="allowed" name="allowed" class="form-control multiselectmin" multiple 
+		                   		data-ng-options="availableProduct.id as getBothProducts(availableProduct.productCode, availableProduct.productDescription) for availableProduct in availableProducts">
+		                       		<option data-ng-repeat="availableProduct in availableProducts | filter:filterText" value="{{availableProduct.id}}">{{availableProduct.productDescription}}</option>
+		                   		</select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row" >
+                        <div class="col-md-4">
+                       <label class="control-label ">{{ 'label.selectedproduct' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                         <input ng-autofocus="true" ng-model="filterText1" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+                        </div>
+                         <div class="col-md-12">
+                        	  <select id="selectedproducts" ng-model="restricted" name="restricted" class="form-control multiselectmin" multiple data-ng-options="selectedProduct.id as getBothProducts(selectedProduct.productCode, selectedProduct.productDescription) for selectedProduct in selectedProducts"> <option data-ng-repeat="availableProduct in availableProducts | filter:filterText1" value="{{availableProduct.id}}">{{availableProduct.productDescription}}</option>
+                                    <!--   <option data-ng-repeat="selectedProduct in selectedProducts | filter:filterText1" value="{{selectedProduct.id}}">{{selectedProduct.productDescription}}</option> -->
+                                   </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	               
+	          <ul class="btn-group-list text-center mt20 mb20">
+                <li>
+                   <button type="button" class="btn btn-primary" data-ng-click="allow()"><i class="fa fa-angle-double-left"></i></button>
+                </li>
+                <li>
+                  <button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right"></i></button>
+                </li>
+            </ul>
+        </div>
+	      
+      	     <ul class="btn-group-list text-right mt20 mb20">
+		       <li>
+        	 	<a href="#/plans"><button type="reset" class="btn btn-warning">{{'button.cancel'| translate}}</button></a></li>
+        	    <li><button id="save" type="submit" data-ng-disabled="createplan.$dirty && createplan.$invalid" class="btn btn-primary">{{'button.save'| translate}}</button></li>
+      	     </ul>
+	 	 </form>
+	</div>
+</div>

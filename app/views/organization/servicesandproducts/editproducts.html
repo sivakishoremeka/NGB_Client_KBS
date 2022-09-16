@@ -1,0 +1,191 @@
+<div class="content-container" ng-controller="EditProductsController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li><a href="#/services">{{'label.servicesandproducts' | translate}}</a></li>
+        <li class="active">{{'label.editproducts' | translate}}</li>
+    </ul>
+    <div class="widget">
+        <h3>{{'label.editproducts' | translate}}</h3>
+
+        <form name="editProductsForm" novalidate="" class="form-horizontal" rc-submit="submit()">
+            <api-validate></api-validate>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label " for="productCode">{{ 'label.code' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="productCode" name="productCode" data-ng-model="formData.productCode" class="form-control" data-ng-maxlength="10" />
+                            <span data-ng-show="editProductsForm.productCode.$dirty && editProductsForm.productCode.$invalid">
+		    			    	<small class="error" data-ng-show="editProductsForm.productCode.$error.maxlength">{{'error.code.definition.length.validation'| translate}}</small>
+							</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label " for="productDescription">{{ 'label.description' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="productDescription" class="form-control" data-ng-model="formData.productDescription">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label " for="serviceId">{{ 'label.type' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="serviceId" class="form-control" data-ng-model="formData.serviceId" data-ng-change="typeChangeFun(formData.serviceId)" data-ng-options="serviceCategory.id as serviceCategory.serviceCode for serviceCategory in serviceCategorys"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label " for="status">{{ 'label.status' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="status" class="form-control" data-ng-model="formData.status" data-ng-options="status.value as status.value for status in statuses"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label " for="isSelector">isBouquet</label>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="checkbox">
+                                <input type="checkbox" id="isBouquet" data-ng-model="formData.isBouquet">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div ng-if="formData.productCategory == 'Service'">
+					    		<label class="control-label " for="serviceType">{{ 'label.type' | translate }}<span class="required" >*</span></label>
+					    		<div class="col-sm-3">
+						    	    <select id="serviceType" class="form-control" data-ng-model="formData.serviceType"  
+						    			    data-ng-options="serviceTypes.type as serviceTypes.type for serviceTypes in services" ></select>
+					    		</div>
+			    			</div> -->
+            <!-- <div ng-if="formData.productCategory == 'Product'"> -->
+            <!-- <label class="control-label " for="serviceType">{{ 'label.type' | translate }}<span class="required" >*</span></label>
+					            <div class="col-sm-3">
+						    		<select id="serviceType" class="form-control" data-ng-model="formData.serviceType"  
+						    			    data-ng-options="serviceCategory.serviceCode as serviceCategory.serviceCode for serviceCategory in serviceCategorys"></select>
+					    		</div> -->
+
+            <!--  <div class="form-group">
+		                <label class="control-label " for="isOptional">{{ 'label.isoptional' | translate }}</label>
+		                <div class="col-sm-3">
+			                <label class="checkbox">
+		              			<input type="checkbox" id="isOptional" class="form-control" data-ng-model="formData.isOptional">
+		            		</label>
+		                </div>
+		                <label class="control-label " for="isOptional">{{ 'label.isautoprovision' | translate }}</label>
+		                <div class="col-sm-3">
+			                <label class="checkbox">
+		                    	<input type="checkbox" id="isOptional" class="form-control" data-ng-model="formData.isAutoProvision">
+		                    </label>
+		                </div>
+	                </div> -->
+            <div class="table-respnsive">
+                <table class="table table-striped" ng-if="formData.productCategory">
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <h4><label class="control-label">{{ 'label.parameter' | translate }}<span class="required">*</span></label></h4>
+                        </td>
+                        <td>
+                            <select data-ng-model="serviceFormData.paramName" class="form-control" data-ng-options="serviceParam.id as serviceParam.mCodeValue for serviceParam in serviceParamsData">
+                            </select>
+                        </td>
+                        <td>
+                            <select data-ng-model="serviceFormData.paramType" class="form-control" data-ng-options="paramType for paramType in paramTypes" data-ng-change="onAddChangeParam()"></select>
+                        </td>
+                        <td>
+                            <select data-ng-model="serviceFormData.paramCategory" class="form-control" data-ng-options="paramCategory for paramCategory in paramCategories"></select>
+                        </td>
+                        <td>
+                            <span ng-if="serviceFormData.paramType">
+				                      		<input ng-if="serviceFormData.paramType != 'Date' && serviceFormData.paramType != 'Boolean'" class="form-control" 
+				                      			type="text" data-ng-model="serviceFormData.paramValue" placeholder="{{'label.service.paramvalue' | translate}}">
+					                    	<input type="text" ng-if="serviceFormData.paramType == 'Date'" data-datepicker-pop="yyyy-MM-dd" id="paramValue" 
+					                    		class="form-control" data-ng-model="serviceFormData.paramValue"  data-is-open="opened2" min="minDate" max="'2020-06-22'" 
+					                    			data-date-disabled="disabled(date, mode)" style="background-color:#FFFFFF;" />
+					                    	<select ng-if="serviceFormData.paramType == 'Boolean'" data-ng-model="serviceFormData.paramValue" class="form-control" 
+					                    		data-ng-options="paramValue for paramValue in paramValues"></select>
+				                      </span>
+                        </td>
+                        <td>
+                            <ul class="table-icon-list">
+                                <li><a data-ng-click="addService()"><i class="fa fa-plus icon-white"></i></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="table-respnsive">
+                <table class="table table-striped" data-ng-show="productArray.length>0">
+                    <tr class="graybg">
+                        <th>{{'label.service.paramname' | translate}}</th>
+                        <th>{{'label.service.paramtype' | translate}}</th>
+                        <th>{{'label.service.paramcategory' | translate}}</th>
+                        <th colspan="2">{{'label.service.paramvalue' | translate}}</th>
+                    </tr>
+                    <tr data-ng-repeat="productArr in productArray">
+                        <td>
+                            <select class="form-control" data-ng-model="productArr.paramName" data-ng-options="serviceParam.id as serviceParam.mCodeValue for serviceParam in serviceParamsData">
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" data-ng-model="productArr.paramType" data-ng-options="paramType for paramType in paramTypes" data-ng-change="onAddChangeParam($index)"></select>
+                        </td>
+                        <td>
+                            <select class="form-control" data-ng-model="productArr.paramCategory" data-ng-options="paramCategory for paramCategory in paramCategories"></select>
+                        </td>
+                        <td ng-if="productArr.paramType">
+                            <span>
+			                      	<input class="form-control" 
+			                      		ng-if="productArr.paramType != 'Date' && productArr.paramType != 'Boolean' && productArr.paramType != 'Combo'" 
+			                      			type="text" data-ng-model="productArr.paramValue" placeholder="{{'label.service.paramvalue' | translate}}">
+			                      	<input class="form-control" ng-if="productArr.paramType == 'Combo'" type="text" data-ng-model="productArr.paramValue" 
+			                      		placeholder="{{'label.service.paramvalue' | translate}}">
+				                    <input class="form-control" type="text" ng-if="productArr.paramType == 'Date'" data-datepicker-pop="yyyy-MM-dd" 
+				                    	id="paramValue" data-ng-model="productArr.paramValue"  data-is-open="opened2" min="minDate" max="'2020-06-22'" 
+				                    		data-date-disabled="disabled(date, mode)" style="background-color:#FFFFFF;"/>
+				                    <select class="form-control" ng-if="productArr.paramType == 'Boolean'" data-ng-model="productArr.paramValue" 
+				                    	data-ng-options="paramValue for paramValue in paramValues"></select>
+		                     	</span>
+                        </td>
+                        <td><a data-ng-click="deleteService($index)"><i class="fa fa-times"></i></a></td>
+                    </tr>
+                </table>
+            </div>
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/services">
+                        <button id="cancel" type="reset" class="btn btn-warning">{{'button.cancel' | translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit" type="submit" data-ng-disabled="editServiceForm.$dirty && editServiceForm.$invalid" class="btn btn-primary">{{'button.save' | translate}}</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+(function(module) {
+	mifosX.controllers = _.extend(module, {				
+		EditVendorController : function(scope,resourceFactory, 
+				location, dateFilter, $rootScope, routeParams) {
+			
+			scope.countryDatas = [];
+			scope.currencyDatas = [];
+			scope.edit = {};
+			scope.vendorId = routeParams.id;		
+			resourceFactory.VendorLemplateResource.getTemplateDetails({vendorId:routeParams.id, template:true}, function(data) {
+				scope.edit = {
+						vendorCode:data.vendorCode,
+						vendormobileNo:data.vendormobileNo,
+						vendorName:data.vendorName,
+						vendorLandlineNo:data.vendorLandlineNo,
+						contactName:data.contactName,
+						vendorAddress:data.vendorAddress,
+						vendorEmailId:data.vendorEmailId,
+						vendorCountry:data.vendorCountryId,
+						vendorCurrency:data.vendorCurrency
+				};
+				scope.countryDatas = data.countryData;
+				scope.currencyDatas = data.currencyOptions;
+			});
+				
+			scope.submit = function() {			
+				scope.edit.locale = scope.optlang.code;
+								
+				resourceFactory.VendorLemplateResource.update({vendorId:scope.vendorId}, scope.edit, function(data) {
+					location.path('/viewvendormanagement/' + data.resourceId);										
+				});							
+			};						
+		}			
+	});
+	mifosX.ng.application.controller('EditVendorController', [ 
+	'$scope', 
+	'ResourceFactory', 
+	'$location', 
+	'dateFilter',
+	'$rootScope',
+	'$routeParams',
+	mifosX.controllers.EditVendorController 
+	]).run(function($log) {
+		$log.info("EditVendorController initialized");	
+	});
+}(mifosX.controllers || {}));

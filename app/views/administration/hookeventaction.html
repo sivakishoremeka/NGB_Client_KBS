@@ -1,0 +1,55 @@
+<div class="content-container" ng-controller="HookEventActionController">
+    <ul class="breadcrumb">
+        <!-- <li><a href="#/system">{{'link.admin.system' | translate}}</a></li> -->
+        <li><a href="#/eventaction">{{'label.eventaction' | translate}}</a></li>
+        <li class="active">{{'label.hookeventaction' | translate}}</li>
+    </ul>
+    <div class="widget mb30">
+        <div class="row">
+            <div class="col-md-3">
+                <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+            </div>
+            <div class="col-md-9">
+                <ul class="btn-group-list text-right ">
+                    <li><a has-permission=C REATE_EVENTACTIONMAP href="#/createeventactionmapping" class="btn primary_btn"><i class="fa fa-plus"></i>{{ 'button.add' | translate }}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="widget">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{'table.eventactionmapping.event' | translate}}</th>
+                    <th>{{'table.eventactionmapping.action' | translate}}</th>
+                    <th>{{'table.eventactionmapping.process' | translate}}</th>
+                    <th>{{'table.eventactionmapping.orderby' | translate}}</th>
+                    <th>{{'table.eventactionmapping.prepost' | translate}}</th>
+                    <th>{{'table.eventactionmapping.processparams' | translate}}</th>
+                    <th>{{'label.enabled' | translate}}</th>
+                    <th>{{ 'table.heading.actions' | translate }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="data in datas  | filter:filterText">
+                    <td><a href="#/vieweventactionmapping/{{data.id}}">{{data.eventName}}</a></td>
+                    <td>{{data.actionName}}</td>
+                    <td>{{data.process}}</td>
+                    <td>{{data.orderBy}}</td>
+                    <td ng-show="data.prePost">Post</td>
+                    <td ng-show="!data.prePost">Pre</td>
+                    <td>{{data.processParams}}</td>
+                    <td data-ng-show="data.isDeleted=='Y'">
+                        <button type="button" class="btn btn-success flag" data-ng-click="isDeletedEventAction(data.id,data.isDeleted)">
+                            <i class="fa fa-flag-o"></i></button>
+                    </td>
+                    <td data-ng-show="data.isDeleted=='N'">
+                        <button type="button" class="btn btn-danger flag" data-ng-click="isDeletedEventAction(data.id,data.isDeleted)">
+                            <i class="fa fa-flag-o"></i></button>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

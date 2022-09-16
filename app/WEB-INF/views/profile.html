@@ -1,0 +1,100 @@
+<div class="content-container" data-ng-controller="ProfileController">
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h4 class="ng-binding"><i class="fa fa-user"></i>&nbsp;{{'label.heading.userprofile' | translate}}</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    
+                </div>
+                <div class="col-md-6">
+                 	<div class="pull-right">
+               			<a href="#/activitylog" class="btn btn-primary" ><i class="fa fa-plus"></i> {{'label.button.Activitylog' | translate}}</a>
+                    </div> &nbsp;
+                    <div class="pull-right">
+                        <!-- <a href="#/admin/roles" has-permission='READ_ROLE' class="btn btn-primary ng-binding">{{ 'label.button.viewpermissions' | translate }}</a> -->
+                        <button type="button" class="btn btn-primary" data-ng-click="updatePassword()"><i
+                                class="fa fa-cog "></i>
+                            {{'label.button.changepassword' | translate}}
+                        </button> &nbsp;
+                    </div> 
+                   
+                </div>
+            <br>
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <table class="table view-table table-bordered table-striped">
+                            <tr>
+                                <th>{{ 'label.heading.userid' | translate }}</th>
+                                <td>{{userDetails.userId}}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'label.heading.username' | translate }}</th>
+                                <td>{{userDetails.username}}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'label.heading.office' | translate }}</th>
+                                <td>{{userDetails.officeName}}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'label.heading.status' | translate }}</th>
+                                <td>{{status}}</td>
+                            </tr>
+
+                            <tr>
+                                <th>{{ 'label.heading.language' | translate }}</th>
+                                <td>{{optlang.name}}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'label.heading.primaryemail' | translate }}</th>
+                                <td>{{user.email}}</td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <table class="table view-table table-bordered table-striped">
+                            <tr class="graybg">
+                                <th>{{ 'label.heading.role' | translate }}</th>
+                                <th>{{ 'label.heading.description' | translate }}</th>
+                            </tr>
+                            <tr data-ng-repeat="role in userDetails.roles">
+                                <td>{{role.name}}</td>
+                                <td>{{role.description}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="password.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">{{'label.changepassword' | translate}}</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="password">{{ 'label.password' | translate }}</label>
+                <div class="col-sm-5">
+                    <input type="password" id="password" class="form-control" ng-model="formData.password">
+                </div>
+            </div><br><br>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="repeatPassword">{{ 'label.repeatpassword' | translate }}</label>
+                <div class="col-sm-5">
+                    <input type="password" id="repeatPassword" class="form-control" ng-model="formData.repeatPassword">
+                </div>
+            </div><br>
+        </div>
+
+        <div class="modal-footer silver">
+            <button class="btn btn-warning" ng-click="cancel()">{{'label.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="save()">{{'label.save' | translate}}</button>
+        </div>
+    </script>
+</div>

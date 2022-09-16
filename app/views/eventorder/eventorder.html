@@ -1,0 +1,69 @@
+<div class="content-container" ng-controller="EventOrderController">
+    <ul class="breadcrumb">
+		 <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+		<li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+		<li class="active">{{'label.eventorder' | translate}}</li>
+	</ul>
+	<div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+    		<h3>{{'label.eventorder' | translate}}</h3>
+			<form class="form-horizontal" ng-submit="submit()">
+				<api-validate></api-validate>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label class="control-label">{{ 'label.eventdate' | translate }}</label>
+							</div>
+							<div class="col-md-8">
+							 <input type="text" datepicker-pop="dd MMMM yyyy" ng-model="start.date" is-open="opened2" min="minDate" max="'2020-06-22'" class="form-control" date-disabled="disabled(date, mode)" style="background-color:#FFFFFF;"  readonly/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label class="control-label">{{ 'label.events' | translate }}</label>
+							</div>
+							<div class="col-md-8">
+							 <select ng-model="formData.eventId"  class="form-control" ng-options="event.id as event.eventName for event in events" value="{{event.id}}"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label class="control-label">{{ 'label.formattype' | translate }}</label>
+							</div>
+							<div class="col-md-8">
+							 <select ng-model="formData.formatType" class="form-control" ng-options="code.mCodeValue as code.mCodeValue for code in codes" value="{{code.mCodeValue}}"></select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label class="control-label">{{ 'label.opttype' | translate }}</label>
+							</div>
+							<div class="col-md-8">
+						    <select ng-model="formData.optType"   class="form-control" ng-options="optType.value as optType.value for optType in optTypes" value="{{optType.value}}"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<ul class="btn-group-list text-right mt20 mb20">
+					<li>
+						<a href='#/viewclient/id/{{clientId}}' class="btn btn-warning" ng-click="reset123()">Cancel</a>
+					</li>
+					<li>
+						<button type="submit" class="btn btn-primary">Save</button>
+					</li>
+				</ul>
+		</form>
+    </div>
+</div>
+
+

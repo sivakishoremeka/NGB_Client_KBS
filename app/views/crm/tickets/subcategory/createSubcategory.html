@@ -1,0 +1,46 @@
+<div class="content-container" data-ng-controller="CreateSubcategoryController">
+    <ul class="breadcrumb">
+		 <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+		<li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+		<li class="active">{{'label.creatticket' | translate}}</li>
+	</ul>
+	<!-- <div data-ng-include="'views/clients/viewclienttopinfo.html'"></div> -->
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.createsubcategory' | translate}}</h4>
+    		</div>
+    		<br>
+    		<form name="createsubcategoryform" class="form-horizontal"  ng-submit="submit()">
+					<api-validate></api-validate>
+					<fieldset>
+    		<div class="form-group">
+						<label class="control-label col-sm-2" for="Category"> {{'label.ticket.category' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id ="category" name="category" ng-model="formData.maincategory" class="form-control"
+								ng-options="problemsData.id as problemsData.mCodeValue for problemsData in problemsDatas"></select>
+						</div>
+						<label class="control-label col-sm-2" for="subCategory"> {{'label.subcategory' | translate }}<span class="required">*</span></label>
+				         	<div class="col-sm-3">
+              				
+             				<input type="text" id="subcategory" name="subcategory" data-ng-model="formData.subcategory" class="form-control" data-ng-maxlength="100" >
+            			</div>
+            			</div>
+            			<div class="form-group">
+            			<label class="control-label col-sm-2" for="sla"> {{'label.sla' | translate }}<span class="required">*</span></label>
+				         	<div class="col-sm-3">
+              				
+             				<input type="text" id="sla" name="sla" data-ng-model="formData.timetaken" class="form-control" > <!-- data-ng-maxlength="100" --> 
+            			</div>
+					</div>
+					
+					<div class="pull-right">
+						<a id="cancel" href="#/subcategories"><button type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel'| translate}}</button></a>
+						<button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+					</div>
+					</fieldset>
+			</form>
+    		
+</div>
+</div>
+</div>

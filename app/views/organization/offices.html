@@ -1,0 +1,317 @@
+<div class="content-container" ng-controller="OfficesController">
+    <ul class="breadcrumb">
+        <li><a href="#/offices">{{'label.entity' | translate}}</a></li>
+    </ul>
+    <div class="widget card cardgrid mb30">
+        <div class="content">
+            <!-- <div class="toolbar">
+            	<h3>{{ 'label.manageorganization' | translate }}</h3>
+            </div> -->
+           <div class="row d-flex align-items-center">
+            <div class="col-md-3">
+               <input ng-autofocus="true" ng-model="filterText"  type="text" ng-keyup="onFilter()" class="form-control" id="offices"
+                    placeholder="{{'label.input.searchforpartner' | translate}}">
+            </div>
+              <div class="col-md-9">
+              	<ul class="btn-group-list text-right">
+              		<li>
+              			<a ng-show="isTreeView" ng-click="isTreeView=!isTreeView" class="btn primary_btn"><i class="fa fa-list ">
+                   	</i>{{'label.button.listview' | translate}}</a>
+              		</li>
+              		<li>
+              		<a ng-hide="isTreeView" ng-click="isTreeView=!isTreeView ; getTree()" class="btn primary_btn"><i class="fa fa-sitemap ">
+                   	</i>{{'label.button.treeview' | translate}}</a>
+              		</li>
+              		<li>
+              		  <a href="#/officeactivitylog" class="btn primary_btn" ><i class="fa fa-plus"></i> {{'label.button.Activitylog' | translate}}</a>
+              		</li>
+              		<li>
+              			<a href="#/createoffice" class="btn primary_btn" has-permission='CREATE_OFFICE'><i class="fa fa-plus ">
+                   	    </i>{{'label.createorganization' | translate}}</a>
+              		</li>
+              	</ul>
+           </div>
+       </div>
+
+          </div>
+      </div>
+       <!-- <div class="borderMain">
+		 <div class="borderBottom"></div>
+		 <div class="borderTop"></div>
+	  </div> -->
+       <div class="widget">
+          <div class="content">
+            <!-- <uib-tabset id="officetab" class="scrollable"  tabset-name="officeTabset" scrollable persistent-tab  style="margin:-30px;">
+				<uib-tab heading="{{'tab.office' | translate}}" select="getOffices()" style="margin:0px 0px -4px 26px;">  -->
+					<!-- <div class="col-md-3">
+                    	<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" 
+                    		placeholder="{{'label.input.filterbyname' | translate}}">
+                	</div>
+       
+					<div class="col-md-2">
+	                    <a ng-show="isTreeView" ng-click="isTreeView=!isTreeView" class="btn primary_btn"><i class="fa fa-list ">
+	                    	</i>{{'label.button.listview' | translate}}</a>
+	                    <a ng-hide="isTreeView" ng-click="isTreeView=!isTreeView" class="btn primary_btn"><i class="fa fa-sitemap ">
+	                    	</i>{{'label.button.treeview' | translate}}</a>
+                	</div>
+                	<div>
+                	<a href="#/officeactivitylog" class="btn primary_btn" ><i class=""></i> 
+               			{{'label.button.Activitylog' | translate}}</a>
+               			
+                        <a href="#/createoffice" class="btn primary_btn" has-permission='CREATE_OFFICE'><i class="fa fa-plus ">
+	                    	</i>{{'label.createorganization' | translate}}</a> -->
+	                    	<div id= "office" name = "office" select = "getOffices()">
+                	<div data-ng-hide="isTreeView" >
+                	
+						<table class="table table-striped">
+							<thead>
+								<tr class="graybg">
+									<th>{{ 'label.entityname' | translate }}</th>
+									<th>{{ 'label.externalid' | translate }}</th>
+									<th>{{ 'label.parentorganization' | translate }}</th>
+								    <th>{{ 'label.officeType' | translate }}</th>
+									<th>{{ 'label.openedon' | translate }}</th>
+							     <!-- 	<th>{{ 'label.balance.amount' | translate }}</th> -->
+									<th>{{ 'label.actions' | translate }}</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+								<tr class="pointer-main" data-ng-repeat="office in officeDatas.currentPageItems" select="getOffices()">
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.nameDecorated}}</td>
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.externalId}}</td>  
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.parentName}}</td>
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.officeType}}</td>
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.openingDate | DateFormat}}</td>
+									<!-- <td class="pointer" data-ng-click="routeTo(office.id)">{{office.balance}}</td> -->
+									<td><a has-permission='UPDATE_OFFICE' href="#/editoffice/{{office.id}}" data-uib-popover="Edit Office" 
+										   data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a>
+								    <a data-ng-click="creditPopup(office.id)" uib-popover="Updatecreditlimit" 
+                                           data-popover-trigger="mouseenter" class="fa fa-plus-circle"></a>
+                                    <a type="button" href="#/OfficeTicket/{{office.id}}" uib-popover="AddTicket"
+											data-popover-trigger="mouseenter" ><i class="fa fa-plus"></i></a> 
+                                    </td>
+								</tr>
+							</tbody>
+						</table>
+							<ul class="pager">
+		   			           <li class="previous"><a data-ng-click="officeDatas.previous()" href="" 
+		   				           data-ng-disabled="!officeDatas.hasPrevious()">&larr; {{ 'label.Prev' | translate }}</a></li>
+		   			           <li class="next" ><a data-ng-click="officeDatas.next()" href="" 
+		   			         	   data-ng-disabled="!officeDatas.hasNext()">{{ 'label.Next' | translate }} &rarr;</a></li>
+				            </ul>
+					</div>
+					
+					<div data-ng-show="isTreeView ">
+						<div
+							data-angular-treeview="true"
+							data-tree-id="treeview"
+							data-tree-model="treedata"
+							data-node-id="id"
+							data-node-label="name"
+	                        data-node-children="children">
+							
+						</div>
+					</div>
+			 </div>
+			 <!-- <uib-tab heading="{{'tab.partnersDisbursements' | translate}}"
+				select="getPartnerDisbursements()" active="PartnersDisbursementTab">
+			
+			<div class="toolbar">
+				<div class="row">
+					<div>
+						<table class="table" >
+							<tr>
+								<td>
+									<form style="margin: 30px 15px;">
+										<input ng-autofocus="true" ng-model="filterText"
+											class="form-control" type="text" ng-keyup="onFilter()"
+											class="form-control"
+											placeholder="{{'label.input.filterbyname' | translate}}">
+									</form>
+								</td>
+								<td><label for="sourceType">{{'label.sourceType' |
+										translate }}</label> <select id="sourceDatas"
+									data-ng-model="searchData.sourceType" class="form-control"
+									data-ng-options="sourceData.mCodeValue as sourceData.mCodeValue for sourceData in sourceDatas track by sourceData.id"
+									value="{{sourceData.mCodeValue}}">
+										<option class="displaynone" value="">---Source
+											Type---</option>
+								</select></td>
+								<td><label for="partnerType">{{'label.partnerType'
+										| translate }}</label> <select id="patnerDatas"
+									data-ng-model="searchData.partnerType" class="form-control"
+									data-ng-options="patnerData.partnerName as patnerData.partnerName for patnerData in patnerDatas"
+									value="{{patnerData.partnerName}}">
+										<option class="displaynone" value="">---Partner
+											Type---</option>
+								</select></td>
+								<td>
+									<button data-ng-click="search()"
+										class="btn primary_btn control" valign="bottom" align="right"
+										type="submit">{{'label.button.search' | translate}}</button> <a data-ng-click="search()" class="btn btn-primary control" uib-popover="Search" data-popover-placement="bottom"  
+						    	data-popover-trigger="mouseenter"><i class="fa fa-search"></i></a>
+								</td>
+								<td>
+									<button data-ng-click="clearFilters()"
+										class="btn primary_btn control" valign="bottom" align="right"
+										type="cancel">{{'label.button.clear' | translate}}
+										<a data-ng-click="clearFilters()" class="btn btn-primary control" uib-popover="Clear" data-popover-placement="bottom"  
+						    	       data-popover-trigger="mouseenter"><i class="fa fa-times-circle-o"></i></a>
+									</button>
+								</td>
+							</tr>
+							 <div class="col-md-2">
+								<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+							</div>
+							<div class="col-md-2">
+								<select id="sourceDatas" data-ng-model="searchData.sourceType"
+									chosen="sourceDatas" data-ng-autofocus="true"
+									data-ng-options="sourceData.mCodeValue as sourceData.mCodeValue for sourceData in sourceDatas track by sourceData.id"
+									data-placeholder="Source Type" value="{{sourceData.mCodeValue}}">
+									<option class="displaynone" value="">---Source Type---</option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<select id="patnerDatas" data-ng-model="searchData.partnerType"
+									chosen="patnerDatas" data-ng-autofocus="true"
+									data-ng-options="patnerData.partnerName as patnerData.partnerName for patnerData in patnerDatas"
+									data-placeholder="Partner Type"
+									value="{{patnerData.partnerName}}">
+									<option class="displaynone" value="">---Partner Type---</option>
+								</select>
+							</div>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="borderMain">
+				<div class="borderBottom"></div>
+				<div class="borderTop"></div>
+			</div>
+			<div class="container" style="width:99.8%;">
+			<table class="table table-striped">
+				<thead>
+					<tr class="graybg">
+						<th>{{'label.id' | translate}}</th>
+						<th>{{'label.partnername' | translate}}</th>
+						<th>{{'label.transactiondate' | translate}}</th>
+						<th>{{'label.source' | translate}}Source</th>
+						<th>{{'label.chargeamount' | translate}}</th>
+						<th>{{'label.commissiontype' | translate}}</th>
+						<th>{{'label.commissionrate' | translate}}</th>
+						<th>{{'label.commissionamount' | translate}}</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr
+						data-ng-repeat="patnerDisbursementData in patnerDisbursementData.currentPageItems | filter:filterText">
+						<td>{{patnerDisbursementData.id}}</td>
+						<td>{{patnerDisbursementData.partnerName}}</td>
+						<td>{{patnerDisbursementData.transDate |DateFormat}}</td>
+						<td>{{patnerDisbursementData.source}}</td>
+						<td>{{patnerDisbursementData.netAmount}}</td>
+						<td>{{patnerDisbursementData.percentage}}</td>
+						<td>{{patnerDisbursementData.shareAmount}}</td>
+						<td>{{patnerDisbursementData.commissionAmount}}</td>
+
+					</tr>
+				</tbody>
+			</table>
+			<ul class="pager">
+	   			<li class="previous"><a data-ng-click="patnerDisbursementData.previous()" href="" 
+	   				data-ng-disabled="!patnerDisbursementData.hasPrevious()">&larr; {{ 'label.Prev' | translate }}</a></li>
+	   			<li class="next" ><a data-ng-click="patnerDisbursementData.next()" href="" 
+	   				data-ng-disabled="!patnerDisbursementData.hasNext()">{{ 'label.Next' | translate }} &rarr;</a></li>
+			</ul></div>
+			</uib-tab>  -->
+			<!-- <uib-tab heading="Customers" select = "getClients()">
+			<div class="container" style="width:99.8%;">
+			<div class="col-md-3 pull-right" style="margin:-44px 2px;">
+			<button id="Renewal" class=" btn primary_btn pull-right" data-ng-click="RenewalSubmit()" ><i
+                            		class="fa fa-plus"></i>{{'button.renewal' | translate}}</button>
+                <div class="col-sm-12">
+			<form ng-submit="searchItemDetails(filterText)" >
+			        	<div class="col-md-3">
+				        	<input ng-autofocus="true" ng-model="filterText" ng-keyup="onFilter()" type="text"
+                                       class="form-control unstyled"
+                                       placeholder="{{'label.input.filterbynameaccno' | translate}}">
+				        </div>
+				          <div class="col-sm-4">
+				          <button id="Renewal" class="btn primary_btn pull-right" data-ng-click="RenewalSubmit()" ><i
+                            		class="fa fa-plus"></i>{{'button.renewal' | translate}}</button>
+                    			<a href="" class="btn primary_btn" ng-click="RenewalSubmit()"><i
+                            		class="fa fa-plus"></i>Renewal</a>
+                		  </div>
+				    	  
+					</form>
+					</div>
+					</div>
+					<div class="container" style="width:1404px;margin-top:-6px;">
+					<table class="table table-striped">
+			        <thead>
+			            <tr class="graybg">
+			            <th><input type="checkbox" ng-model="activeall" ng-true-value="true" ng-false-value="false"
+			                     ng-change="selectAll(activeall)"></th>
+			            	<th>{{'label.Stb Number' | translate}}</th>
+			                <th>{{'label.Customer Number' | translate}}</th>
+			                <th>{{'label.Name' | translate}}</th>
+			                <th>{{'label.Mobile Number' | translate}}</th>
+			                <th>{{'label.Order Number' | translate}}</th>
+			                <th>{{'label.Active Date' | translate}}</th> 
+			                <th>{{'label.Expiry Date' | translate}}</th>
+			                <th>{{'label.Balance Amount' | translate}}</th>
+			                <th>Balance Check</th>
+			                 	   
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <tr class="pointer-main" ng-repeat="client in clientsData.currentPageItems  | filter:filterText" > ng-hide="client.status.value == 'Closed'" 
+			                <td><input type="checkbox" ng-checked="activeall" ng-model="active" ng-true-value="true" ng-false-value="false"  ng-change="clientSelected(client, active)">
+			                <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.stbId}}</td>
+			                <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.accountNo}}</td>
+			                <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.displayName}}</td>
+			                <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.phone}}</td>
+			                <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.orderId}}</td>
+			                <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.startDate | DateFormat}}</td>
+			                <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.endDate | DateFormat}}</td>
+			                <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.balanceAmount}}</td>
+			                <td class="pointer" data-ng-click="routeTo(client.id)" >{{client.balanceCheck}}</td>
+			                
+			                
+			            </tr>
+			        </tbody>
+			    </table></div>
+			 </uib-tab>		 -->
+			<!-- </uib-tabset> -->
+        </div>
+    </div>
+    
+    <script type="text/ng-template" id="credit.html">
+      <div class="modal-content" style="width: 630px;">
+        <!-- 	<div class="modal-header silver">
+         	</div> -->
+			<form class="form-horizontal" novalidate=""  rc-submit="submit()">
+					<!--<api-validate></api-validate>
+				  <div class="error" ng-show="errorStatus || errorDetails">
+				      <label ng-show="errorStatus">{{errorStatus}}</label>
+				      <label ng-hide="errorStatus" ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+	    	      </div>
+				<fieldset>-->
+			<div class="modal-body">
+				<h3 class="bolder">Credit</h3>
+					<div class="form-group">
+					<label class="control-label " for="creditlimit">{{ 'label.creditlimit' | translate }}</label>
+					 <input type="text" id="creditlimit" name="creditlimit" class="form-control" data-ng-model="formData.creditLimitAmount" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/"  maxlength="15" required  data-late-Validate/>
+    			     </div>
+    			 </div>
+		            <div class="modal-footer">
+			            <button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
+			            <button class="btn btn-primary" ng-click="credit()">{{'label.button.confirm' | translate}}</button>
+		           </div>
+                <!--</fieldset>-->
+           </form>
+      </div>
+  </script>   
+</div>

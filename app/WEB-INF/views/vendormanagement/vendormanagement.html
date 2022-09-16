@@ -1,0 +1,80 @@
+<div class="content-container" ng-controller="VendorController">
+    <ul class="breadcrumb">
+    	<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li class="active">{{'label.vendor.vendormanagement' | translate}}</li>
+    </ul>
+   <div class="widget mb30"> 
+            <div class="row align-items-center">
+                <div class="col-md-3">
+    				      <input data-ng-autofocus="true" data-ng-model="filterText" data-ng-keyup="onFilter()" type="text" class="form-control" placeholder="{{ 'label.input.filterbyname' | translate }}">
+                </div>
+                <div class="col-md-9 ">
+                  <ul class="btn-group-list text-right">
+                   <li>
+                    <a href="#/createvendormanagement" class="btn btn-primary pull-right" has-permission='CREATE_TEMPLATE'><i class="fa fa-plus fa fa-white"></i>{{'button.create' | translate}}</a>
+                </li>
+            </ul>
+    			</div>
+        </div>	
+   </div>
+   
+   	<div class="widget">
+   	  <div class="table-responsive">
+    	<table class="table table-striped">
+        	<thead>
+		        <tr class="graybg">
+		            <th>{{'label.vendor.code' | translate}}</th>
+		            <th>{{'label.vendor.name' | translate}}</th>
+		            <th>{{'label.vendor.emailid' | translate}}</th>
+		            <th>{{'label.vendor.conatactname' | translate}}</th>
+		            <th>{{'label.vendor.mobileno' | translate}}</th>
+		            <th>{{'label.vendor.vendorlandlineno' | translate}}</th>
+		            <th>{{'label.vendor.vendoraddress' | translate}}</th>
+		            <th>{{'label.vendor.vendorcurrency' | translate}}</th>
+		            <th>{{'label.vendor.country' | translate}}</th>
+		            <th>{{'label.heading.actions' | translate }}</th>
+		        </tr>
+          </thead>
+        <tbody>
+        <tr class="pointer-main" data-ng-repeat="template in vendorDatas | filter:filterText">
+            <td class="pointer" data-ng-click="routeTo(template.id)">{{template.vendorCode}}</td>
+            <td class="pointer" data-ng-click="routeTo(template.id)">{{template.vendorName}}</td>
+            <td class="pointer" data-ng-click="routeTo(template.id)">{{template.vendorEmailId}}</td>
+            <td class="pointer" data-ng-click="routeTo(template.id)">{{template.contactName}}</td>
+            <td class="pointer" data-ng-click="routeTo(template.id)">{{template.vendormobileNo}}</td>
+            <td class="pointer" data-ng-click="routeTo(template.id)">{{template.vendorLandlineNo}}</td>
+            <td class="pointer" data-ng-click="routeTo(template.id)">{{template.vendorAddress}}</td>
+            <td class="pointer" data-ng-click="routeTo(template.id)">{{template.vendorCurrency}}</td>
+             <td class="pointer" data-ng-click="routeTo(template.id)">{{template.vendorCountryName}}</td>
+            <td>
+				<a has-permission='UPDATE_VENDOR' 
+					href="#/editvendormanagement/{{template.id}}" data-popover="Edit Vendor" 
+					data-popover-trigger="mouseenter">
+                    <i class="fa fa-edit fa fa-white"></i>
+                </a>     	
+                <!-- <a data-ng-show="PermissionService.showMenu('DELETE_VENDOR')" 
+                	data-ng-click="deleteVendor(template.id)" data-popover="{{'label.vendordelete' | translate}}" 
+						data-popover-trigger="mouseenter"><i class="icon-remove icon-white"></i></a> -->
+			  </td>
+        </tr>
+        </tbody>
+    </table>
+   </div>
+  </div> 
+    
+    <script type="text/ng-template" id="deletePopupForVendor.html">
+    	<div class="modal-header silver">
+        	<h3 class="bolder">{{'label.vendordelete' | translate}}</h3>
+        </div>
+
+        <div class="modal-body style="height:60px;">
+            <h4>Are you sure?</h4>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+        </div>
+ 	</script>
+ 
+</div>

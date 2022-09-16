@@ -1,0 +1,72 @@
+<div class="content-container" ng-controller="BillModesController">
+	<ul class="breadcrumb">
+		<li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+		<li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+		<li class="active">{{'label.ClientBillProfile' | translate}}</li>
+	</ul>
+	<div ng-include="'views/clients/viewclienttopinfo.html'"></div>
+  <div class="widget">
+           <!-- <a href="#/addbillmodes/{{client.id}}" class="btn btn1 mrl15"><i class="fa fa-edit"></i>
+    							{{'label.editbillprofile' | translate}}</a> -->
+
+      <div class="top-full-wrap ">
+         <h3>{{'label.ClientBillProfile' | translate}}</h3>
+      		<ul class="btn-group-list text-right">
+      			<li><a data-ng-click="editBill()" class="btn btn-primary"><i class="fa fa-edit"></i> EditBillProfile</a></li>
+           </ul>
+      </div>
+      <table class="table table-bordered table-striped">
+ 		<tr>
+ 			<td>{{ 'label.clientId' | translate }}</td>
+ 			<td>{{bill.clientId}}</td>
+ 		</tr>
+ 		<tr>
+ 			<td>{{ 'label.billDayOfMonth' | translate }}</td>
+ 			<td>{{bill.billDayOfMonth}}</td>
+ 		</tr>
+ 		<tr>
+ 			<td>{{ 'label.billCurrency' | translate }}</td>
+ 			<td>{{bill.billCurrency}}</td>
+ 		</tr>
+ 	    <tr>
+ 	   		<td>{{ 'label.billFrequency' | translate }}</td>
+ 	   		<td>{{bill.billFrequency}}</td>
+ 	    </tr>
+ 	    <tr>
+ 	   		<td>{{ 'label.billSegment' | translate }}</td>
+ 	   		<td>{{bill.billSegment}}</td>
+ 	    </tr>
+ 	     <tr>
+ 	   		<td>{{'label.nextBillDay' | translate }}</td>
+ 	   		<td>{{bill.nextBillDay | DateFormat}}</td>
+ 	    </tr>
+ 	     <tr>
+ 	   		<td>{{'label.lastBillDay' | translate }}</td>
+ 	   		<td>{{bill.lastBillDay}}</td>
+ 	    </tr>
+ 	     <tr>
+ 	   		<td>{{ 'label. lastBillNo' | translate }}</td>
+ 	   		<td>{{bill.lastBillNo}}</td>
+ 	    </tr>
+ 	     <tr>
+ 	   	  <td>{{ 'label. paymentType' | translate }}</td>
+ 	   	 	<td>{{bill.paymentType}}</td>
+ 	    </tr>
+ 	    <tr>
+ 	   	 <td>{{ 'label. billSuppressionFlag' | translate }}</td>
+ 	   	 	<td>{{bill.billSuppressionFlag}}</td>
+ 	    </tr>
+ 	    <tr>
+ 	   	 <td>{{ 'label. billSuppressionId' | translate }}</td>
+ 	   	  	<td>{{bill.billSuppressionId}}</td>
+ 	    </tr>
+ 	    <tr>
+ 	   	   <td>{{ 'label. firstBill' | translate }}</td>
+ 	   	 <td>{{bill.firstBill}}</td>
+ 	    </tr>
+ 	    <tr>
+ 	   	  <td>{{ 'label. hotBill' | translate }}</td>
+ 	   	  <td>{{bill.hotBill}}</td>
+ 	    </tr>
+ 	</table>				
+  </div>

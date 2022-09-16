@@ -1,0 +1,454 @@
+<div class="content-container" ng-controller="EditOfficeController">
+    <ul class="breadcrumb">
+        <li><a href="#/offices">{{'label.Entity' | translate}}</a></li>
+        <li class="active">{{'label.editorganization' | translate}}</li>
+    </ul>
+
+    <div class="widget card mb30 avatar-wrap">
+       <div class="row d-flex align-items-center">
+	       	<div class="col-md-2">
+	       		<div class="avatarDiv">
+	       			<img data-ng-hide="client.imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar" >
+	                       <img data-ng-show="client.imagePresent" src="{{image}}" alt="Avatar"  class="avatar">
+	                   	<h3>{{formData.name}} </h3>
+	                   	<i class="fa fa-circle fs15 {{client.status.code | StatusLookup}}"></i>
+	                   	<small ng-if="client.subStatus.description">
+	                       	[{{client.subStatus.description}}]
+	                   	</small>
+	       		</div>
+	       	</div>
+	       	<div class="col-md-10">
+       			<div class="row">
+       				<div class="col-md-4">
+       					 <label id="fthin">{{ 'Entity Code' | translate }}: <span id="fnormal">{{formData.externalId}}</span></label>
+       				</div>
+       				<div class="col-md-4">
+       					 <label id="fthin">{{ 'Entity Type' | translate }}: <span id="fnormal">{{formData.officeType}}</span></label>
+       				</div>
+       				<div class="col-md-4">
+       					  <label id="fthin">{{ 'Parent Entity' | translate }}: <span id="fnormal">{{formData.parentName}}</span></label>
+       				</div>
+       				<div class="col-md-4">
+       					 <label id="fthin">{{ 'label.contactperson' | translate }}: <span id="fnormal">{{formData.contactPerson}}</span></label>
+       				</div>
+       			</div>
+	       	</div>
+       </div>
+
+
+		<!-- <div class="content ptrbl0">
+			<div class="toolbar">
+	               <div class="client-title">
+	                   <div class="col-md-1 prl0 tc avatarDiv">
+	                       <img data-ng-hide="client.imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar" >
+	                       <img data-ng-show="client.imagePresent" src="{{image}}" alt="Avatar"  class="avatar">
+	                   	<h3>{{formData.name}} <i class="fa fa-circle fs15 {{client.status.code | StatusLookup}}"></i></h3>
+	                   	<small ng-if="client.subStatus.description">
+	                       	[{{client.subStatus.description}}]
+	                   	</small>
+	                   </div>
+	                   <div class="col-md-11">
+		                   	<div class="form-group" >
+		                           <label id="fthin" class="col-md-4">{{ 'Entity Code' | translate }}<span id="fnormal">{{formData.externalId}}</span></label>
+		                           <label id="fthin" class="col-md-4">{{ 'Entity Type' | translate }}: <span id="fnormal">{{formData.officeType}}</span></label>
+		                       	   
+		                    </div>
+	                   </div><br><br>
+	                   <div class="col-md-11">
+	                       <div class="form-group">
+	                              <label id="fthin" class="col-md-4">{{ 'Parent Entity' | translate }}:<span id="fnormal">{{formData.parentName}}</span></label>
+		                           <label id="fthin" class="col-md-4">{{ 'label.contactperson' | translate }}:<span id="fnormal">{{formData.contactPerson}}</span></label>
+	                              
+	                       </div>
+	                   </div>
+	               </div>
+	           </div>
+		</div> -->
+	</div>
+
+    <div class="widget card">
+    	<div class="content">
+    		<form name="editofficeform" novalidate="" class="form-horizontal" 
+    		      rc-submit="submit()">
+    		    <!-- <div uib-alert type="danger" ng-show="errorStatus || errorDetails.length > 0">
+		 		<label><i class="fa fa-exclamation-circle viewbgclient-t-actions"></i>field is required</label>
+		 			<div ng-repeat="error in errorDetails"><label>{{error.code | translate:error.args}}</label></div>
+				</div> -->
+    		    <!-- <fieldset> -->
+    		        <!-- <legend> --><h3>{{'label.editorganization' | translate}}</h3><!-- </legend> -->
+    		         <div class="row">
+	    		          <div class="col-md-6">
+		    		          <div class="form-group row">
+		                        <div class="col-md-4">
+		    		          	  <label class="control-label">{{ 'label.businesstype' | translate }}</label>
+		    		          	</div>
+		              			<div class="col-md-8">
+		                			<select data-ng-model="formData.businessType"  class="form-control"
+		                				data-ng-options="businessType.mCodeValue as businessType.mCodeValue for businessType in businessTypes"></select>
+		              			</div>
+		              		</div>
+		              	  </div>
+		              	   <div class="col-md-6">
+                  			<div class="form-group row">
+                  			  <div class="col-md-4">
+                  			    <label class="control-label" for="email">{{'label.email' | translate}}<span class="required">*</span></label>
+                  		     </div>
+					         <div class="col-md-8">
+					           <input type="text" id="email" class="form-control" data-ng-model="formData.email"/>
+					        </div>
+                  		</div>
+                  	</div>
+                  </div>
+
+                   <div class="row">
+                   	 <div class="col-md-6">
+    		           <div class="form-group row">
+    		           	  <div class="col-md-4">
+
+    		              <!-- <label class="control-label col-sm-2">{{ 'label.orgcode' | translate }}</label>
+    		
+    				        <div class="col-sm-3">
+    				            <input id="externalId" type="text" name="externalId" ng-model="formData.externalId" class="form-control"/>
+    				            <span data-ng-show="createofficeform.externalId.$dirty && createofficeform.externalId.$invalid" data-ng-minlength="3" data-ng-maxlength="15">
+    			                  	<small class="error" data-ng-show="createofficeform.externalId.$error.minlength">{{'org.code.require.atleast.3.characters'| translate}}</small>
+    			                  	<small class="error" data-ng-show="createofficeform.externalId.$error.maxlength">{{'org.code.should.not.exceed.15.characters'| translate}}</small>
+					            </span>
+    				        </div> -->
+    				        <label class="control-label" for="name">{{ 'label.orgname' | translate }}<span
+    				                class="required">*</span></label>
+    				            </div>
+		   				        <div class="col-md-8">
+		   				            <input id="name" type="text" name="name" ng-model="formData.name" class="form-control" />
+		   				            <!-- <form-validate valattributeform="editofficeform" valattribute="name"/> -->       
+		   				        </div>
+    				        </div>
+    				    </div>
+
+    				    <div class="col-md-6">
+    				    	<div class="form-group row">
+    				    	  <div class="col-md-4">
+    				             <label class="control-label">{{'label.addressname' | translate}}<span class="required">*</span></label>
+    				         </div>
+			        		<div class="col-md-8">
+					          	<input type="text" id="addressName" name="addressName" class="form-control" data-ng-model="formData.addressName" />
+					          	<!-- <span  data-ng-show="editofficeform.address.$invalid">
+					             	<small class="error" data-ng-show="editofficeform.address.$error.req">
+					                  {{'label.required.field' | translate}}
+					              	</small>
+					          	</span> -->
+			        		</div>
+    		           </div>
+    		       </div>
+    		   </div>
+
+    		       <div class="row">
+    		          <div class="col-md-6">
+    				    <div class="form-group row">
+    				      <div class="col-md-4">
+    				         <label class="control-label">{{ 'label.orgtype' | translate }}</label>
+    				       </div>
+	                  		<div class="col-md-8">
+	                    	<select data-ng-model="formData.officeType"  class="form-control" data-ng-options="officeType.name as officeType.name for officeType in officeTypes"></select>
+	                  			</div>
+	                  		</div>
+	                  	</div>
+    				        <!-- <div class="col-sm-3">
+    				            <form-validate valattributeform="editofficeform" valattribute="name"/>
+    				        </div> -->
+    				       <div class="col-md-6">
+    				       	 <div class="form-group row">
+	    				       	  <div class="col-md-4">
+	    				            <label class="control-label" for="city">{{'label.city/area' | translate}}<span class="required">*</span></label>
+	    				        </div>
+					          <div class="col-md-8">
+					          	  <input type="text" id="city" name="city" class="form-control" data-ng-model="formData.city" required data-ng-change="getStateAndCountry(formData.city)"/>  
+					          </div>
+					          <datalist id="citylist">
+				             	  <option  data-ng-repeat="city in cities" value="{{city}}"></option>
+				       		  </datalist>
+    				        
+    				    </div>
+    				</div>
+    			</div>
+
+    				 <div class="row">
+    				   <div class="col-md-6">
+    				    <div class="form-group row">
+    				    	<div class="col-md-4">
+    				             <label class="control-label">{{ 'label.parentorg' | translate }}<span class="required">*</span></label>
+    				         </div>
+			                  <div class="col-md-8">
+			                     <!-- <select data-ng-model="formData.officeType"  class="form-control"
+			                     	data-ng-options="officeType.id as officeType.name for officeType in officeTypes">
+			                     </select> -->
+			                     <select id="parentId" ng-model="formData.parentId" class="form-control"
+    		                            ng-options="office.id as office.name for office in offices" data-ng-change="changeParent(formData.parentId)"
+    		                            value="{{office.id}}"></select>
+			                  </div>
+			              </div>
+			          </div>
+
+			           <div class="col-md-6">
+    				     <div class="form-group row">
+			                  <div class="col-md-4">
+	                  			 <label class="control-label" for="district">{{'label.district' | translate}}<span class="required">*</span></label>
+	                  			</div>
+					            <div class="col-md-8">
+						          <input type="text" id="district" class="form-control" data-ng-model="formData.district" disabled required/>
+						        </div>
+   				    	</div>
+   				    </div>
+   				</div>
+
+				  <div class="row">
+				   	 <div class="col-md-6">
+    				    <div class="form-group row">
+    				    	 <div class="col-md-4">
+			                   <label class="control-label">{{ 'label.orgopenedon' | translate }}<span
+    				                class="required">*</span></label>
+    				            </div>
+	    				        <div class="col-md-8">
+	    				            <input id="openingDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="first.date"
+	    				                   is-open="opened" min="minDate" max="restrictDate" class="form-control"/>
+	    				        </div>
+	    				    </div>
+	    				</div>
+	                <div class="col-md-6">
+		                 <div class="form-group row">
+		                 	<div class="col-md-4">
+					        <label class="control-label" for="state">{{'label.state' | translate}}<span class="required">*</span></label>
+					    </div>
+				            <div class="col-md-8">
+					          <input type="text" id="state" class="form-control" data-ng-model="formData.state" disabled required/>
+					        </div>
+					    </div>    
+	                </div>
+	            </div>
+
+		          <div class="row">
+		          	 <div class="col-md-6">
+    				    <div class="form-group row">
+    				    	 <div class="col-md-4">
+    				        <label class="control-labe" for="contactPerson">{{ 'label.contactperson' | translate }}</label>
+    				    </div>
+	            			<div class="col-md-8">
+	              				<input type="text" id="contactPerson" name="contactPerson" data-ng-model="formData.contactPerson" class="form-control">
+	            			</div>
+	            		</div>
+	            	</div>
+            		 <div class="col-md-6">
+				        <div class="form-group row">
+				        	 <div class="col-md-4">
+				              <label class="control-label" for="country">{{'label.country' | translate}}<span class="required">*</span></label>
+				         </div>
+				        <div class="col-md-8">
+				          <input type="text" id="country" name="country" class="form-control" data-ng-model="formData.country" disabled required />
+				        </div>
+				    </div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+			      <div class="form-group row">
+			      	<div class="col-md-4">
+            		<label class="control-label" for="phone">{{'label.phonenumber' | translate}}<span class="required">*</span></label></div>
+			         <div class="col-md-8">
+			          <input type="text" id="phone" data-ng-model="formData.phoneNumber" class="form-control" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/" name="phoneNumber" maxlength="15"/>
+			          	<!-- <div data-ng-show="editofficeform.phoneNumber.$dirty && editofficeform.phoneNumber.$invalid">
+			  				<small class="error" data-ng-show="editofficeform.phoneNumber.$error.pattern">{{'label.prospect.error.mobileno' | translate}}</small>
+						</div> -->
+			        </div>
+			    </div>
+			</div>
+        		<div class="col-md-6">
+        			 <div class="form-group row">
+        			 	<div class="col-md-4">
+	            			<label class="control-label" for="zip">{{ 'label.zip' | translate }}</label>
+	            		</div>
+        			<div class="col-md-8">
+          		    	<input type="text" id="zip" name="zip" data-ng-model="formData.zip" class="form-control"/>
+        			</div>
+            	</div>
+            </div>
+        </div>
+
+    			<div class="row">
+    				 <div class="col-md-6">
+    				    <div class="form-group row">
+    				    	 <div class="col-md-4">
+	                            <label class="control-label" >PANCARD No</label>
+	                        </div>
+                             <div class="col-md-8">
+                                  <input type="text" id="pancardNo" name="pancardNo" data-ng-model="formData.pancardNo" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-md-6"> 
+                      	<div class="form-group row">
+                      		 <div class="col-md-4"> 
+	                            <label class="control-label" for="file">{{'label.client.select.logo' | translate}}</label>
+	                        </div>
+                        <div class="col-md-8"> 
+	                            <input type="file" data-ng-file-select="onFileSelect($files)" >
+                        </div>
+                       </div>
+                   </div>
+               </div>
+
+                <div class="row">
+                	 <div class="col-md-6"> 
+                     <div class="form-group row">
+                     	 <div class="col-md-4"> 
+                            <label class="control-label" >GST Reg No</label>
+                        </div>
+                        <div class="col-md-8"> 
+                              <input type="text" id="gstRegNo" name="gstRegNo" data-ng-model="formData.gstRegNo" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-6">  
+                   <div class="form-group row"> 
+                   	<div class="col-md-4">
+                        <label class="control-label " >Company Reg No<span class="required">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                          <input type="text" id="companyRegNo" name="companyRegNo" data-ng-model="formData.companyRegNo" class="form-control" required/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+           <div class="row">
+           	 <div class="col-md-6">
+                <div class="form-group row">
+                	 <div class="col-md-4">
+                      <label class="control-label">Commission Model<span class="required">*</span></label>
+                    </div>
+                   <div class="col-md-8">
+                      <select id="commisionModel" class="form-control" name="commisionModel" data-ng-model="formData.commisionModel ">
+                            <option>PostPaid</option>
+                              <option>Prepaid</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                 <div class="form-group row"> 
+                      <div class="col-md-4">  
+                        <label class="control-label" >PaymentType</label>
+                    </div>
+                     <div class="col-md-8">  
+                          <select ng-model="formData.payment" class="form-control"
+                              ng-options="payment for payment in payments">
+                              <option value="">--select search--</option>
+                          </select>
+                      </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="row">
+         	 <div class="col-md-6">  
+                 <div class="form-group row">
+                 	 <div class="col-md-4">  
+                    <label class="control-label" for="isSelector">Subscriber Dues</label>
+                </div>
+                 <div class="col-md-8">  
+                      <label class="checkbox">
+                        <input type="checkbox" id="subscriberdues"  data-ng-model="formData.subscriberdues">
+                      </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group row">
+	              <div class="col-md-4">
+	                <label class="control-label">{{ 'label.dasType' | translate }}</label>
+	            </div>
+      			<div class="col-md-8">
+        			<select data-ng-model="formData.dasType"  class="form-control"
+        				ng-options="dasType.id as dasType.name for dasType in dasTypes">
+        				<option value=""></option></select>
+        			</div>
+      			</div>
+      		</div> 
+      	</div>       
+      			    
+    				    <!-- <div class="form-group">
+                 			<label class="control-label col-sm-2">{{'label.addressname' | translate}}<span class="required">*</span></label>
+			        		<div class="col-sm-3">
+					          	<input type="text" id="addressName" name="addressName" class="form-control" data-ng-model="formData.addressName" 
+					          		required data-late-Validate/>
+					          	<span  data-ng-show="editofficeform.address.$invalid">
+					             	<small class="error" data-ng-show="editofficeform.address.$error.req">
+					                  {{'label.required.field' | translate}}
+					              	</small>
+					          	</span>
+			        		</div>
+              			</div> -->
+              			
+    				    <!-- <div class="form-group">
+	            			<label class="control-label col-sm-2" for="city">{{'label.city/area' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          	<input type="text" id="city" name="city" class="form-control" data-ng-model="formData.city" required data-ng-change="getStateAndCountry(formData.city)"/>  
+					        </div>
+					        <datalist id="citylist">
+				             	<option  data-ng-repeat="city in cities" value="{{city}}">
+				       		</datalist>
+	          			</div> -->
+	          			
+				      	<!-- <div class="form-group">
+				         	<label class="control-label col-sm-2" for="state">{{'label.state' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          <input type="text" id="state" class="form-control" data-ng-model="formData.state" disabled required/>
+					        </div>
+				      	</div> -->
+				      	
+					   <!-- <div class="form-group">
+					        <label class="control-label col-sm-2" for="country">{{'label.country' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          <input type="text" id="country" name="country" class="form-control" data-ng-model="formData.country" disabled required />
+					        </div>
+		      			</div> -->
+		      			
+		      			<!-- <div class="form-group">
+				        	<label class="control-label col-sm-2" for="phone">{{'label.phonenumber' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          <input type="text" id="phone" data-ng-model="formData.phoneNumber" class="form-control" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/" name="phone" maxlength="15" required  data-late-Validate/>
+					          	<div data-ng-show="editofficeform.phoneNumber.$dirty && editofficeform.phoneNumber.$invalid">
+					  				<small class="error" data-ng-show="editofficeform.phoneNumber.$error.pattern">{{'label.prospect.error.mobileno' | translate}}</small>
+								</div>
+					        </div>
+					   	</div -->
+					   	
+					   	<!-- <div class="form-group">
+					        <label class="control-label col-sm-2" for="email">{{'label.email' | translate}}</label>
+					        <div class="col-sm-3">
+					          <input type="text" id="email" class="form-control" data-ng-model="formData.email"/>
+					        </div>
+			      		</div> -->
+			      		
+			      		<!-- <div class="form-group">
+					        <label class="control-label col-sm-2" for="file">{{'label.client.select.logo' | translate}}</label>
+					        <div class="col-sm-3">
+					          <input type="file" data-ng-file-select="onFileSelect($files)">
+					        </div>
+		      			</div> -->
+
+		      	 <ul class="btn-group-list text-right mt20 mb20">  
+		      	 	<li> 
+		      	 		<a id="cancel" href="#/offices">
+				            <button type="reset" class="btn btn-warning">{{'label.button.cancel' | translate}}</button>
+				        </a>
+				    </li>
+				    <li>
+				    	<button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_OFFICE'>{{'label.button.save' | translate}}</button>
+				    </li>
+		      	 </ul>
+    		    <!-- </fieldset> -->
+    		</form>
+    	</div>
+    </div>
+</div>

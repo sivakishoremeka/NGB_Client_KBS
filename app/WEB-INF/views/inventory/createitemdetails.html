@@ -1,0 +1,198 @@
+<div class="content-container" ng-controller="CreateItemDetailsController">
+ 	<ul class="breadcrumb">
+   		<li><a href="#/inventory">{{'link.admin.inventory' | translate}}</a></li>
+  		<li class="active">{{'label.create.new.itemdetail' | translate}}</li>
+ 	</ul>
+    <div class="widget card ">
+   		  <h3>{{'label.create.new.itemdetail' | translate}}</h3>
+   			<form class="form-horizontal"  ng-submit="submit()">
+   				<api-validate></api-validate>
+		    	<fieldset>
+               <div class="row">
+               	<div class="col-md-6">
+		     	 <div class="form-group row">
+		     	 	<div class="col-md-4">
+       				    <label class="control-label" for="grnId">{{'label.grid'| translate }}&nbsp;<span class="required">*</span></label>
+       			    </div>
+			          <div class="col-md-8">
+			               <select id="grnId" class="form-control" ng-model="formData.grnId" 
+			               		ng-options="grnIdData.testId as getBoth(grnIdData.testId,grnIdData.itemDescription) for grnIdData in inventoryGrnDatas"
+								value="{{grnIdData.testId}}" ng-change="changeGrn(formData.grnId)">
+								<option value="">{{'label.select.one' | translate}}</option>
+							</select>
+			          </div>
+				      </div>
+				  </div>
+				  <div class="col-md-6">
+		     	      <div class="form-group row">
+		     	      	<div class="col-md-4">
+					      <label class="control-label" for="itemDescription">{{'label.itemdescription' | translate }}</label>
+					   </div>
+					  	<div class="col-md-8">
+						  <input type="text" class="form-control" name="itemDescription" ng-model="itemDetailsData.itemDescription" readonly>
+					  </div>
+					</div>
+				</div>
+			</div>
+			 <div class="row">
+               	<div class="col-md-6">
+				  <div class="form-group row">
+				    <div class="col-md-4">
+					   <label class="control-label" for="supplierName">{{'label.suppliername' | translate }}</label>
+				   </div>
+					 <div class="col-md-8">
+						<input type="text" class="form-control" name="supplierName" ng-model="itemDetailsData.supplierName" readonly>
+					</div>
+					</div>
+				 </div>
+				 <div class="col-md-6">
+				  <div class="form-group row">
+				  	<div class="col-md-4">
+					   <label class="control-label " for="officeName">{{'label.officename' | translate }}</label>
+				    </div>
+					<div class="col-md-8">
+						<input type="text" class="form-control" name="officeName" ng-model="itemDetailsData.officeName" readonly>
+					</div>
+				</div>
+				</div>
+			</div>
+			<div class="row">
+               <div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+					   <label class="control-label" for="orderdQuantity">{{'label.orderedquantity' | translate }}</label>
+				    </div>
+					<div class="col-md-8">
+						<input type="text" class="form-control" name="orderdQuantity" ng-model="itemDetailsData.orderdQuantity" readonly>
+					</div>
+				</div>
+			</div>
+			 <div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+					   <label class="control-label" for="receivedQuantity">{{'label.receivedquantity' | translate }}</label>
+				  </div>
+				  <div class="col-md-8">
+						<input type="text" class="form-control" name="receivedQuantity" ng-model="itemDetailsData.receivedQuantity" readonly>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+              <div class="col-md-6">
+				 <div class="form-group row">
+					<div class="col-md-4">
+					 <label class="control-label" for="quality">{{'label.quality' | translate }}</label>
+				 </div>
+					<div class="col-md-8">
+						<select ng-model="itemDetailsData.quality" class="form-control" ng-options="q.mCodeValue as q.mCodeValue for q in qualityDatas" 
+							>
+							<option ng-if="grnId" value="">{{'label.select.one' | translate}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			  <div class="col-md-6">
+				 <div class="form-group row">
+				 	<div class="col-md-4">
+					  <label class="control-label" for="itemModel">{{'label.itemModel' | translate }}</label>
+				    </div>
+					<div class="col-md-8">
+						<select ng-model="q" class="form-control" ng-options="q as q.model for q in modelProvisionMappingData" 
+							    data-ng-change='setModel(q)' value="{{q.model}}">
+					    		<option value="">{{'label.select.one' | translate}}</option>
+					    </select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+              <div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+		 			  <label class="control-label" for="serialNumber">{{'label.serialnumber' | translate }}&nbsp;<span class="required">*</span></label>
+		 		    </div>
+					<div class="col-md-8">
+						<input type="text" class="form-control" name="serialNumber" ng-model="itemDetailsData.serialNumber">
+					</div>
+				</div>
+			</div>
+			 <div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+					   <label class="control-label " for="provisioningSerialNumber">{{'label.provisioningserialnumber' | translate }}&nbsp;
+		 				<span class="required">*</span></label>
+		 			</div>
+					<div class="col-md-8">
+						<input type="text" class="form-control" id="provisioningSerialNumber" name="provisioningSerialNumber" 
+							ng-model="itemDetailsData.provisioningSerialNumber">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="formData.grnId">
+			<div class="row">
+               <div class="col-md-6 ">
+			    	<div class="form-group row">
+			    	   <div class="col-md-4">
+			            <label class="control-label" for="isPaired">{{ 'label.ispaired' | translate }}</label>
+			           </div>
+			            <div class="col-md-8">
+			              <label class="checkbox">
+			                <input type="checkbox" class="form-control" id="isPaired" data-ng-model="formData.isPairing" ng-change="isPairedChecked()">
+			              </label>
+			            </div>
+			        </div>
+			     </div>
+			      <div class="col-md-6">
+	            		<div ng-if="formData.isPairing==true">
+					      	<div class="form-group row">
+					      		<div class="col-md-4">
+									<label class="control-label" for="pairedItem">{{'label.pairedItem'| translate }}&nbsp;<span class="required">*</span></label>
+								</div>
+							<div class="col-md-8">
+								<select class="form-control" ng-model="formData.pairedItemId"
+									ng-options="itemData.id as getBothItem(itemData.itemCode,itemData.itemDescription) for itemData in pageItems" 
+										value="{{itemData.id}}">
+								</select>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+      <div class="col-md-6">
+		<div class="form-group row">
+		   <div class="col-md-4">
+			 <label class="control-label" for="remarks">{{'label.remarks' | translate }}</label>
+		    </div>
+				<div class="col-md-8">
+					<input type="text" class="form-control" name="remarks" ng-model="itemDetailsData.remarks">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group row">
+			 <div class="col-md-4">
+				<label class="control-label" for="CartoonNumber">{{'label.CartoonNumber' | translate }}</label>
+			  </div>
+				<div class="col-md-8">
+					<input type="text" class="form-control" name="CartoonNumber" ng-model="itemDetailsData.cartoonNumber">
+				</div>
+			</div>
+		</div>
+	</div>
+	<ul class="btn-group-list text-right mt20 mb20">
+		<li>
+			<a href="#/inventory"><button type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel' | translate}}</button></a>
+		</li>
+		<li>
+			<button type="submit" class="btn btn-primary">{{'button.save' | translate}}</button>
+		</li>
+	</ul>
+  </form>
+</div>
+</div>

@@ -1,0 +1,85 @@
+<div class="content-container" ng-controller="ViewNetworkSystemController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/system">{{'label.anchor.system' | translate}}</a>
+		</li>
+		<li>
+			<a href="#/mappingconfig">{{'label.provisioningMapping' | translate}}</a>
+		</li>
+		<li class="active">{{'label.viewnetworksystem' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+		<h3>View Network System</h3>
+		
+		<h4>{{provisioningmapping.viewnetworksystem}}</h4>
+		<ul class="btn-group-list text-right mt20 mb20">
+			
+			<li><a has-permission = UPDATE_NETWORKSYSTEM href="#/editNetworkSystem/{{networksystem.id}}" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a></li>
+			<li><a has-permission =DELETE_NETWORKSYSTEM data-ng-click="deleteNetworkSystem()" class="btn btn-primary"><i class="fa fa-trash-o"></i> Delete</a></li>
+			
+		</ul>
+		
+		
+		<div class="table-responsive">
+				<table  class="table table-bordered table-striped" >
+					<tr>
+						<td>{{'table.provisioningcommands.id' | translate}}</td>
+						<td>{{networksystem.id}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'table.provisioningcommands.systemcode' | translate }}</td>
+						<td>{{networksystem.systemcode}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'table.provisioningcommands.systemname' | translate }}</td>
+						<td>{{networksystem.systemname}}</td>
+					</tr>
+					<tr>
+						<td>{{ 'table.provisioningcommands.status' | translate }}</td>
+						<td>{{networksystem.status}}</td>
+					</tr>
+				</table>
+			</div>
+			
+		
+		<!-- <div class="row">
+				<div class="col-md-12">
+					<h3>&nbsp;&nbsp;&nbsp;{{'label.commandparameter' | translate}}</h3>
+					<table class="table">
+						<thead>
+							<tr class="graybg" width="20%">
+								<th>{{'label.paramname' | translate}}</th>
+								<th>{{'label.paramtype' | translate}}</th>
+								<th>{{'label.paramlength' | translate}}</th>
+								<th>{{'label.paramnotes' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="commandParam in commandParameters | filter:filterText">
+								
+								<td>{{commandParam.commandParam}}</td>
+								<td>{{commandParam.paramType}}</td>
+								<td>{{commandParam.paramLength}}</td>
+								<td>{{commandParam.paramNotes}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<script type="text/ng-template" id="networksystem.html">
+		<div class="modal-header silver">
+			<h3 class="bolder">Delete Network System</h3>
+		</div>
+		<div class="modal-body modal-small">
+			<h4 class="text-center">Are you sure?</h4>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+			<button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+		</div>
+	</script>
+</div>
+</div>

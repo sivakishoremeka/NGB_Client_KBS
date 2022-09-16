@@ -1,0 +1,193 @@
+<div class="content-container" data-ng-controller="CreateVoucherPinController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li><a href="#/voucherpins">{{'label.ManageVoucherpins' | translate}}</a></li>
+        <li class="active">{{'label.createvoucherpin' | translate}}</li>
+    </ul>
+    <div class="widget">
+        <h3>{{'label.createvoucherpin' | translate}}</h3>
+        <form name="createVoucherForm" class="form-horizontal" data-ng-submit="submit()">
+            <api-validate></api-validate>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-check-inline">
+                                <input type="radio" name="voucherSelectionType" data-ng-change="radioTypeSelection()" data-ng-model="voucherType" value="voucher" />
+                                <label class="control-label">{{ 'label.Voucher' | translate }}</label>
+                            </div>
+                            <div class="form-check-inline">
+                                <input type="radio" name="voucherSelectionType" data-ng-change="radioTypeSelection()" data-ng-model="voucherType" value="coupon" />
+                                <label class="control-label">{{ 'label.Coupon' | translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="batchName">{{ 'label.batchName' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="batchName" class="form-control" data-ng-model="formData.batchName">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="officeId">{{ 'label.office' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="officeId" data-ng-model="formData.officeId" class="form-control" data-ng-options="office.id as office.name for office in offices">
+                                <option value="">{{'label.select.one' | translate}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="length">{{ 'label.lengthOfPin' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="length" class="form-control" name="length" data-ng-model="formData.length" data-ng-pattern="/^[0-9]/">
+                            <span data-ng-show="createVoucherForm.length.$dirty && createVoucherForm.length.$invalid">
+        <small class="error" data-ng-show="createVoucherForm.length.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+      </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="beginWith">{{ 'label.beginWith' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="beginWith" class="form-control" data-ng-model="formData.beginWith">
+                            <small class="error" data-ng-show="lengthValidationError">{{'form.error.voucher.no.length.match.exception'|translate}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="pinCategoryData">{{ 'label.pinCategory' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select data-ng-model="formData.pinCategory" class="form-control" id="pinCategory" data-ng-options="pinCategoryData.value as pinCategoryData.value for pinCategoryData in pinCategoryDatas">
+                                <option value="">{{'label.select.one' | translate}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="quantity">{{ 'label.quantity' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="quantity" name="quantity" class="form-control" data-ng-model="formData.quantity" data-ng-pattern="/^[0-9]/">
+                            <span data-ng-show="createVoucherForm.quantity.$dirty && createVoucherForm.quantity.$invalid">
+    <small class="error" data-ng-show="createVoucherForm.quantity.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+  </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="serialNo">{{ 'label.serialNoLength' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="serialNo" name="serialNo" class="form-control" data-ng-model="formData.serialNo" data-ng-pattern="/^[0-9]/">
+                            <span data-ng-show="createVoucherForm.serialNo.$dirty && createVoucherForm.serialNo.$invalid">
+    <small class="error" data-ng-show="createVoucherForm.serialNo.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+  </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" data-ng-if="voucherType=='coupon'">
+                    <div class="control-group form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.promotion' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select data-ng-model="formData.pinValue" id="promotionValue" class="form-control" data-ng-options="promotionData.id as promotionData.promotionDescription for promotionData in promotionDatas">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" data-ng-if="voucherType=='voucher'">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.pinType' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select data-ng-model="formData.pinType" id="pinType" class="form-control" data-ng-change="setPinValue()" data-ng-options="pinTypeData.value as pinTypeData.value for pinTypeData in pinTypeDatas">
+                            </select>
+                        </div>
+                    </div>
+                    <div data-ng-if="voucherType=='voucher'">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <input data-ng-show="formData.pinType=='VALUE'" class="form-control" type="text" id="pinValue" name="pinValue" data-ng-model="formData.pinValue" data-ng-pattern="/^[0-9]/" />
+                                <select data-ng-show="formData.pinType=='PRODUCT'" class="form-control" id="productValue" data-ng-model="formData.pinValue" data-ng-options="planPriceData.id as planPriceData.plan_duration for  planPriceData in planPriceData">
+                                </select>
+                                <span data-ng-show="createVoucherForm.pinValue.$dirty && createVoucherForm.pinValue.$invalid">
+         <small class="error" data-ng-show="createVoucherForm.pinValue.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+       </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.expiryDate' | translate }}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" data-datepicker-pop="dd MMMM yyyy" id="expiryDate" class="form-control" readonly data-ng-model="start.date" data-is-open="opened2" min="minDate" max="'2020-06-22'" data-date-disabled="disabled(date, mode)" style="background-color:#FFFFFF;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/voucherpins">
+                        <button id="cancel" type="reset" class="btn btn-warning ">{{'button.cancel'| translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit" type="submit" class="btn btn-primary " data-ng-disabled="createVoucherForm.$dirty && createVoucherForm.$invalid">{{'button.save'| translate}}</button>
+                </li>
+                <!-- <button  id="submit" type="submit" class="btn btn-primary" data-ng-disabled="createVoucherForm.$dirty && createVoucherForm.$invalid">{{'button.save'| translate}}</button>  -->
+            </ul>
+        </form>
+    </div>
+
+</div>

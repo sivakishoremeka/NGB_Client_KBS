@@ -1,0 +1,175 @@
+<div class="content-container" ng-controller="GenerateQuoteController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/leads">{{'link.prospects' | translate}}</a> 
+			<span class="divider"></span>
+		</li>
+		<!-- <li>
+			<a href="#/viewprospects/{{prospectsData.id}}">{{'link.viewprospects' | translate}}</a> 
+			<span class="divider"></span>
+		</li> -->
+		<li class="active">{{'label.generateQuote' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h3>{{'label.heading.generatequote' | translate}}</h3>
+			</div>
+			<form class="form-horizontal" name="generateQuote" novalidate="" rc-submit="submit()">
+				<api-validate></api-validate>
+				<h4> {{'label.prospect.personaldetails' | translate}} </h4>
+				<fieldset>
+					<div class="form-group">
+					    <label class="control-label col-sm-2"></label>
+					    <div class="col-sm-3"></div>
+					
+						<label class="control-label col-sm-2" for="quoteStatus">{{'label.quoteStatus' | translate }}</label>
+						<div class="col-sm-3">
+						    <input data-ng-model="formData.status" class="form-control" readonly>
+					    </div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="quoteNo">{{'label.quoteNo' | translate }}</label>
+						<div class="col-sm-3">
+						    <input data-ng-model="formData.quoteNo" class="form-control" readonly>
+					    </div>
+					    
+					    <label class="control-label col-sm-2" for="quoteDate">{{ 'label.quoteDate' | translate }}<span class="required">*</span></label>
+	            		  <div class="col-sm-3">
+	              	   	  	<input type="text" datepicker-pop="dd MMMM yyyy" readonly data-ng-model="quote.date"  is-open="opened" min="minDate" 
+	              	   	  		date-disabled="disabled(date, mode)" style="background-color:#FFFFFF;" class="form-control" readonly required date-Validate  />
+	            		 </div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="customerId">{{'label.customerId' | translate }}</label>
+						<div class="col-sm-3">
+						    <input data-ng-model="formData.customerId" type="text" class="form-control" readonly>
+					    </div>
+					    
+					    <label class="control-label col-sm-2" for="customerName">{{'label.customerName' | translate }}</label>
+						<div class="col-sm-3">
+						    <input data-ng-model="formData.customerName" type="text" class="form-control" readonly>
+					    </div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="address">{{'label.address' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input type="text" id="address" data-ng-model="formData.address" class="form-control" readonly>
+						</div>
+					    
+					    <label class="control-label col-sm-2" for="streetArea">{{'label.street/area' | translate }}</label>
+						<div class="col-sm-3">
+							<input type="text" id="streetArea" data-ng-model="formData.streetArea" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="cityDistrict"> {{'label.city/district' | translate }} <span class="required">*</span> </label>
+						<div class="col-sm-3">
+							<input type="text" id="cityDistrict" data-ng-model="formData.cityDistrict" list="citylist" data-ng-change="getStateAndCountry(editprospects.district)" class="form-control" readonly>
+						</div>
+						<datalist id="citylist">
+							<option data-ng-repeat="cityData in cityDatas" value="{{cityData}}"></option>
+					    </datalist>
+					    
+					    <label class="control-label col-sm-2" for="district">{{'label.district' | translate}}</label>
+					        <div class="col-sm-3">
+					          <input type="text" id="district" class="form-control" data-ng-model="formData.district" readonly/>
+					        </div>
+					</div>
+					<div class="form-group">
+					    <label class="control-label col-sm-2" for="state"> {{'label.state' | translate }} </label>
+						<div class="col-sm-3">
+							<input type="text" id="state" data-ng-model="formData.state" class="form-control" readonly>
+						</div>
+		                			
+						<label class="control-label col-sm-2" for="country"> {{'label.country' | translate }} </label>
+						<div class="col-sm-3">
+							<input type="text" id="country" data-ng-model="formData.country" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="zipCode">{{'label.zipcode' | translate }}</label>
+						<div class="col-sm-3">
+					    	<input type="text" id="zipcode" data-ng-model="formData.zipCode" class="form-control" readonly>
+						</div>
+						
+						<label class="control-label col-sm-2" for="totalCharge">{{'label.totalCharge' | translate }}</label>
+						<div class="col-sm-3">
+					    	<input type="text" id="totalCharge" data-ng-model="formData.totalCharge" class="form-control" readonly>
+						</div>
+					</div>
+				</fieldset>
+				<h4> {{'label.prospect.serviceplans' | translate}} </h4>
+				<fieldset>
+				<table class="table">
+                 			<tr>
+                    			<td>
+                    				<label for="serviceData">{{ 'label.generatequote.service' | translate }}</label>
+                    				<select class="input-small form-control" data-ng-model="formData.serviceData" data-ng-change="serviceChangeFun(formData.serviceData)"
+                    				data-ng-options="serviceData as serviceData.serviceCode for serviceData in serviceDatas"></select>
+                    			</td>
+                   				<td>
+                   					<label for="availablePlan">{{ 'label.generatequote.plan' | translate }}</label>
+                   					<select class="input-small form-control"  data-ng-model="formData.availablePlan" data-ng-change="ChangeFun()"
+                   						data-ng-options="availablePlan as availablePlan.planDescription for availablePlan in availablePlans"></select>
+                   				</td>
+                   				<td>
+                   					<label for="chargeCode">{{ 'label.generatequote.frequency' | translate }}</label>
+                   					<select class="input-small form-control"  data-ng-model="formData.chargeCode" data-ng-change="ChangeFun()"
+                   						data-ng-options="chargecode.chargeCode as chargecode.chargeDescription for chargecode in chargecodes"></select>
+                   				</td>
+                   				<td>
+                   					<label for="recurringCharge">{{ 'label.generatequote.recurringcharge' | translate }}</label>
+                   					<input class="input-small form-control"  data-ng-model="formData.recurringCharge" >
+                   				</td>
+                    			<td>
+                    				<label for="oneTimeCharge">{{ 'label.generatequote.onetimecharge' | translate }}</label>
+                    				<input class="input-small form-control"  data-ng-model="formData.oneTimeCharge" >
+                    			</td>
+                    			<td>
+	                      	    	<a data-ng-click="!(generateQuote.price.$error.pattern)&&addServicePlanData()" style="margin-left:25px;">
+	          							<i class="fa fa-plus" style="margin-top: 30px;"></i>
+	          						</a>&nbsp;
+	          					</td>
+                  			</tr>
+        				</table>
+            			
+            			<div data-ng-show="servicePlans.length>0">
+            				<legend><h3>{{'label.existsServicePlans' | translate}}</h3></legend>
+            				<table class="table table-striped">
+            						 <tr class="graybg">
+		                      			<th>{{ 'label.serviceCode' | translate }}</th>
+		                     			<th>{{ 'label.planName' | translate }}</th>
+		                     			<th>{{ 'label.frequency' | translate }}</th>
+		                      			<th>{{ 'label.recurringCharge' | translate }}</th>
+		                      			<th>{{ 'label.oneTimeCharge' | translate }}</th>
+		                   			 </tr>
+		                   			 <tr data-ng-repeat="servicePlan in servicePlans track by $index">
+		                      			<td><input class="input-small form-control" data-ng-model="servicePlan.serviceCode" readonly></td>
+		                     			<td><input class="input-small form-control"  data-ng-model="servicePlan.planDescription" readonly></td>
+		                     			<td><input class="input-small form-control"  data-ng-model="servicePlan.frequency"  readonly></td>
+		                     			<td><input class="input-small form-control"  data-ng-model="servicePlan.recurringCharge" type="text" readonly></td>
+		                      			<td><input class="input-small form-control"  data-ng-model="servicePlan.oneTimeCharge" type="text" readonly></td>
+		                      			<td>
+		                        	    <a data-ng-click="removeServicePlans($index)" data-popover="Delete Plan" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>&nbsp;</td>
+		                    		</tr>
+            				</table>
+          			  	</div>
+				</fieldset>
+				
+				<fieldset>
+						<div class="form-group">
+						<label class="control-label col-sm-2" for="note">{{ 'label.note' | translate }}<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<textarea id="note" class="form-control" data-ng-model="formData.note" style="width:200%; height:4em;"></textarea>
+		                    </div>
+						</div>
+				</fieldset>
+				<div class="col-md-offset-10">
+						<a href="#/leads"><button type="reset" class="btn btn-warning">{{'button.cancel'| translate}}</button></a>
+						<button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

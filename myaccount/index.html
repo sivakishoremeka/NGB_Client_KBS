@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="selfcareApp">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+    <title>{{'title.obs.selfcare' | translate}}</title>
+    <style>[data-ng-cloak] { display: none !important; }</style>
+    <style>
+       input.marginbottom0px {
+          width:200px !important;
+          margin-bottom:20px !important;
+          float:right !important;
+       }
+    </style>
+  
+    <link rel="stylesheet" href="./css/bootstrap-combined.min.css" />
+    <link rel="stylesheet" href="./css/bootswatch.css" />
+    <link rel="stylesheet" href="./css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./css/app.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="./css/jquery-ui.css" />
+    <link rel="stylesheet" href="./css/extrastyles.css" />
+    <link rel="stylesheet" href="./css/angular-ui-switch.css" />
+    <link rel="stylesheet" href="./css/bootstrap-switch.css" />
+    <script type='text/javascript' src='./loaderFiles.js'></script>
+     
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="896577405037-2lgbh5lg6rk8cjbrpkk0cl704ju860da.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://www.cashfree.com/assets/cashfree.sdk.v1.2.js" type="text/javascript"></script>
+
+
+</head>
+<body id="top" data-spy="scroll" data-target=".subnav" data-offset="80" data-ng-controller="SelfcareMainController" style="background: #DDDDDD;">
+    <div data-ng-hide="domReady" style="margin-left:auto;margin-top:auto; position: absolute;margin-top:240px; top:0px;left:550px;">
+        <img src="../images/loading.gif" >
+    </div>
+    <div data-ng-hide="isLandingPage || currentSession.user != null" data-ng-cloak >
+      <div>
+         <table class="fullwidth" id="header" style="-webkit-box-shadow: 0 6px 4px -4px #BABABA;box-shadow: 0 6px 4px -4px #BABABA;">
+            <tr>
+                <td style="padding: 10px;background:#fff;" width="10%">
+                   <div class="pull-left" style="margin: 0px 0px;background:#fff;">
+                      <img src="../images/Trigital_logo.png" alt="Billing" width="100">
+                   </div>
+                </td>
+                <td style="background-color: #4c66a4">
+                   <div id="lang-ch" class="dropdown pull-right colorwhite" style="margin-right:10px;">{{ 'label.change.language' | translate }}
+                      <a class="dropdown-toggle btn btn-primary ">{{localeLang.name}}<i class="icon-sort-down"></i></a>
+                         <ul class="dropdown-menu"><li data-ng-repeat="lang in langs">
+                            <a data-ng-click="changeLang(lang)">{{lang.name}}</a></li>
+                         </ul>
+                   </div>
+               </td>
+           </tr>
+          </table>
+       </div></div>
+       <div class=" alert alert-success" data-ng-repeat="msgs in infoMsgs">
+           <table>
+              <tr>
+                 <td colspan="msgs.names.length"><span><img src="{{msgs.image}}" width="30"></span></td>
+                 <td><span data-ng-repeat="msg in msgs.names">
+                    <strong class="marginleft40" >{{msg.name | translate}}</strong><br/>
+                     </span>
+                 </td>
+              </tr>
+           </table>
+       </div>
+       
+ <div style="background-image:url('../images/broadband.jpg'); background-position: center;background-repeat: no-repeat;background-size: cover;" data-ng-show="currentSession.user == null">
+    <div class="container">
+        <div  class="row" data-ng-form="signInForm" data-ng-controller="SignInFormController">
+            <div  class="col" style="height:430px;background:#eef3fa none repeat scroll 0 0;width:400px;margin:88px 500px;box-shadow:0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.14);border-radius:2px;" >
+          <br><div ng-if = "isSignUp == false" class="fontsize16 fontweight700 lightbluecolor" style="text-align:center;"><strong>{{'label.registered.customer' | translate}}</strong></div>
+                  <div ng-if = "isSignUp == false" class="form-group " style="margin:20px 44px;">{{'label.registered.customer.pleaselogin' | translate}}</div>
+                  <div ng-if = "isSignUp == true" class="form-group marginround25 fontsize16 fontweight700 lightbluecolor" style="text-align:center;"><strong>{{'label.new.customer' | translate}}</strong></div>
+                  <div style="margin:10px 41px;" ng-if = "isSignUp == true" class="form-group marginround25">{{'label.new.customer.enteremail' | translate}}<br/>
+                                                           {{'label.customer.email.gettingdetails' | translate}}</div>
+           
+                         
+      <form class="login-form" id="nfrm" style="margin:0px 24px 0px 42px;">
+         <!-- <div class="form-group">
+             <label class="error" data-ng-repeat="error in loginErrorMsgs"><strong>*{{error.name | translate}}</strong></label>
+         </div> -->
+         <!-- <div class="form-group"  ng-show="login.socialLogin==true">
+             <label class="icon-user lightbluecolor"></label>
+         </div> -->
+         
+         <div class="form-group " ng-if = "isSignUp == false" ng-show="login.secondaryLogin==true">
+             <!-- <label class="icon-user lightbluecolor"></label> -->
+             <input id="input" class="form-control fontAwesome" data-ng-autofocus="true" type="text" data-ng-model="loginCredentials.username" data-ng-disabled="signInProcessLoading" placeholder="&#xf0e0; {{'label.email' | translate}}" style="height:28px;width:90%;border-radius:2px;box-shadow:none;">
+         </div>
+         <div class="form-group" ng-if = "isSignUp == false" ng-show="login.secondaryLogin==true">
+             <!-- <label class="icon-key lightbluecolor"></label> -->
+             <input id="input"  type="password" data-ng-model="loginCredentials.password"  class="form-control fontAwesome" data-ng-disabled="signInProcessLoading" placeholder="&#xf023; {{ 'label.password' | translate }}" style="height:28px;width:90%;border-radius:2px;box-shadow:none;">
+         </div>
+         <div class="form-group" ng-if = "isSignUp == true" ng-show="login.signUp=='email'">
+             <!-- <label class="icon-user lightbluecolor"></label> -->
+             <input id="input" type="email" data-ng-autofocus="true" type="text" data-ng-model="loginCredentials.username" class="form-control" ng-change="showOtp()" data-ng-disabled="signInProcessLoading" placeholder="{{'label.email' | translate}}">
+         </div>
+         <div class="form-group" ng-if = "isSignUp == true" ng-show="login.signUp=='phone'">
+             <!-- <label class="icon-user lightbluecolor"></label> -->
+             <input id="input"  data-ng-autofocus="true" type="text" data-ng-model="loginCredentials.username" class="form-control fontAwesome" ng-change="showOtp()"    data-ng-disabled="signInProcessLoading" placeholder="&#xf0e0; {{'label.email' | translate}}" style="height:28px;width:90%;border-radius:2px;box-shadow:none;">
+         </div>
+  
+   
+          <div class="form-group">
+                <button style="height:38px;margin:0px 0px 10px;width:140px;box-shadow:none;" ng-show= "showOTPButton ==true && resendOTP==false"  class=" btn-primary OTPbtn "   data-ng-click="OTPFunction();OTPAction()" value='OTP'>
+			    {{ 'btn.OTP' | translate }}
+			    </button>
+		  </div>
+          <div  class="form-group" ng-show = "isOTP == true" ng-if="isSignUp==true">
+		        <input style="width:146px;margin:0px 0px 0px 154px;position:absolute;height:29px;box-shadow:none;" type="text"   id="input" data-ng-change="inputvalue(oneTimePassword)" data-ng-model="oneTimePassword"  data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)\d{1,4}$/" name="input" maxlength="4" required  data-late-Validate/>
+		  </div>
+
+						<div class="form-group">
+						<button style="height:38px;margin:0px 0px 10px;width:150px;box-shadow:none;" ng-show= "resendOTP==true"  ng-if="isSignUp==true"class=" btn-primary resendOtpbtn " data-ng-click="OTPFunction();OTPAction()" >{{ 'btn.resendOtp' | translate }}</button>
+						</div>
+						
+						<div class="form-group">
+                          <button style="height:36px;width:94%;border-radius:2px;box-shadow:none;margin:0px;" ng-if = "isSignUp == true" type="submit" class=" btn-primary loginbtn" data-ng-click="LoginProcess(null,null,null)" data-ng-hide="isProcessing"                                     >
+                                    {{ 'btn.signup' | translate }} </button>
+                        </div>
+                        <div class="form-group">
+        <button ng-show = "isSignUp == true" ng-click = "loginPage()"  style="height:36px;width:94%;border-radius:2px;box-shadow:none;margin:10px 0px;" class="btn-primary"  >
+         Login
+        </button></div>
+                        <div class="form-group">
+                            <button class="btn-primary " data-ng-show="isProcessing" >
+                                {{'label.pleasewait' | translate}}<i class="icon-refresh icon-spin"></i>
+                            </button>
+                        </div>    
+                        
+          <div class="form-group pull-right" style="width:120px;margin:0px 20px 4px 0px;">                
+          <span ng-if = "isSignUp == false" class=" forgotpwd" data-ng-click="forgotPwdPopup()" >{{'label.forgot.password' | translate}}</span>
+          </div>
+         <div class="form-group">
+         <button ng-if = "isSignUp == false" type="submit"  style="height:36px;width:94%;border-radius:2px;margin:0px;box-shadow:none;" class="btn-primary loginbtn "  data-ng-hide="isProcessing" data-ng-click="LoginProcess(null,null,null)">
+          {{ 'btn.login' | translate }}
+         </button>
+         </div>
+         <div class="social_login form-group">
+             <span id="line" >or use your social profile</span>
+        </div>
+        <div class="form-group" style="margin:40px 0px 22px;">
+             <label class=" g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="width:314px;">
+         </label>
+         </div>
+                                 
+                              
+         <div class="form-group" style="text-align:center;">
+            <p class="header__registr-checkout" ng-show = "isSignUp == false">Not a member yet?
+                <span ng-show = "isSignUp == false" class="forgotpwd" ng-click = "signUp()" style="width:220px;height:32px;margin:14px 0px">
+                Create account</span>
+           </p> 
+        </div>
+      
+     
+         <div class="form-group">                       
+        <button class="btn loginbtn" data-ng-show="isProcessing" ng-if = "isSignUp == false">
+        {'label.pleasewait' | translate}}<i class="icon-refresh icon-spin"></i>
+        </button>
+          
+              
+        </div>
+       
+       </form>
+       
+       </div>
+       
+	
+       </div> </div></div>
+       
+     
+     <!--  <span class="pull-right" style="padding-right:325px;margin-top:-25px;">Thor Telecom - Dalvegur 16b - 201 Kópavogur - Sími 5 100 500 -
+        <a  style="color:#007fff;" href="http://thortelecom.is" target="_blank">http://thortelecom.is/</a></span> -->
+      <!-- <span class="pull-right" style="padding-right:212px;margin-top:-25px;">Thor Telecom – Avda. Antonio Pedrera Soler Local 20 – 03619 Algorfa (Alicante) – Tlf. 966 111 676 -
+            <a  style="color:#007fff;" href="http://thortelecom.is" target="_blank">http://thortelecom.com</a></span> -->
+    
+    <div data-ng-class="{fullscreen:true,blockui:blockUI==true}" id="main" data-ng-cloak data-ng-hide="currentSession.user == null">
+         <div class="navbar navbar-fixed-top container">
+            <div class="navbar-inner" >
+                <div class="row">
+                    <a class="brand" ><img src="../images/Trigital_logo.png" alt="SelfCare" width="90px;"></a>
+                    <div class="" id="main-menu" >
+                        <ul class="nav" id="main-menu-left pull-left" data-ng-hide="isRegClientProcess">
+                         <li><a href="#/profile" data-ng-class="{ activate: isActive('/profile') }"><i class="icon-user icon-white"></i>{{'label.profile' | translate}}</a></li>
+                         <li><a data-ng-click="redeemFun()" data-ng-hide="!isRedemptionConfig"><i class="icon-gift icon-white icon-large"></i>{{'label.redeem' | translate}}</a></li>
+                         <li><a href="#/services" data-ng-class="{ activate: isActive('/services') }"><i class="icon-list icon-white"></i>{{'label.services' | translate}}</a></li>
+                         <li><a href="#/events" data-ng-class="{ activate: isActive('/events') }"><i class="icon-list icon-white"></i>{{'label.ondemands'|translate}}</a></li>
+                         <li><a href="#/statements" data-ng-class="{ activate: isActive('/statements') }"><i class="icon-file icon-white"></i>{{'label.bill.statements' | translate}}</a></li>
+                         <li><a href="#/tickets"  data-ng-class="{ activate: isActive('/tickets') }"><i class="icon-money icon-white"></i>{{'link.tickets'|translate}}</a></li>
+                        <!--  <li><a href="{{webtvURL}}" data-ng-click="isWebtvClick = true"><i class="icon-facetime-video icon-white"></i>{{'label.webtv'|translate}}</a></li> -->
+                        </ul>
+                        <ul class="nav pull-right " id="main-menu-right" data-ng-hide="isRegClientProcess">
+                            <li class="dropdown" id="preview-menu">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{selfcare_userName}}<b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/changepwd"><i class="icon-cog icon-white"></i>{{'label.change.password' | translate}}</a></li>
+                                    <li data-ng-show="iskortaTokenAvailable"><a href="#/changekortatoken"><i class="icon-cog"></i>{{'label.change.kortatoken' | translate}}</a></li>
+                                    <li><a href="#/usersetting"><i class="icon-cog"></i>{{ 'label.settings' | translate }}</a></li>
+                                </ul>
+                            </li>
+                            <li class="marginright20" ><a id="logout" data-ng-click="signout()"><i class="icon-off"></i>{{'label.signout' | translate}}</a></li>
+                        </ul>
+                        <ul class=" nav pull-right marginright20" id="main-menu-right" data-ng-show="isRegClientProcess">
+                            <li class="dropdown marginright2"myaccount/main.js"0" id="preview-menu">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ 'label.change.language' | translate }}<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                         <li data-ng-repeat="lang in langs">
+                                              <a data-ng-click="changeLang(lang)">{{lang.name}}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container whitebg fullscreen preview">
+          <div>
+            <div class="row row-fluid whitebg">
+                <div class="span12 pull-right whitebg">
+                    <div class="whitebg" data-ng-view style="padding: 10px 20px;"></div>
+                </div>
+                <hr>
+            </div>
+           </div>
+        </div></div>
+           <!-- <span class="pull-right" style="padding-right:325px;margin-top:-80px;">Thor Telecom - Dalvegur 16b - 201 Kópavogur - Sími 5 100 500 - <a  style="color:#007fff;" href="http://thortelecom.is" target="_blank">http://thortelecom.is/</a>
+        </span> -->
+        <!-- <span class="pull-left" style="padding-left:18%;margin-top:-25px;">Thor Telecom – Avda. Antonio Pedrera Soler Local 20 – 03619 Algorfa (Alicante) – Tlf. 966 111 676 -
+             <a  style="color:#007fff;" href="http://thortelecom.is" target="_blank">http://thortelecom.com</a>
+        </span> -->
+    
+      <script type="text/ng-template" id="forgotpwdpopup.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">{{'header.forgot.password' | translate}}</h3>
+                    </div>
+                <form name="forgotForm" novalidate="" class="form-horizontal ">
+                        <div class="control-group">
+                               <div class="controls">
+                                <span class="control-label" style="color:red;" ng-show="stmError.length>0">{{stmError | translate}}</span>
+                            </div>
+                        </div>
+                    <div class="modal-body modal-small" style="padding:25px 0px 0px 35px;" >
+                           <div class="control-group">
+                            <label class="control-label">{{'label.emailid' | translate}}&nbsp;:<span class="required">*</span></label>
+                            <div class="controls">
+                               <input type="email" id="email" ng-model="email" required/>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="modal-footer" ng-hide="isProcessing">
+                        <button id="cancel" class="btn btn-warning" ng-click="reject()">{{'btn.cancel' | translate}}</button>
+                        <button id="submit" class="btn btn-primary" ng-disabled="!forgotForm.$valid" ng-click="accept(email)" >{{'label.confirm' | translate}}</button>
+                    </div>
+                    <div class="modal-footer" ng-show="isProcessing">
+                        <span class="btn">{{'label.pleasewait' | translate}}
+                            <i class="icon-refresh icon-spin"></i>
+                        </span>
+                    </div>
+                <form>
+                  
+      </script>
+      <script type="text/ng-template" id="forgotpwdpopupsuccess.html">
+                  
+                    <div class="modal-body modal-small" style="padding:25px 0px 0px 35px;">
+                           <div class="control-group">
+                            <div class="controls">
+                               {{'title.verify.emailid' | translate}}
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a id="submit" class="btn btn-primary" ng-click="done()">{{'btn.done' | translate}}</a>
+                    </div>
+      </script>
+   <script type="text/ng-template" id="messagespopup.html">
+         <div class="modal-body modal-medium">     
+         <div class="alert alert-success" data-ng-repeat="msgs in popUpMsgs">
+               <table><tr>
+                       <td colspan="msgs.names.length" >
+                        <span><img src="{{msgs.image}}" width="30"></span>
+                    </td>
+                     <td><span data-ng-repeat="msg in msgs.names">
+                             <strong class="marginleft40" >{{msg.name | translate}}</strong><br/>
+                         </span>
+                     </td></tr>
+               </table>
+            </div>
+          </div>
+         <div class="modal-footer">
+           <a id="submit" class="btn btn-primary" ng-click="approve()">{{'btn.done' | translate}}</a>
+         </div>
+      </script>  
+      <script type="text/ng-template" id="redemptionpop.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">{{'label.redeem' | translate}}</h3>
+        </div>
+        <div class="modal-body" style="height:100px;">
+          <form name="redeemFormPopup" novalidate>
+            <div class="control-group">
+                <label class="control-label">{{ 'label.voucher.number'| translate }}<span class="required">&nbsp;*</span></label>
+                <div class="controls">
+                     <input type="text" id="pinNumber" data-ng-autofocus="true" ng-model="formData.voucherNumber" placeholder= "{{ 'placeholder.enter.voucher.number' | translate }}"
+                            data-ng-onblur="voucherNumberValidationFun(formData.voucherNumber)" required data-late-Validate><br/>
+                     <small class="error" data-ng-show="isInValidVoucher">{{'error.invalid.voucher'|translate}}</small>
+                        <small class="error" data-ng-show="isDateExpired">{{'error.voucher.dateexpiry'|translate}}</small>
+                     <small class="error">{{voucherError | translate}}</small>
+                </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" ng-hide="isProcessing">
+            <button id="cancel" class="btn" ng-click="cancel()">{{'btn.cancel' | translate}}</button>
+            <button id="submit" class="btn btn-primary" ng-click="confirm(formData.voucherNumber)" ng-disabled="!redeemFormPopup.$valid">{{'label.confirm' | translate}}</button>
+        </div>
+        <div class="modal-footer" ng-show="isProcessing">
+            <span class="btn">{{'label.pleasewait' | translate}}
+                <i class="icon-refresh icon-spin"></i>
+            </span>
+        </div>
+    </script>
+    <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+           var profile = googleUser.getBasicProfile();
+        angular.element(document.getElementById('signIn')).scope().LoginProcess(profile.getName(),
+                profile.getEmail(),googleUser.getAuthResponse().id_token);
+      };
+      
+      function signOut() {
+    	    var auth2 = gapi.auth2.getAuthInstance();
+    	    auth2.signOut().then(function () {
+    	    });
+    	  }
+
+    </script>
+    
+    
+</body>
+
+</html>

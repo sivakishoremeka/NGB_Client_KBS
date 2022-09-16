@@ -1,0 +1,229 @@
+<div class="content-container" ng-controller="EditClientAddressController">
+    <ul class="breadcrumb">
+        <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+        <li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+        <li class="active">{{'label.editaddress' | translate}}</li>
+    </ul>
+    <div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+        <h3>{{'label.editaddress' | translate}}</h3>
+
+        <form name="editaddressform" novalidate class="form-horizontal" data-ng-submit="submit()">
+            <api-validate></api-validate>
+            <div class="primary-form">
+                <h4>Primary</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row" data-ng-hide="propertyMaster">
+                            <div class="col-md-4">
+                                <label class="control-label" for="addressNo">{{'label.addressno' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="addressNo" class="form-control" data-ng-model="primaryAddress.addressNo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row" data-ng-hide="propertyMaster">
+                            <div class="col-md-4">
+                                <label class="control-label">{{'label.buildingcode' | translate}}<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="addressNo" name="address" class="form-control" data-ng-model="primaryAddress.addressNo" data-typeahead="propertyCode.propertyCode as propertyCode.propertyCode for propertyCode in getPropertyCode($viewValue)" autocomplete="off" data-typeahead-min-length="0" data-ng-blur="getPropertyDetails(formData.addressNo)" required data-late-Validate/>
+                                <span data-ng-show="editaddressform.address.$invalid"> <small class="error" data-ng-show="editaddressform.address.$error.req">{{'label.required.field' | translate}}</small>
+        						</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="street">{{'label.street' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="street" class="form-control" ng-model="primaryAddress.street">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row" data-ng-hide="propertyMaster">
+                            <div class="col-md-4">
+                               <label class="control-label" for="city">{{'label.city' | translate}}</label>
+                            </div>
+                            <div class="col-md-8" data-ng-hide="propertyMaster">
+                                <input type="text" id="city" class="form-control" data-ng-model="primaryAddress.city" autocomplete="off" list="citylist" data-ng-change="getStateAndCountry(primaryAddress.city, true)">
+                            </div>
+                            <div class="col-sm-3" data-ng-show="propertyMaster">
+                           <input type="text" id="city" class="form-control" name="city" data-ng-model="primaryAddress.city" readonly required />  
+                          </div>
+                        </div>
+                        <datalist id="citylist">
+                            <option data-ng-repeat="cityData in cityDatas" value="{{cityData}}">
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="district">{{'label.district' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="district" class="form-control" ng-model="primaryAddress.district" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="state">{{'label.state' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="state" class="form-control" ng-model="primaryAddress.state" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="country">{{'label.country' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="country" class="form-control" ng-model="primaryAddress.country" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="zip">{{'label.zipcode' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="zip" class="form-control" ng-model="primaryAddress.zip">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="billing-form">
+                <h4>Billing</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="addressNo">{{'label.addressno' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="addressNo" class="form-control" data-ng-model="billingAddress.addressNo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label">{{'label.buildingcode' | translate}}<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="addressNo" name="address" class="form-control" data-ng-model="billingAddress.addressNo" data-typeahead="propertyCode.propertyCode as propertyCode.propertyCode for propertyCode in getPropertyCode($viewValue)" autocomplete="off" data-typeahead-min-length="0" data-ng-blur="getPropertyDetails(formData.addressNo)" required data-late-Validate/><span data-ng-show="editaddressform.address.$invalid">
+						<small class="error" data-ng-show="editaddressform.address.$error.req">{{'label.required.field' | translate}}</small>
+				</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="street">{{'label.street' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="street" class="form-control" ng-model="billingAddress.street">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-md-6">
+                        <div class="form-group row" data-ng-hide="propertyMaster">
+                            <div class="col-md-4">
+                               <label class="control-label" for="city">{{'label.city' | translate}}</label>
+                            </div>
+                            <div class="col-md-8" data-ng-hide="propertyMaster">
+                                <input type="text" id="city" class="form-control" data-ng-model="primaryAddress.city" autocomplete="off" list="citylist" data-ng-change="getStateAndCountry(primaryAddress.city, true)">
+                            </div>
+                            <div class="col-sm-3" data-ng-show="propertyMaster">
+                           <input type="text" id="city" class="form-control" name="city" data-ng-model="primaryAddress.city" readonly required />  
+                          </div>
+                        </div>
+                        <datalist id="citylist">
+                            <option data-ng-repeat="cityData in cityDatas" value="{{cityData}}">
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="district">{{'label.district' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="district" class="form-control" ng-model="billingAddress.district" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="state">{{'label.state' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="state" class="form-control" ng-model="billingAddress.state" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="country">{{'label.country' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="country" class="form-control" ng-model="billingAddress.country" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="zip">{{'label.zipcode' | translate}}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="zip" class="form-control" ng-model="billingAddress.zip">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a id="cancel" href="#/viewclient/id/{{formData.clientId}}">
+                        <button type="reset" class="btn btn-warning">Cancel</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit" type="submit" class="btn btn-primary">Save</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

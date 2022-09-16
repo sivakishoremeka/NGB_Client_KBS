@@ -1,0 +1,93 @@
+<div class="content-container" ng-controller="AdjustmentClientController">
+    <ul class="breadcrumb">
+		<li><a href="#/clients">{{'link.clients' | translate}}</a></li>
+		<li><a href='#/viewclient/id/{{clientId}}' ng-click="reset123()">{{'link.view.client' | translate}}</a></li>
+		<li class="active">{{'label.adjustments' | translate}}</li>
+	</ul>
+	<div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+    	<h3>{{'label.adjustmentdate' | translate}}</h3>
+             <form  name="createadjustmentform" novalidate class="form-horizontal" data-ng-submit="submit()">
+    			 <div uib-alert type="danger" ng-show=" errorDetails.length > 0">
+                 <label><i class="fa fa-exclamation-circle"></i>Adjustment is not Creating</label>
+                 <div ng-repeat="error in errorDetails"><label>{{error.code | translate:error.args}}</label></div>
+            </div>
+		 			
+			<div class="row">
+				<div class="col-md-6">
+				  <div class="form-group row">
+					  	<div class="col-md-4">
+					  		<label class="control-label">{{ 'label.adjustmentdate' | translate }}</label>
+					  	</div>
+					  	<div class="col-md-8">
+					  		<input type="text" datepicker-pop="dd MMMM yyyy" data-ng-model="start.date" is-open="opened2" class="form-control" min="minDate" max="'2020-06-22'" date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;"  readonly/>
+					  	</div>
+				   </div>
+				</div>
+				<div class="col-md-6">
+				  <div class="form-group row">
+					  	<div class="col-md-4">
+					  	  <label class="control-label">{{ 'label.adjustmentcode' | translate }}<span class="required">*</span></label>
+					  	</div>
+					  	<div class="col-md-8">
+					  		<select id="adjustment_code" data-ng-model="formData.adjustment_code" class="form-control"
+            				data-ng-options="data.id as data.adjustmentCode for data in data" value="{{data.id}}"></select> 
+            			</div>
+            			 <div class="col-md-12" ng-if="isCrm">
+    	   				   <label class="control-label col-md-2" for="withtax">{{ 'label.adjustmentWithTax' | translate }}</label>
+              				 <!-- <label class="checkbox"> -->
+                 				<input type="checkbox" class="checkbox" data-ng-model="formData.withtax" >
+               				<!-- </label> -->
+    	     			</div>
+				   </div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+				  <div class="form-group row">
+					  	<div class="col-md-4">
+					  		<label class="control-label" for="adjustment_type">{{ 'label.adjustmentamount' | translate }}<span class="required">*</span></label>
+					  	</div>
+					  	<div class="col-md-3">
+					  		<input type="text" id="amount_paid" name="adjustmentAmount" data-ng-model="formData.amount_paid" class="form-control" data-ng-pattern="/^\d+(\.\d{1,2})?$/"> 
+					  	</div>
+					  	<div class="col-md-5">
+					  		<select data-ng-model="formData.adjustment_type"
+		              				data-ng-options="discountOption.discountType as discountOption.discountType for discountOption in discountOptions" 
+		              					class="input-small form-control" value="{{discountOption.discountType}}"></select>
+			               	 	<span  data-ng-show="createadjustmentform.adjustmentAmount.$invalid">
+					              	<small class="error" data-ng-show="createadjustmentform.adjustmentAmount.$error.pattern">Not Valid Amount!</small>
+					             </span>
+					  	</div>
+				   </div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+				  <div class="form-group row">
+					  	<div class="col-md-4">
+					  	 <label class="control-label">{{'label.notes' | translate}}</label>
+					  	</div>
+					  	<div class="col-md-8">
+					  	  <textarea data-ng-click="hideError()" class="form-control" data-ng-model="formData.Remarks"></textarea>
+					  </div>
+				   </div>
+				</div>
+			</div>
+			<ul class="btn-group-list text-right mt20 mb20">
+				<li>
+					<a id="cancel" href="#/viewclient/id/{{clientId}}">
+					<button type="reset" class="btn btn-warning" data-ng-click="reset123()">{{'button.cancel' | translate}}</button>
+				</a>
+				</li>
+				<li>
+					<button id="submit" type="submit" class="btn btn-primary" data-ng-disabled="createadjustmentform.adjustmentAmount.$invalid">Save</button>
+				</li>
+			</ul>
+	      </form>
+    	</div>
+    </div>
+
+

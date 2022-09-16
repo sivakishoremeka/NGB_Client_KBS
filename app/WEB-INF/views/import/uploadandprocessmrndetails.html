@@ -1,0 +1,67 @@
+<div class="content-container" ng-controller="UploadAndProcessMrnDetailsController">
+    <ul class="breadcrumb">
+        <li><a href="#/inventory">{{'label.inventory' | translate}}</a></li>
+        <li><a href="#/stocktransfer">{{'label.stocktransfer' |
+				translate}}</a></li>
+        <li class="active">{{'button.uploadandprocess' | translate}}</li>
+    </ul>
+    <div class="widget ">
+        <h3>{{'label.uploadandprocessmrndetails' | translate}}</h3>
+        <form class="form-horizontal" rc-submit="submit()">
+            <api-validate></api-validate>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="status">{{ 'label.import.name' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select ng-model="formData.status" class="form-control">
+                                <option value="Mrn">MRN</option>
+                                <option value="Move Itemsale">Move Itemsale</option>
+                                <option value="MrnCarton">MrnCarton</option>
+                            </select>&nbsp;&nbsp;&nbsp;
+                            <a ng-hide="formData.status =='-1'" ng-click="downloadFile(formData.status)"> <i class="fa fa-cloud-download"></i> Download Sample File
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="file">{{'label.client.select.file' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="file" ngf-select="onFileSelect($files)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="description">{{ 'label.import.description' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea rows="2" cols="2" class="form-control" ng-model="formData.description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/inventory">
+                        <button id="cancel" type="reset" class="btn btn-warning">{{'button.cancel'| translate}}
+                        </button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit" type="submit" class="btn btn-primary">{{'button.uploadandprocess'| translate}}
+                    </button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

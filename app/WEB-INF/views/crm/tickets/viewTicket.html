@@ -1,0 +1,115 @@
+<div class="content-container" ng-controller="ViewTicketController">
+    <ul class="breadcrumb">
+		<li><a href="#/clients">{{'link.clients' | translate}}</a></li>
+		<li><a href="#/viewclient/id/{{clientId}}" ng-click="reset123()">{{'link.view.client' | translate}}</a></li>
+		<li class="active">{{'label.viewticket' | translate}}</li>
+	</ul>
+
+    <div class="card">
+        <div class="content">
+        	<div class="toolbar">
+        		<h4>{{employee.displayName}}</h4>
+        		<div class="pull-right">
+        		    <div class="btn-group">
+        		       <!--  <a  href="#/editTicket/{{clientId}}/{{ticket.id}}" ng-show="(ticket.status == 'OPEN')" has-permission="UPDATE_TICKET"  
+        		        	class="btn btn-primary"><i class="fa fa-edit"></i>Add Comment</a>
+	          			<a href="#/closeTicket/{{clientId}}/{{ticket.id}}" ng-show="(ticket.status == 'OPEN')" has-permission="CLOSE_TICKET" 
+	          				class="btn btn-primary"><i class="fa fa-trash"></i> Close</a> --> 
+	          				<span ng-show="(status != 'CLOSED')">
+	          				<a has-permission = UPDATE_TICKET data-ng-click="editTicket()"  class="btn btn-primary"><i class="fa fa-trash-o"></i> EditTicket</a>
+	          				<a has-permission = CLOSE_TICKET data-ng-click="closeTicket()"  class="btn btn-primary"><i class="fa fa-trash-o"></i> CloseTicket</a>
+        		    		</span>
+        		    </div>
+        		</div>
+        	</div>
+      			<div class="row">
+      				<div class="col-md-12">
+      			        <!-- <table class="table table-bordered table-striped">
+             				<tr>
+                 					<td>{{ 'label.id' | translate}}</td>
+                 					<td>{{ticket.id}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.priority' | translate}}</td>
+                 					<td>{{ticket.priority}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.status' | translate }}</td>
+                 					<td>{{ticket.status}}</td>
+               				</tr>
+               				
+             				<tr>
+                 					<td>{{ 'label.ticketdate' | translate }}</td>
+                 					<td>{{ticket.ticketDate | DateFormat}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.lastComment' | translate }}</td>
+                 					<td>{{ticket.lastComment}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.problemdescription' | translate}}</td>
+                 					<td>{{ticket.problemDescription}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.team' | translate }}</td>
+                 					<td>{{ticket.teamCode}}</td>
+               				</tr>
+               				<tr>
+                 					<td>{{ 'label.teamuser' | translate }}</td>
+                 					<td>{{ticket.assignedTo}}</td>
+               				</tr>
+               				
+               				<tr>
+               				       <td>{{ 'label.subcategory' | translate }}</td>
+                 					<td>{{ticket.subCategorys}}</td>
+                 			</tr>
+                 			<tr>
+               				       <td>{{ 'label.Commentdate' | translate }}</td>
+                 					<td>{{ticket.Comment_date}}</td>
+                 			</tr>
+               				
+                        	</table> -->
+      				
+      				
+      		
+
+	   	<!-- <h3>&nbsp;&nbsp;&nbsp;List of Team and Team users</h3> -->
+
+			<table class="table table-striped">
+				<thead>
+					<tr class="graybg">
+						<th>{{ 'label.id' | translate }}</th>
+
+						<th>{{'label.priority' | translate }}</th>
+						<th>{{'label.status' | translate}}</th>
+						<th>{{'label.ticketdate' | translate}}</th>
+						<th>{{'label.lastcomment' | translate}}</th>
+						<th>{{'label.problemdescription' | translate}}</th>
+						<th>{{'label.team' | translate}}</th>
+						<th>{{'label.teamuser' | translate}}</th>
+						<th>{{'label.subcategory' | translate}}</th>
+						<th>{{'label.Commentdate' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr class="pointer-main" data-ng-repeat="teamuser in teamusers  | filter:filterText">
+					
+					<td>{{teamuser.id}}</td>
+					<td>{{teamuser.priority}}</td>
+					<td>{{teamuser.status}}</td>
+					<td>{{teamuser.ticketDate | DateFormat}}</td>
+					<td>{{teamuser.lastComment}}</td>
+					<td>{{teamuser.problemDescription}}</td>
+					<td>{{teamuser.teamCode}}</td>
+					<td>{{teamuser.assignedTo}}</td>
+					<td>{{teamuser.subCategorys}}</td>
+					<td>{{teamuser.Comment_date | DateFormat}}</td>
+					</tr>
+				</tbody>
+			</table> 
+			</div>
+       </div>
+      	
+        </div>
+    </div>
+</div>      

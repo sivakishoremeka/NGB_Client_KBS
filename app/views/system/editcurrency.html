@@ -1,0 +1,166 @@
+<div class="content-container" data-ng-controller="EditCurrencyController">
+	<ul class="breadcrumb">
+		<li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+		<!-- <li><a href="#/mappingconfig">{{'label.managemappingconfigurations' | translate}}</a></li> -->
+		<li><a href="#/currencyconfig">{{'label.currencyconfiguration' | translate}}</a></li>
+		<li class="active">{{'label.editcurrencyconfiguration' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+		
+		<h3>{{'label.editcurrencyconfiguration' | translate}}</h3>
+		
+		<!-- <div class="col-md-6">
+					<input class="form-control input-xxlarge" data-ng-model="selected" placeholder="New Currency" type="text"
+				uib-typeahead="item as item.displayLabel for item in allCurrOptions | filter:$viewValue | limitTo:8" />
+				<a data-ng-click='addCur()'><i class="fa fa-plus"></i></a>
+		</div><br><br> -->
+		<div data-ng-repeat="currency in selectedCurrOptions">
+			<input data-disabled="" class="form-control input-xxlarge" placeholder={{currency.displayLabel}}} type="text"/>
+			<a data-ng-click='deleteCur(currency.code)'><i class="fa fa-times"></i></a>
+		</div>
+		<form  name="editclientform" novalidate class="form-horizontal well"  data-ng-submit="submit()">
+			<!-- <div class="error" data-ng-show="errorStatus || errorDetails">
+							<label>{{'label.error' | translate}}</label>
+							<label data-ng-show="errorStatus">{{errorStatus}}</label>
+							<label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+			</div> -->
+		<api-validate></api-validate>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4"></div>
+					<div class="col-md-8">
+						<input type="radio" id="type" data-ng-model="formData.type" style="margin-right: 10px;" name="entryType" value="Currency" disabled>
+						Currency
+						&nbsp;&nbsp;
+						<input type="radio" id="type" data-ng-model="formData.type" style="margin-right: 10px;" name="entryType" value="Non-Currency" disabled>
+						Non-Currency
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="code">{{'label.code' | translate }}<span class="required">*</span></label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="code" class="form-control" name="code" data-ng-model="formData.code" required data-ng-minlength=3 data-late-Validate/>
+						<span  data-ng-show="editclientform.code.$invalid">
+							<small class="error" data-ng-show="editclientform.code.$error.req">
+							{{'label.required.field' | translate}}
+							</small>
+							<small class="error" data-ng-show="editclientform.code.$error.minlength && !editclientform.code.$error.req">{{'error.currencycode.definition.length.validation'| translate}}</small>
+						</span>
+						<!-- <input class="form-control input-xxlarge" data-ng-model="formData.code" type="text"
+							uib-typeahead="item as item.code for item in allCurrOptions | filter:$viewValue | limitTo:8"
+						data-typeahead-on-select="currencyValue($item, $model, $label)"/> -->
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="internationalname">{{ 'label.internationalnamecode' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="internationalname" class="form-control" ng-disabled="formData.type == 'Non-Currency'" data-ng-model="formData.nameCode">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="decimalplaces">{{'label.decimalplaces' | translate }}<span class="required">*</span></label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="decimalplaces" class="form-control" name="decimalplaces" data-ng-model="formData.decimalPlaces"
+						ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+						<span data-ng-show="editclientform.decimalplaces.$dirty && editclientform.decimalplaces.$invalid">
+							<small class="error" data-ng-show="editclientform.decimalplaces.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="countrycode">{{ 'label.countrycode' | translate }}</label>
+					</div>
+						<div class="col-md-8">
+							<input type="text" id="countrycode" class="form-control" ng-disabled="formData.type == 'Non-Currency'" data-ng-model="formData.countryCode"
+							required data-ng-minlength=3 data-late-Validate/>
+							<span  data-ng-show="editclientform.countryCode.$invalid">
+								<small class="error" data-ng-show="editclientform.countryCode.$error.req">
+								{{'label.required.field' | translate}}
+								</small>
+								<small class="error"
+								data-ng-show="editclientform.countryCode.$error.minlength && !editclientform.countryCode.$error.req">{{'error.currencycode.definition.length.validation'| translate}}</small>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="name">{{'label.name' | translate }}<span class="required">*</span></label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="name" name="name" class="form-control" data-ng-model="formData.name" >
+						<!-- <input class="form-control input-xxlarge" data-ng-model="formData.name" type="text"
+						uib-typeahead="item as item.name for item in allCurrOptions | filter:$viewValue | limitTo:8"/> -->
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="countryname">{{ 'label.countryname' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="countryname" ng-disabled="formData.type == 'Non-Currency'" class="form-control" data-ng-model="formData.countryName">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<!-- <label class="control-label" for="name">{{'label.resourceid' | translate }}<span class="required">*</span></label>
+						<div class="col-md-3">
+									<input type="text" id="name" name="name" class="form-control" data-ng-model="formData.name" >
+						</div> -->
+						<label class="control-label" for="displaysymbol">{{ 'label.displaysymbol' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="displaysymbol" ng-disabled="formData.type == 'Non-Currency'" class="form-control" data-ng-model="formData.displaySymbol">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<ul class="btn-group-list text-right mt20 mb20">
+			<li><a href="#/currencyconfig"><button type="reset" class="btn btn-warning">{{'button.cancel'| translate}}</button></a></li>
+			<!-- <div class="col-md-offset-9 pull-right">
+				<a href="#/mappingconfig"><button type="reset" class="btn">{{'button.cancel'| translate}}</button></a> -->
+				<li><button type="submit" class="btn btn-primary">{{'button.save'| translate}}</button></li>
+			</ul>
+		</form>
+		
+	</div>
+</div>

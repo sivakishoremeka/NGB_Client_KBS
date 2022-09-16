@@ -1,0 +1,104 @@
+<div class="content-container" ng-controller="AddCreditCardController">
+    <ul class="breadcrumb">
+        <li><a href="#/clients">{{'link.clients' | translate}}</a></li>
+        <li><a href="#/viewclient/id/{{clientId}}" ng-click="reset123()">{{'label.anchor.viewcustomer' | translate}}</a></li>
+        <li class="active">{{'link.view.creditcard' | translate}}</li>
+    </ul>
+    <div ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+        <h3>{{'label.creditcard' | translate}}</h3>
+        <form id="creditcard" name="creditcard" novalidate="" class="form-horizontal" ng-submit="submit()">
+            <api-validate></api-validate>
+            <div class="row">
+                <div class="col-md-6">
+                   	<input type="radio" id="type" data-ng-model="formData.type" name="entryType" value="creditCard">
+						    &nbsp; CreditCard &nbsp;&nbsp;
+				 <input type="radio" id="type" data-ng-model="formData.type" name="entryType" value="Paypal">
+						         &nbsp; Paypal
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label class="control-label" for="name">{{'label.name' | translate}}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="name" name="name" ng-disabled="formData.type == 'Paypal'" class="form-control" ng-model="formData.name" required late-Validate/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="cardNumber">{{'label.cardnumber' | translate}}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="cardNumber" name="cardNumber" class="form-control" ng-model="formData.cardNumber" ng-disabled="formData.type == 'Paypal'" ng-pattern="/^[0-9]/" ng-focus="cradNumberErrorHide()" ng-change="selectCardType(formData.cardNumber)" required late-Validate/>
+                            <span data-ng-show="creditcard.cardNumber.$invalid">	             	                  
+	                            	<small class="error" data-ng-show="creditcard.cardNumber.$error.req">{{'label.required.field' | translate}}</small>
+	                                <small class="error" data-ng-show="creditcard.cardNumber.$error.pattern && !creditcard.cardNumber.$error.req">
+	                                	{{'error.creditcard.cardNumber.definition.validation'| translate}}</small>
+	                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div ng-if="formData.cardNumber">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="cvvNumber">{{'label.cvv' | translate}}<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="cvvNumber" name="cvvNumber" class="form-control" ng-model="formData.cvvNumber" ng-disabled="formData.type == 'Paypal'" required data-ng-minlength=3 data-late-Validate/> <span data-ng-show="creditcard.cvvNumber.$invalid">
+	                            	<small class="error" data-ng-show="creditcard.cvvNumber.$error.req">{{'label.required.field' | translate}}</small>
+	                                <small class="error" data-ng-show="creditcard.cvvNumber.$error.minlength && !creditcard.cvvNumber.$error.req">
+	                                	{{'error.creditcard.cvvNumber.definition.length.validation'| translate}}</small>
+	                             </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="cardType">{{'label.cardType' | translate}}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="cardType" name="cardType" ng-model="formData.cardType" class="form-control" ng-disabled="formData.type == 'Paypal'" ng-options="cardTypeData for cardTypeData in cardTypeDatas" required late-Validate></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div ng-if="formData.cardNumber">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label" for="cardExpiryDate">{{'label.expirydate' | translate}}<span class="required">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="cardExpiryDate" maxlength="7" class="input-small form-control" name="cardExpiryDate" ng-disabled="formData.type == 'Paypal'" ng-focus="cardExpireErrorHide()" ng-model="formData.cardExpiryDate" required late-Validate/>
+                                <span class="error" ng-show="patternMatch">Expire Date Pattern Doesn't Match!</span>
+                                <span class="error" ng-show="cardExpire">Card Expired!.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/viewclient/id/{{clientId}}">
+                        <button type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel' | translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button type="submit" class="btn btn-primary" ng-disabled="!creditcard.$valid">{{'button.save' | translate}}</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

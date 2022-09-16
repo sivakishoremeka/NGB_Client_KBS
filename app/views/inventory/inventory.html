@@ -1,0 +1,283 @@
+<div class="content-container" data-ng-controller="InventoryController">
+
+	<ul class="breadcrumb">
+		<li class="active">{{'label.inventory' | translate}}&nbsp;&nbsp;</li>
+	</ul>
+	<div class="content">
+		<div class="widget mb30">
+			<!-- <div class="toolbar">
+				<h4>Inventory</h4>
+			</div>
+			<br> -->
+			<!-- <div class="clearfix mb20"> -->
+			<form ng-submit="searchItemDetails(filterText)">
+				<div class="row align-items-center">
+					<div class="col-md-3">
+						<div id="search">
+							<input ng-autofocus="true" id="search" type="text"
+								class="form-control" ng-model="filterText"
+								placeholder="{{'label.input.searchforinventory' | translate}}">
+						</div>
+					</div>
+				<div class="col-md-9">
+					<ul class="btn-group-list text-right">
+						<li>
+							<a has-permission=CREATE_ITEMDETAILS
+							 href="#/createitemdetails"
+							class="btn primary_btn"><i class="fa fa-plus"></i>{{
+								'label.adddevice' | translate }}</a></li>
+						<li><a has-permission='READ_GRN' href="#/grndetails" class="btn primary_btn"><i class="fa fa-shopping-basket"></i>{{'label.heading.goodsreceipt'
+								| translate}}</a></li>
+						<li><a has-permission='READ_MRN' href="#/stocktransfer" class="btn primary_btn"><i class="fa fa-sign-out"></i>{{'label.heading.stocktransfer' |
+								translate}}</a></li>
+					</ul>
+				</div>
+			</div>
+				<!--  <div class="col-md-2" style="margin-top:-24px;">
+					          	<select ng-model="source" class="form-control" ng-change="searchSource(source)">
+					              <option value="">--select Entity--</option>
+					              <option value="">--select state--</option>
+					              <option value="ALL">ALL</option>
+					              <option value="Available">Available</option>
+					              <option value="UnAvailable">UnAvailable</option>
+					              <option value="In use">In Use</option>
+					    	  	</select>
+					    	  </div>
+					    	  <div class="col-md-2" style="margin-top:-24px;">
+					    	  	<select ng-model="officeName" class="form-control" 
+					    	  		ng-options="officeData.name as officeData.name for officeData in officeDatas"  
+					    	  			ng-change="searchSource(officeName)">
+					    	  		<option value="">--select Entity--</option>
+
+					    	  		<option value="">--select entity--</option>
+
+					    	  	</select>
+					    	  </div>
+					    	  <div class="col-md-2" style="margin-top:-24px;margin-right:-20px;">
+					    	  	<select ng-model="itemCode" class="form-control"
+					    	  		ng-options="itemMasterData.itemCode as itemMasterData.itemCode for itemMasterData in itemMasterDatas"  
+					    	  			ng-change="searchSource(itemCode)">
+					    	  		<option value="">--select device code--</option>
+					    	  	</select>
+					    	  </div> -->
+			</form>
+			<!-- </div> -->
+		</div>
+
+		<div class="widget card">
+			<span data-ng="deviceShow()">
+				<!--  <h3>{{ 'label.Searched Device' | translate }}</h3> -->
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<!-- <th>{{'label.itemDetail.office' | translate}}</th>  -->
+							<th>{{'label.Entity Name' | translate}}</th>
+							<th>{{'label.itemDescription' | translate}}</th>
+							<th>{{'label.itemCode' | translate}}</th>
+							<th>{{'label.accountNumber' | translate}}</th>
+							<!-- <th>{{'label.serialnumber' | translate}}</th> -->
+							<th>{{'label.Chip Id' | translate}}</th>
+							<th>{{'label.isPairing' | translate}}</th>
+							<th>{{'label.pairedItemId' | translate}}</th>
+							<th>{{'label.PairedItem' | translate}}</th>
+							<th>{{'label.provserialnumber' | translate}}</th>
+							<th>{{'label.warranty Date' | translate}}</th>
+							<th>{{'label.itemModel' | translate}}</th>
+							<!-- <th>{{'label.supplier' | translate}}</th>
+				              <th>{{'label.quality' | translate}}</th> -->
+							<th>{{'label.status' | translate}}</th>
+							<!-- <th>{{'label.pairingwith' | translate}}</th>
+				                <th>{{'label.model' | translate}}</th>
+				                <th>{{'label.allocated' | translate}}</th> -->
+							<th>{{'table.actions' | translate}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="pointer-main"
+							ng-repeat="itemdetail in itemdetails.currentPageItems  | filter:filterText">
+							<!-- <td class="pointer" data-ng-click="routeTo(itemdetail.accountNumber)">{{itemdetail.officeName}}</td> -->
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.entityname}}</td>
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.itemDescription}}</td>
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.itemCode}}</td>
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.accountNumber}}</td>
+							<!-- <td class="pointer" data-ng-click="routeTo(itemdetail.accountNumber)">{{itemdetail.serialNumber}}</td> -->
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.Chipid}}</td>
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.isPairing}}</td>
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.pairedItemId}}</td>
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.PairedItem}}</td>
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.serialNumber}}</td>
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.warranty_date|
+								DateFormat}}</td>
+
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.itemModel}}</td>
+							<!-- <td class="pointer" data-ng-click="routeTo(itemdetail.accountNumber)">{{itemdetail.supplier}}</td> -->
+							<!-- <td class="pointer" data-ng-click="routeTo(itemdetail.accountNumber)">{{itemdetail.quality}}</td> -->
+							<td class="pointer" data-ng-click="routeTo(itemdetail.clientId)">{{itemdetail.status}}</td>
+							<!-- <td class="pointer" data-ng-click="routeTo(itemdetail.accountNumber)">{{itemdetail.pairedItemCode}}</td> -->
+							<!-- <td class="pointer" data-ng-click="routeTo(itemdetail.accountNumber)">{{itemdetail.itemModel}}</td> -->
+							<!-- <td ng-show="itemdetail.accountNumber" class="pointer" data-ng-click="routeTo(itemdetail.accountNumber)">
+				                	{{itemdetail.accountNumber}}</td> -->
+							<!-- <td ng-hide="itemdetail.accountNumber" class="pointer" data-ng-click="routeTo(itemdetail.accountNumber)">
+				                	In Stock</td> -->
+							<td><a ng-show="(itemdetail.clientId)"
+								has-permission="UPDATE_ITEMDETAILS"
+								ng-click="editProvSerial(itemdetail.id,itemdetail.quality,itemdetail.Chipid,itemdetail.itemModel)"
+								uib-popover="Edit Provisioning" popover-trigger="mouseenter"
+								class="fa fa-edit"></a> <a ng-show="(!itemdetail.clientId)"
+								has-permission="UPDATE_ITEMDETAILS"
+								ng-click="editQuality(itemdetail.id,itemdetail.quality,itemdetail.Chipid,itemdetail.serialNumber,itemdetail.itemModel)"
+								uib-popover="Edit Item Details" popover-trigger="mouseenter"
+								class="fa fa-edit"></a> <a has-permission="READ_ITEMDETAILS"
+								ng-click="itemHistoryPopup(itemdetail.serialNumber)"
+								uib-popover="View Track" popover-trigger="mouseenter"
+								class="fa fa-list-ul"></a> <a ng-show="(!itemdetail.clientId)"
+								has-permission="DELETE_INVENTORY"
+								ng-click="deleteItemDetail(itemdetail.id)"
+								uib-popover="DeleteItemDetails" popover-trigger="mouseenter"
+								class="fa fa-times"></a>&nbsp;</td>
+					</tbody>
+				</table>
+			</span>
+		</div>
+		<!-- <div class="card">
+		    <div class="toolbar">
+                <h3>&nbsp&nbsp{{'label.Inventory Tabs' | translate}}</h3>
+            </div>
+			<div class="row">
+				<div class="col-sm-6 col-md-6">
+					<div class="list-group">
+						<a class="list-group-item" href="#/createitemdetails" has-permission='CREATE_ITEMDETAILS'>
+		                    <h4 class="list-group-item-heading"><i class="fa fa-caret-square-o-down"></i>&nbsp;&nbsp;{{'label.heading.deviceentry' | translate}}</h4>
+		                    <p class="list-group-item-text">{{'label.creatingdeviceentry' | translate}}</p>
+	                    </a>
+	                    <a class="list-group-item" href="#/grndetails" has-permission='READ_GRN'>
+		                    <h4 id="iconh4" class="list-group-item-heading"><i id="iconfa"  class="fa fa-shopping-basket"></i>&nbsp;&nbsp;{{'label.heading.goodsreceipt' | translate}}</h4>
+		                    <p class="list-group-item-text">{{'label.creatinggoodsreceipt' | translate}}</p>
+	                    </a>
+	                    <a class="list-group-item" href="#/uploadandprocessitemdetails">
+				            <h4 id="iconh4" class="list-group-item-heading"><i id="iconfa" class="fa fa-upload"></i>&nbsp;&nbsp;{{'label.heading.bulkstockupload' | translate}}</h4>
+				            <p class="list-group-item-text">{{'label.uploadingfiles' | translate}}</p>
+		                </a>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6">
+					<div class="list-group">
+					    <a class="list-group-item" href="#/stocktransfer" has-permission='READ_MRN'>
+		                    <h4 id="iconh4" class="list-group-item-heading"><i id="iconfa" class="fa fa-sign-out"></i>&nbsp;&nbsp;{{'label.heading.stocktransfer' | translate}}</h4>
+		                    <p class="list-group-item-text">{{'label.movingstock' | translate}}</p>
+	                    </a>
+		                <a class="list-group-item" href="#/uploadandprocessmrndetails">
+		                    <h4 id="iconh4" class="list-group-item-heading"><i id="iconfa" class="fa fa-upload"></i>&nbsp;&nbsp;{{'label.heading.bulkstocktransfer' | translate}}</h4>
+		                    <p class="list-group-item-text">{{'label.transferingfiles' | translate}}</p>
+	                    </a>
+					</div>
+				</div>
+			</div>
+		</div> -->
+	</div>
+	
+	<script type="text/ng-template" id="EditProvSerial.html">
+	<div class="modal-header silver">
+       	 	<h3 class="bolder">Edit Provisioning SerialNumber</h3>
+        </div>
+   	    <div class="modal-body" style="height:160px;">
+ 		<div class="error" ng-show="errorStatus || errorDetails">
+		                 <label>{{'label.contract.error' | translate}}</label>
+		                 <label ng-show="errorStatus">{{errorStatus}}</label>
+		                 <label ng-hide="errorStatus" ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+	                     </div>
+       <fieldset>
+ 			<div class="form-group">
+				<label class="control-label col-sm-3" for="quality">{{'label.itemdetail.provisionserialnum' | translate }}</label>
+				<div class="col-sm-3">
+             		<input type="text" id="serialnum" class="form-control" ng-model="provserialnum">
+           	 	</div>
+	   		</div>
+      </fieldset>
+     </div>
+     <div class="modal-footer">
+        <button id="cancel" class="btn btn-warning" ng-click="cancelQuality()">{{'button.cancel' | translate}}</button>
+     	<button id="submit" class="btn btn-primary" ng-click="approveQuality(quality,provserialnum)" ng-disabled="flagEditQuality">{{'button.save' | translate}}</button>
+     </div>
+	</script>
+	<script type="text/ng-template" id="EditQuality.html">
+	<div class="modal-header silver">
+        <h3 class="bolder">Edit Quality</h3>
+    </div>
+    <div class="modal-body" style="height:200px;">
+ 	<div class="error" ng-show="errorStatus || errorDetails">
+		                 <label>{{'label.contract.error' | translate}}</label>
+		                 <label ng-show="errorStatus">{{errorStatus}}</label>
+		                 <label ng-hide="errorStatus" ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+	                     </div>
+       <fieldset>
+       <div class="control-group">
+			<label class="control-label" for="quality">{{'label.itemdetail.quality' | translate }}<span class="required">*</span></label>
+			<div class="controls">
+              <select ng-model="quality"  ng-options="q.mCodeValue as q.mCodeValue for q in qualityDatas" value="{{q.mCodeValue}}" required>
+              </select>
+            </div>
+	   </div>
+ 	<div class="control-group">
+			<label class="control-label" for="provisioningSerialNumber">{{'label.itemdetail.provisionserialnum' | translate }}&nbsp;<span class="required">*</span></label>
+			<div class="controls">
+             <input type="text" id="provisioningSerialNumber" ng-model="provserialnum">
+            </div>
+ 	<div class="control-group">
+			<label class="control-label" for="quality">{{'label.itemdetail.serialnumber' | translate }}&nbsp;<span class="required">*</span></label>
+			<div class="controls">
+             <input type="text" id="serialNumber" ng-model="serialNumber">
+            </div>
+	   </div>
+    </fieldset>
+    </div>
+     <div class="modal-footer">
+        <button id="cancel" class="btn btn-warning" ng-click="cancelQuality()">{{'button.cancel' | translate}}</button>
+     	<button id="submit" class="btn btn-primary" ng-click="approveQuality(quality,provserialnum,serialNumber)" ng-disabled="flagEditQuality">{{'button.save' | translate}}</button>
+     </div>
+	</script>
+	<script type="text/ng-template" id="approvedelete.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete itemDetail</h3>
+                    </div>
+                    <div class="modal-body style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancelItem()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approveToDelete()">{{'button.save' | translate}}</button>
+                    </div>
+    </script>
+	<script type="text/ng-template" id="itemhistory.html">
+      <div class="modal-header silver">
+           <h3 class="bolder">Track History</h3>
+       </div>
+       <div class="modal-body" style="height:auto;width:600px;">
+          <table class="table table-striped">
+	            <thead>
+	              <tr class="graybg">
+	                <th>{{'table.itemhistory.refType' | translate}}</th>
+	                <th>{{'table.itemhistory.transactionDate' | translate}}</th>
+	                <th>{{'table.itemhistory.movement' | translate}}</th>
+	                <th>{{'table.itemhistory.fromOffice' | translate}}</th>
+	                <th>{{'table.itemhistory.toOffice' | translate}}</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+	              <tr ng-repeat="ih in itemhistory.currentPageItems  | filter:filterText">
+	                <td>{{ih.refType}}</td>
+	                <td>{{ih.transactionDate | DateFormat}}</td>
+	                <td>{{ih.movement}}</td>
+	                <td>{{ih.fromOffice}}</td>
+	                <td>{{ih.toOffice}}</td>
+					<tr/>
+				  <tr><td colspan="5"><div data-ng-show="blockUI" class="offset3"><i class="icon-refresh icon-spin icon-large"></i>
+					</div></td></tr>
+	     		 </tbody>
+          	   </table>
+       </div>
+       <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="accept()">Done</button>
+        </div>
+	</script>
+</div>

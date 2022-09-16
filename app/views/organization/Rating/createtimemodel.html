@@ -1,0 +1,138 @@
+<div class="content-container" ng-controller="CreateTimeModelController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'link.admin.masters' | translate}}</a></li>
+        <li><a href="#/createtimemodel">{{'label.createtimemodel/timeperiod' | translate}}</a>
+    </ul>
+    <div class="row">
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h3>{{'label.createtimemodel/timeperiod' | translate}}</h3>
+            </div>
+            <br>
+            
+            <form name="createtimemodel" novalidate="" class="form-horizontal" rc-submit="submit()">
+                <api-validate></api-validate>
+                <fieldset>
+                
+                    <div class="form-group">
+                         <label class="control-label col-sm-2" for="timeModelName">{{'label.timemodelname'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="timeModelName" class="form-control" name="Name" data-ng-model="formData.timeModelName" />
+                         </div>
+                     </div>    
+                     <div class="form-group">
+                         <label class="control-label col-sm-2" for="description">{{'label.description'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="description" class="form-control" name="description" data-ng-model="formData.description" />
+                         </div>
+                     </div>
+                     <!-- <div class="form-group">
+                         <label class="control-label col-sm-2" for="timemodelId">{{'label.timemodelid'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="timemodelId" class="form-control" name="timemodelId" data-ng-model="formData.timemodelId" />
+                         </div>
+                     </div> --> 
+                     
+                     <div class="row">
+                         <table class="table">
+                             <tr>
+                                <td>
+                                    <label class="control-label" for="timeperiodName">{{'label.timeperiodname'| translate }}&nbsp;</label>
+                                    <input type="text" id="timeperiodName" class="form-control" name="timeperiodName" data-ng-model="timeperiodName" />
+                                </td>
+                                <td>
+                                    <label class="control-label" for="startYear">{{'label.startyear'| translate }}&nbsp;</label>
+                                    <input type="text" id="startYear" class="input-small form-control" ng-pattern="/^[0-9]{4}$/" name="startYear" data-ng-model="startYear"/>
+                                    <span  data-ng-show="createtimemodel.startYear.$invalid">
+	              	 					<small class="error" data-ng-show="createtimemodel.startYear.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+	           						</span> 
+                                </td>
+                                <td>
+                                     <label class="control-label" for="endYear">{{'label.endyear'| translate }}&nbsp;</label>
+                                    <input type="text" id="endYear" class="input-small form-control" ng-pattern="/^[0-9]{4}$/" name="endYear" data-ng-model="endYear"/>
+                                    <span  data-ng-show="createtimemodel.startYear.$invalid">
+	              	 					<small class="error" data-ng-show="createtimemodel.endYear.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+	           						</span>
+                                </td>
+                                <td>
+                                     <label class="control-label" for="startMonth">{{'label.startmonth'| translate }}&nbsp;</label>
+                                    <input type="text" id="startMonth" class="input-small form-control" ng-pattern="/^[0-9]{2}$/" name="startMonth" data-ng-model="startMonth"/>
+                                    <span  data-ng-show="createtimemodel.startMonth.$invalid">
+	              	 					<small class="error" data-ng-show="createtimemodel.startMonth.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+	           						</span>
+                                </td>
+                                <td>
+                                     <label class="control-label" for="endMonth">{{'label.endmonth'| translate }}&nbsp;</label>
+                                    <input type="text" id="endMonth" class="input-small form-control" ng-pattern="/^[0-9]{2}$/" name="endMonth" data-ng-model="endMonth"/>
+                                    <span  data-ng-show="createtimemodel.endMonth.$invalid">
+	              	 					<small class="error" data-ng-show="createtimemodel.endMonth.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+	           						</span>
+                                </td>
+                                <td>
+                                     <label class="control-label" for="startDay">{{'label.startday'| translate }}&nbsp;</label>
+                                    <input type="text" id="startDay" class="input-small form-control" name="startDay" data-ng-model="startDay"/>
+                                </td>
+                                <td>
+                                     <label class="control-label" for="endDay">{{'label.endday'| translate }}&nbsp;</label>
+                                    <input type="text" id="endDay" class="input-small form-control" name="endDay" data-ng-model="endDay"/>
+                                </td>
+                                <td>
+                                     <label class="control-label" for="startTime">{{'label.starttime'| translate }}&nbsp;</label>
+                                    <input type="text" id="startTime" class="input-small form-control" name="startTime" data-ng-model="startTime"/>
+                                </td>
+                                <td>
+                                     <label class="control-label" for="endTime">{{'label.endtime'| translate }}&nbsp;</label>
+                                    <input type="text" id="endTime" class="input-small form-control" name="endTime" data-ng-model="endTime"/>
+                                </td>
+                                <td>
+                                   <a data-ng-click="!(createtimemodel.createtimemodel.$error.pattern)&&addCreateTimeModelData()" style="margin-left:25px;">
+                                       <i class="fa fa-plus" style="margin-top: 30px;"></i>
+                                   </a>&nbsp;
+                                  </td>
+                            </tr>
+                          </table>
+                         
+                          <div data-ng-show="times.length>0">
+                            
+                            <table class="table">
+                                   <tr class="graybg">
+                                       <th>{{ 'label.timeperiodname' | translate }}</th>
+                                       <th>{{ 'label.startyear' | translate }}</th>
+                                       <th>{{ 'label.endyear' | translate }}</th>
+                                       <th>{{ 'label.startmonth' | translate }}</th>
+                                       <th>{{ 'label.endmonth' | translate }}</th>
+                                       <th>{{ 'label.startday' | translate }}</th>
+                                       <th>{{ 'label.endday' | translate }}</th>
+                                       <th>{{ 'label.starttime' | translate }}</th>
+                                       <th>{{ 'label.endtime' | translate }}</th>
+                                   </tr>
+                                 <tr data-ng-repeat="existsTemplateDefinition in times track by $index">
+                                     
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.timeperiodName" type="text" ></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.startYear" type="text" ></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.endYear" type="text" ></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.startMonth" type="text" ></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.endMonth" type="text" ></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.startDay" type="text" ></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.endDay" type="text" ></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.startTime" type="text" ></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.endTime" type="text" ></td>
+                                <td>
+				                  <a data-ng-click="removeTimemodel($index)"><i class="fa fa-times"></i>
+				                  </a>
+				               </td>
+                                 </tr>
+                            </table>
+                   <div class="col-md-offset-9 pull-right">
+                       <a href="#/organization"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+                       <button id="save" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+                   </div>
+                  </div>
+                 </div>
+                </fieldset>
+            </form>
+            </div>
+    	</div>
+	</div>
+</div>

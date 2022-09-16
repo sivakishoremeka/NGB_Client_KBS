@@ -1,0 +1,236 @@
+<div class="content-container" data-ng-controller="CreateOrderWorkflowController">
+    <ul class="breadcrumb">
+        <li><a href="#/clients">{{'label.anchor.customers' |
+                translate}}</a></li>
+        <li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer'
+                | translate}}</a></li>
+        <li class="active">{{'label.order.workflow' | translate}}</li>
+    </ul>
+    <div ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+        <h3>{{'label.orderworkflow' | translate}}</h3>
+        <div class="row mb20">
+            <div class="col-md-2">
+              <button id="Draft"  class="btn btn-success" style="" ng-if ="isStatus == 'DRAFT' || isStatus == 'Operation Review' || isStatus == 'Order Accepted' || isStatus == 'Surveying' || isStatus == 'Survey Completed' || isStatus == 'Installation Assigned' || isStatus == 'Installation Completed' || isStatus == 'Provisioned'" >{{'label.button.draft' | translate}}</button>
+            </div>
+            <div class="col-md-1">
+                <div class="text-center">
+                    <img src="../images/arrow(1).png">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button id="Operation Review" class="btn btn-warning" ng-if="isStatus == 'DRAFT'">{{'label.button.review' | translate}}</button>
+                <button id="Operation Review" class="btn btn-success" ng-if="isStatus == 'Operation Review' || isStatus == 'Order Accepted' || isStatus == 'Surveying' || isStatus == 'Survey Completed' || isStatus == 'Installation Assigned' || isStatus == 'Installation Completed' || isStatus == 'Provisioned'">{{'label.button.review' | translate}}</button>
+            </div>
+            <div class="col-md-1">
+                <div class="text-center">
+                    <img src="../images/arrow(1).png">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button id="Order Accepted" class="btn btn-default" ng-if="isStatus == 'DRAFT'">{{'label.button.orderAccepted' | translate}}</button>
+                <button id="Order Accepted" class="btn btn-warning" ng-if="isStatus == 'Operation Review'">{{'label.button.orderAccepted' | translate}}</button>
+                <button id="Order Accepted" class="btn btn-success" ng-if="isStatus == 'Order Accepted' || isStatus == 'Surveying' || isStatus == 'Survey Completed' || isStatus == 'Installation Assigned' || isStatus == 'Installation Completed' || isStatus == 'Provisioned'">{{'label.button.orderAccepted' | translate}}</button>
+            </div>
+            <div class="col-md-1">
+                <div class="text-center">
+                    <img src="../images/arrow(1).png">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button id="Surveying" class="btn btn-default" ng-if="isStatus == 'DRAFT'">{{'label.button.surveying' | translate}}</button>
+                <button id="Surveying" class="btn btn-warning" ng-if="isStatus == 'Order Accepted'">{{'label.button.surveying' | translate}}</button>
+                <button id="Surveying" class="btn btn-success" ng-if="isStatus == 'Survey Completed' || isStatus == 'Installation Assigned' || isStatus == 'Installation Completed' || isStatus == 'Provisioned'">{{'label.button.surveying' | translate}}</button>
+            </div>
+            <div class="col-md-1">
+                <div class="text-center">
+                    <img src="../images/arrow(1).png">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button id="Survey Completed" class="btn btn-default" ng-if="isStatus == 'DRAFT' || isStatus == 'Order Accepted'">{{'label.button.surveyCompleted' | translate}}</button>
+                <!--                    <button id="Order Accepted" class="btn btn-warning" style="width:170px"  ng-if ="isStatus == 'Surveying'">{{'label.button.surveyCompleted' | translate}}</button>
+                             -->
+                <button id="Survey Completed" class="btn btn-success" ng-if="isStatus == 'Survey Completed' || isStatus == 'Installation Assigned' || isStatus == 'Installation Completed' || isStatus == 'Provisioned'">{{'label.button.surveyCompleted' | translate}}</button>
+            </div>
+            <div class="col-md-1">
+                <div class="text-center">
+                    <img src="../images/arrow(1).png">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button id="Installation Assigned" class="btn btn-default" ng-if="isStatus == 'DRAFT' || isStatus == 'Order Accepted'">{{'label.button.installAssigned' | translate}}</button>
+                <button id="Installation Assigned" class="btn btn-warning" ng-if="isStatus == 'Survey Completed'">{{'label.button.installAssigned' | translate}}</button>
+                <button id="Installation Assigned" class="btn btn-success" ng-if="isStatus == 'Installation Completed' || isStatus == 'Provisioned'">{{'label.button.installAssigned' | translate}}</button>
+            </div>
+            <div class="col-md-1">
+                <div class="text-center">
+                    <img src="../images/arrow(1).png">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button id="Installation Completed" class="btn btn-default" ng-if="isStatus == 'DRAFT' || isStatus == 'Order Accepted' || isStatus == 'Survey Completed'">{{'label.button.installCompleted' | translate}}</button>
+                <!--            <button id="Installation Completed" class="btn btn-warning" style="width:170px;margin:0px 0px 0px 110px;"  ng-if ="isStatus == 'Installation Assigned'">{{'label.button.installCompleted' | translate}}</button> -->
+                <button id="Installation Completed" class="btn btn-success" ng-if="isStatus == 'Installation Completed' || isStatus == 'Provisioned'">{{'label.button.installCompleted' | translate}}</button>
+            </div>
+            <div class="col-md-1">
+                <div class="text-center">
+                    <img src="../images/arrow(1).png">
+                </div>
+            </div>
+            <div class="col-md-2">
+                 <button id="Provisioned" class="btn btn-default" style="width:;" ng-if="isStatus == 'DRAFT' || isStatus == 'Order Accepted' || isStatus == 'Survey Completed'">{{'label.button.provisioned' | translate}}
+                 </button>
+                   <button id="Provisioned"  class="btn btn-success" style="width:;"  ng-if ="isStatus == 'Installation Completed' || isStatus == 'Provisioned'">{{'label.button.provisioned' | translate}}</button>
+            </div>
+        </div>
+
+        <!-- <div class="row" ng-if="isStatus == 'DRAFT'">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <textarea ng-model="formData.description" name="description" style="width:100%; height:8em;" class="form-control">
+                    </textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3" style="margin:40px;">
+                   <button id="accept" type="accept" class="btn btn-warning" style="width:130px" >{{'label.button.accept' | translate}}</button>
+
+                   <button id="decline" type="decline" class="btn btn-danger" style="width:130px">{{'label.button.decline' | translate}}</button>
+              </div>
+            </div>
+            </div>
+            <br>
+            <div class="row" ng-if="isStatus == 'review'">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <textarea ng-model="formData.description" name="description" style="width:100%; height:8em;" class="form-control">
+                    </textarea>
+                </div>
+                <div class="col-sm-6" style="margin:40px;">
+                   <button id="upload" type="upload" class="btn btn-danger" style="width:130px" >{{'label.button.upload' | translate}}</button>
+                   <button id="submit" type="submit" class="btn btn-danger" style="width:130px" >{{'label.button.submit' | translate}}</button>
+                   <button id="reject" type="reject" class="btn btn-danger" style="width:130px">{{'label.button.reject' | translate}}</button>
+              </div>
+            </div>
+            </div>
+            <br>
+            <div class="row" ng-if="isStatus == 'Order Accepted'">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <textarea ng-model="formData.description" name="description" style="width:100%; height:8em;" class="form-control">
+                    </textarea>
+                </div>
+                <div class="col-sm-3" style="margin:40px;">
+                   <button id="completed" type="completed" class="btn btn-danger" style="width:130px" >{{'label.button.completed' | translate}}</button>
+                   <button id="reject" type="reject" class="btn btn-danger" style="width:130px">{{'label.button.reject' | translate}}</button>
+              </div>
+            </div>    
+          </div>
+
+            <form name="createorderworkflowform" class="form-horizontal" >
+                <api-validate></api-validate>
+                    <!-- <div class="form-group">
+                        <label class="control-label col-sm-2" for="status">Status</label>
+                        <div class="col-sm-3">
+                            <select data-ng-model="formData.status"  class="form-control" readonly
+                                                data-ng-options="statusData.mCodeValue as statusData.mCodeValue for statusData in statusDatas">
+                                                <option value="">{{'label.select.one' | translate}}</option>
+                            </select>
+                            <input type="text" id="status" data-ng-model="formData.status"  class="form-control" readonly>
+                        </div>
+
+                        <label class="control-label col-sm-2" for="dateTime">{{
+                            'label.assigned to' | translate }}</label>
+                        <div class="col-sm-3">
+                            <select data-ng-model="team"  class="form-control"
+                                                data-ng-options="teamData as teamData.teamDescription for teamData in teamDatas">
+                                                <option value="">{{'label.select.one' | translate}}</option>
+                            </select>
+                        </div>
+                    </div> -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label class="control-label" for="description">{{'label.description' | translate }}<span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+                        <textarea ng-model="formData.description" name="description" class="form-control" required late-Validate>
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="btn-group-list text-right mt20 mb20">
+            <li>
+                <a data-ng-click="cancelOrder()">
+                    <button type="reset" class="btn btn-warning">{{'label.button.cancel' | translate}}</button>
+                </a>
+            </li>
+            <li>
+                <button ng-click="reject()" class="btn btn-primary">{{'label.button.Reject' | translate}}</button>
+            </li>
+            <li>
+                <button ng-click="submit()" has-permission='CREATE_ORDERWORKFLOW' class="btn btn-primary">{{'label.button.save' | translate}}</button>
+            </li>
+            <li>
+                <a data-ng-click="editBill()" class="btn btn-primary"> <i class="fa fa-plus"></i>{{'button.documentuploads' | translate}}</a>
+            </li>
+        </ul>
+        <div class="table-responsive">
+            <table class="table table-striped" has-permission="READ_DOCUMENT">
+                <thead>
+                    <tr>
+                        <th>{{'table.heading.name' | translate}}</th>
+                        <th>{{'table.heading.description' | translate}}</th>
+                        <th>{{'table.heading.filename' | translate}}</th>
+                        <th>{{'table.heading.actions' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="clientdocument in clientdocuments">
+                        <td>{{clientdocument.name}}</td>
+                        <td>{{clientdocument.description}}</td>
+                        <td>{{clientdocument.fileName}}</td>
+                        <td>
+                            <ul class="table-icon-list">
+                                <li>
+                                    <a data-ng-click="downloadDocument(clientdocument.id)" uib-popover="Download Document" data-popover-trigger="mouseenter"><i
+                                            class="fa fa-cloud-download viewbgclient-t-actions m-0"></i></a></li>
+                                <li>
+                                    <a has-permission="DELETE_DOCUMENT" data-ng-click="deletePopUp('',clientdocument.id,$index,'Delete Document')" uib-popover="Delete Document" data-popover-trigger="mouseenter"><i class="fa fa-times viewbgclient-t-actions m-0"></i></a>
+                                </li>
+                            </ul>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- <div class="col-md-offset-3">
+                    <a data-ng-click="cancelOrder()"><button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button></a>
+                    <button   ng-click="reject()"  class="btn btn-primary">{{'label.button.Reject' | translate}}</button>
+                    <button   ng-click="submit()" has-permission='CREATE_ORDERWORKFLOW' class="btn btn-primary">{{'label.button.save' | translate}}</button>
+                </div> -->
+        </form>
+    </div>
+</div>
+
+<script type="text/ng-template" id="document.html">
+    <div class="modal-header silver">
+        <h3 class="bolder">Delete Document</h3>
+    </div>
+    <div class="modal-body style=" height:60px; ">
+           <h4>Are you sure?</h4>
+        </div>
+        <div class="modal-footer ">
+            <ul class="btn-group-list text-right mt20 mb20 ">
+            <li><button class="btn btn-warning " ng-click="cancel() ">{{'button.cancel' | translate}}</button></li>
+            <li> <button class="btn btn-primary " ng-click="approve() ">{{'label.confirm' | translate}}</button></li></ul>
+        </div>
+    </script>
+</div>

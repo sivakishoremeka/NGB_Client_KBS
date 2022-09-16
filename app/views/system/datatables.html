@@ -1,0 +1,41 @@
+<div class="content-container" ng-controller="DataTableController">
+    <ul class="breadcrumb">
+        <li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+        <li class="active">{{'label.anchor.managedatatables' | translate}}</li>
+    </ul>
+    <div class="widget mb30">
+        
+        
+        <div class="row">
+            <div class="col-md-3">
+                <input ng-autofocus="truw" "text" ng-model="filterText" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+            </div>
+            <div class="col-md-9">
+                <ul class="btn-group-list text-right">
+                    <li><a href="#/createdatatable" class="btn primary_btn" has-permission='CREATE_DATATABLE'><i class="fa fa-plus "></i>{{'label.button.createdatatable' | translate}}</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        
+    </div>
+    
+    <div class="widget">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="graybg">
+                        <th>{{'label.heading.datatablename' | translate}}</th>
+                        <th>{{'label.heading.associatedwith' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pointer-main" ng-repeat="datatable in datatables | orderBy:'registeredTableName':reverse | filter:filterText">
+                        <td class="pointer" data-ng-click="routeTo(datatable.registeredTableName)">{{datatable.registeredTableName}}</td>
+                        <td class="pointer" data-ng-click="routeTo(datatable.registeredTableName)">{{datatable.applicationTableName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

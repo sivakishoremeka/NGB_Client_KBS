@@ -1,0 +1,277 @@
+<div class="content-container" ng-controller="CreateHardwareServiceActivationController">
+	<div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h3>{{'label.button.activation' | translate}}</h3>
+			</div>
+			<br>
+			<form class="form-horizontal"  rc-submit="submit()">
+				<api-validate></api-validate>
+				<wizard>
+					<wz-step wz-title="Client Service Info">
+						<ng-form name="clientserviceinfoform" novalidate="" class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="serviceId">{{'label.addservice' | translate }}&nbsp;
+									<span class="required">*</span>
+								</label>
+								<div class="col-sm-3">
+									<select id="serviceId" data-ng-model="formData.serviceId" class="form-control" name="serviceId"
+									    	data-ng-options="serviceDatas.id as getBothService(serviceDatas.serviceCode, serviceDatas.serviceDescription) for serviceDatas in serviceData" 
+									        ng-change="changeServiceFun()" required>
+										<option value="">{{'label.select.one' | translate}}</option>
+								    </select>
+								    <span data-ng-show="clientserviceinfoform.serviceId.$invalid">
+						            	<span class="error" data-ng-show="clientserviceinfoform.serviceId.$error.req">Required Field</span>
+					                </span>
+							    </div>
+							</div>
+							<fieldset  ng-if="formData.serviceId">
+								<h3>{{'label.details' | translate}}</h3>
+								<div class="form-group" data-ng-repeat="serviceDetails in serviceDetail">
+									<label class="control-label col-sm-2">{{serviceDetails.codeParamName}}</label>
+									<div class="col-sm-3">
+	                              		<span>
+	                              		    <input ng-if="serviceDetails.paramType == 'Query' " id="paramValue" data-ng-model="serviceDetails.clientDetails.email" 
+                                                    class="form-control" type="text" name="paramValue" required>
+	                              			<input ng-if="serviceDetails.paramType != 'Combo' && serviceDetails.paramType != 'Boolean' && serviceDetails.paramType != 'Date' && serviceDetails.paramType != 'Password' && serviceDetails.paramType != 'Query'" 
+	                              				class="form-control" type="text" name="paramValue" data-ng-model="serviceDetails.paramValue" required/>
+	                            			<input ng-if="serviceDetails.paramType != 'Combo' && serviceDetails.paramType != 'Boolean' && serviceDetails.paramType != 'Date' && serviceDetails.paramType != 'Text' && serviceDetails.paramType != 'Query'" 
+                                                  class="form-control" type="password" name="paramValue" data-ng-model="serviceDetails.paramValue" required/>
+	                            			<select ng-if="serviceDetails.paramType == 'Combo'" id="paramValue" data-ng-model="serviceDetails.paramValue" 
+									    			class="form-control" name="paramValue" 
+									    		    data-ng-options="detail.id as detail.systemcode for detail in serviceDetails.details" required>
+									    			<option value="">{{'label.select.one' | translate}}</option>		
+											</select>
+											<select ng-if="serviceDetails.paramType == 'Boolean'" id="paramValue" data-ng-model="serviceDetails.paramValue" 
+									    			class="form-control" name="paramValue" data-ng-options="paramValue for paramValue in paramValues" required>
+											</select>
+											<input type="text" ng-if="serviceDetails.paramType == 'Date'" data-datepicker-pop="yyyy-MM-dd" id="paramValue" 
+												data-ng-model="serviceDetails.paramValue"  data-is-open="opened2" min="minDate" max="'2020-06-22'" 
+													class="form-control" name="paramValue" data-date-disabled="disabled(date, mode)" 
+														style="background-color:#FFFFFF;" required/>
+											<span data-ng-show="clientserviceinfoform.paramValue.$invalid">
+						                		 <span class="error" data-ng-show="clientserviceinfoform.paramValue.$error.req">Required Field</span>
+					                		</span>
+	                            		</span>
+	                            	</div>
+								</div>
+							</fieldset><br><br>
+							
+								<div class="col-sm-offset-9">
+									<button id="previous" type="reset" wz-previous class="btn btn-primary">Previous</button>
+			                        <a href="#/clients"><button id="cancel" type="reset" class="btn btn-warning">Cancel</button></a>
+					        		<button  wz-next data-ng-disabled="!clientserviceinfoform.$valid" class="btn btn-primary" ng-click="getOnetimesale()">Next</button>
+				        		</div>
+			        
+						</ng-form>
+					</wz-step>
+					<wz-step wz-title="Device Info">
+						<ng-form name="deviceInfoForm" novalidate="" class="form-horizontal">
+							<div class="form-group">
+								<!-- <label class="control-label col-sm-2" for="officeId">{{'label.heading.office' | translate}}&nbsp;<span class="required">*</span></label>
+								<div class="col-sm-3">
+									<select data-ng-model="formData.officeId" class="form-control" 
+											data-ng-options="office.id as office.name for office in offices" ng-change="officeDetailsFun()">
+									</select>
+								</div> -->
+								<label class="control-label col-sm-2">{{ 'label.saleDate' | translate }}&nbsp;<span class="required">*</span></label>
+								<div class="col-sm-3">
+									<input data-ng-model="dateTime" data-is-open="opened2" 
+										   min="minDate" class="form-control" max="maxDate" data-date-disabled="disabled(date, mode)" 
+										   style="background-color: #FFFFFF;" readonly />
+								</div>
+						    </div>
+						    
+						    <br><br>
+        		    		<h4>{{'label.device.details' | translate}}</h4>
+        		   			<div class="form-group">
+		        		   		<label class="control-label col-sm-2" for="serialNumber">{{'label.serialNumber' | translate }}&nbsp;
+					  				<span class="required">*</span>
+					  	   		</label>
+					  	   		<div class="col-sm-3">
+							  	   	<input type="text" data-ng-model="itemDetail" name="serialNumber" class="form-control" 
+										  uib-typeahead="itemDetail as itemDetail for itemDetail in getData($viewValue)" 
+										  autocomplete="off" data-typeahead-on-select="getItemData($item, $model, $label)" data-typeahead-min-length="0">
+					  	   		</div>
+	        		   
+	        		   			<label class="control-label col-sm-2" for="itemId">{{'label.item' | translate }}&nbsp;<span class="required">*</span></label>
+		        		   		<div class="col-sm-3">
+				        		   	<select id="itemId" data-ng-model="formData.itemId" disabled class="form-control" 
+										   data-ng-options="itemData.id as itemData.itemCode for itemData in itemDatas">
+								   	</select>
+		        		   		</div>
+        		   			</div>
+        		   			<div class="form-group" ng-if="isPairable">
+        						<label class="control-label col-sm-2" for="pairableSerialNo">{{'label.pairedserialnumber' | translate}}<span class="required">*</span></label>
+		        				<div class="col-sm-3">
+				        			<input type="text" id="pairableSerialNo" name="pairableSerialNo" data-ng-model="pairableSerialNo" class="input-small form-control"
+						       			   autocomplete="off" list ="pairableItemlist" data-ng-change="selectPairableItemDetails(pairableSerialNo)" required /> 
+				       				<datalist id="pairableItemlist">
+				          				<option  data-ng-repeat="pairableItemDetail in pairableItemDetails" value="{{pairableItemDetail}}">
+				   					</datalist>
+		        				</div>
+	        			
+	        					<label class="control-label col-sm-2" for="pairableItemId">{{'label.paireditem' | translate }}&nbsp;<span class="required">*</span></label>
+		        				<div class="col-sm-3">
+				        			<select id="pairableItemId" data-ng-model="pairableFormData.itemId" disabled class="input-small form-control"
+							    			data-ng-options="pairableItemData.id as pairableItemData.itemCode for pairableItemData in itemDatas">
+									</select>
+		        				</div>
+        					</div>
+        					
+        					<br><br>
+        		    <h4>{{'label.plan.details' | translate}}</h4>
+        		      <div class="form-group">
+				         <label class="control-label col-sm-2" for="saleCatalogeId">{{ 'label.salescataloge' | translate }}</label>
+					     <div class="col-sm-3">
+						     <select  data-ng-model="saleCatalogeId" data-ng-change="serviceChangePlan(saleCatalogeId)"
+						             data-ng-options="salesCataloges.id as salesCataloges.name for salesCataloges in deviceHardwarePlan" class="form-control">
+						     	<option  value="">{{'label.select.one' | translate}}</option>
+						     </select>
+					     </div>
+					     
+					     <label class="control-label col-sm-2" for="planCode">{{ 'label.activation.plan' | translate }}</label>
+			             <div class="col-sm-3">
+				             <select data-ng-model="plandata"  class="form-control" name="planCode"
+		                     		 data-ng-options="plandata as getPlan(plandata.planCode, plandata.planDescription) for plandata in availablePlan" 
+		                     		 data-ng-change='setBillingFrequency(plandata);setContractPeriodForHardwareWhileCrm(plandata);' required>
+		                 	 	<option value="">{{'label.select.one' | translate}}</option>
+		                 	 </select>
+		                   	 <span data-ng-show="deviceInfoForm.planCode.$invalid">
+		            		 	<span class="error" data-ng-show="deviceInfoForm.planCode.$error.req">Required Field</span>
+		           			 </span>
+			             </div>
+				     </div>
+		             <!-- <div class="form-group" ng-if="!isCrm">
+			             <label class="control-label col-sm-2" for="contractPeriod">{{ 'label.order.contractperiod' | translate }}</label>
+			             <div class="col-sm-3">
+				             <div ng-if="formData.isPrepaid == Y">
+					             <select ng-model="formData.contractPeriod" class="form-control" name="contractPeriod"
+						                 ng-options="subscriptiondata.id as subscriptiondata.Contractdata for subscriptiondata in subscriptiondatas" 
+						                 required>
+						         	<option value="">{{'label.select.one' | translate}}</option>
+						         </select>
+						         <span data-ng-show="deviceInfoForm.contractPeriod.$invalid">
+						         	<span class="error" data-ng-show="deviceInfoForm.contractPeriod.$error.req">Required Field</span>
+					             </span>
+				             </div>
+				             
+				             <div ng-if="formData.isPrepaid != Y">
+					             <select ng-model="formData.contractPeriod"  class="form-control" name="contractPeriod1"
+				                         ng-options="paytermdata.duration as paytermdata.duration for paytermdata in paytermdatas" 
+				                         required>
+				                 	<option value="">{{'label.select.one' | translate}}</option>
+				                 </select>
+				                 <span data-ng-show="deviceInfoForm.contractPeriod1.$invalid">
+					             	<span class="error" data-ng-show="deviceInfoForm.contractPeriod1.$error.req">Required Field</span>
+				                 </span>
+				             </div>
+			             </div>
+			             
+			             <label class="control-label col-sm-2" for="paytermCode">{{ 'label.order.billingfrequency' | translate }}</label>
+			             <div class="col-sm-3">
+				             <select data-ng-model="formData.paytermCode"  class="form-control" name="paytermCode"
+						             data-ng-options="paytermdata.paytermtype as paytermdata.paytermtype for paytermdata in paytermdatas" >
+						     	<option value="">{{'label.select.one' | translate}}</option>
+						     </select>
+						     <span data-ng-show="deviceInfoForm.paytermCode.$invalid">
+					         	<span class="error" data-ng-show="deviceInfoForm.paytermCode.$error.req">Required Field</span>
+				             </span>
+			             </div> 
+		             </div> -->
+        					
+       					<div>
+							<div>
+								<button id="previous" type="reset" wz-previous class="btn btn-primary col-sm-1">Previous</button>
+							</div>
+								<div class="col-md-offset-9">
+							        <a href="#/clients"><button id="cancel" type="reset" class="btn btn-warning">Cancel</button></a>
+							        <button  wz-next data-ng-disabled="!deviceInfoForm.$valid" class="btn btn-primary" ng-click="getPlans()">Next</button>
+					        	</div>
+		        		</div>
+						</ng-form>
+					</wz-step>
+					<wz-step wz-title="Plan Info">
+						<ng-form name="planInfoForm" novalidate="" class="form-horizontal"> 
+							<div class="form-group" >
+			             		 <label class="control-label col-sm-2">{{ 'label.saleDate' | translate }}&nbsp;<span class="required">*</span></label>
+								<div class="col-sm-3">
+									<input data-ng-model="dateTime" data-is-open="opened2" 
+										   min="minDate" class="form-control" max="maxDate" data-date-disabled="disabled(date, mode)" 
+										   style="background-color: #FFFFFF;" readonly />
+										  <!--  type="text" data-datepicker-pop="dd MMMM yyyy"  -->
+								</div>
+			           		</div>
+		        		    <div class="form-group">
+			            		<label class="control-label col-sm-2" for="salesCatalogeId">{{ 'label.salescataloge' | translate }}</label>
+				            	<div class="col-sm-3">
+				              		<select id="salesCatalogeId" data-ng-model="salesCatalogeId" data-ng-change="serviceChangeFun(salesCatalogeId)"
+				              		        data-ng-options="salesCataloges.id as salesCataloges.name for salesCataloges in salesCataloges" class="form-control">
+				              		<option  value="">{{'label.select.one' | translate}}</option>
+				              		</select>
+				            	</div>
+				            	
+			                   <label class="control-label col-sm-2" for="planCode">{{ 'label.activation.plan' | translate }}</label>
+			                     <div class="col-sm-3">
+			                        <select data-ng-model="planData1"  class="form-control" name="planCode"
+			                        		data-ng-options="planData1 as getPlan(planData1.planCode, planData1.planDescription) for planData1 in availablePlans" 
+			                        		data-ng-change='setBillingFrequencies(planData1);setContractPeriodWhileCrm(planData1);' required>
+			                        		<option value="">{{'label.select.one' | translate}}</option>
+			                        		</select>
+			                        	<span data-ng-show="planInfoForm.planCode.$invalid">
+				                		 	<span class="error" data-ng-show="planInfoForm.planCode.$error.req">Required Field</span>
+			                			</span>
+			                    </div>
+				            </div> 
+			           		<!-- <div class="form-group" ng-if="!isCrm">
+			               		<label class="control-label col-sm-2" for="contractPeriod">{{ 'label.order.contractperiod' | translate }}</label>
+			                	 <div class="col-sm-3" ng-if="formData1.isPrepaid == Y">
+			                     		<select ng-model="formData1.contractPeriod" class="form-control" name="contractPeriod"
+			                     			    ng-options="subscriptionData.id as subscriptionData.Contractdata for subscriptionData in subscriptiondatas" 
+			                     				required>
+			                     				<option value="">{{'label.select.one' | translate}}</option>
+			                     				</select>
+			                     		<span data-ng-show="planInfoForm.contractPeriod.$invalid">
+			                		 		<span class="error" data-ng-show="planInfoForm.contractPeriod.$error.req">Required Field</span>
+		                				</span>
+			                      </div>
+		                           <div class="controls col-sm-3" ng-if="formData1.isPrepaid != Y">
+		                              <select ng-model="formData1.contractPeriod"  class="form-control" name="contractPeriod1"
+		                              		  ng-options="paytermData.duration as paytermData.duration for paytermData in paytermDatas" 
+		                              		  required>
+		                              		  <option value="">{{'label.select.one' | translate}}</option>
+		                              		  </select>
+		                              	<span data-ng-show="planInfoForm.contractPeriod1.$invalid">
+			                		 		<span class="error" data-ng-show="planInfoForm.contractPeriod1.$error.req">Required Field</span>
+		                				</span>
+		                           </div>
+		                           <label class="control-label col-sm-2" for="paytermCode">{{ 'label.order.billingfrequency' | translate }}</label>
+			                     	<div class="col-sm-3">
+				                        <select data-ng-model="formData1.paytermCode"  class="form-control" name="paytermCode"
+				                        	    data-ng-options="paytermData.paytermtype as paytermData.paytermtype for paytermData in paytermDatas" >
+				                                <option value="">{{'label.select.one' | translate}}</option>
+				                        </select>
+				                        <span data-ng-show="planInfoForm.paytermCode.$invalid">
+			                		 		<span class="error" data-ng-show="planInfoForm.paytermCode.$error.req">Required Field</span>
+		                				</span>
+			                    	</div>
+			             	</div> --><br><br>
+		                    
+		                    <div>
+								<div>
+							    	<button id="previous" type="reset" wz-previous class="btn btn-primary col-sm-1">Previous</button>
+								</div>
+								<div class="pull-right">
+							        <a href="#/clients"><button id="cancel" type="reset" class="btn btn-warning">Cancel</button></a>
+							        <button  type="submit" data-ng-click="!planInfoForm.$valid" class="btn btn-primary">Activation</button>
+					        	</div>
+			        		</div>
+						</ng-form>
+					</wz-step>
+				</wizard>
+			</form>
+		</div>	
+	</div>
+</div>
+	

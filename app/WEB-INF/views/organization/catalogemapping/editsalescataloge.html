@@ -1,0 +1,93 @@
+<div class="content-container" ng-controller="EditSalesCatalogeController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li><a href="#/catalogemapping">{{'label.catalogemapping' | translate}} </a></li>
+		<li class="active">{{'label.editsalescataloge' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+			
+				<h3>{{'label.heading.editsalescataloge' | translate}}</h3>
+			
+			
+			<form name="editsalescataloge" novalidate="" class="form-horizontal" rc-submit="submit()">
+				<api-validate></api-validate>
+				
+				<div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+	            	<label class="control-label" for="name">{{ 'label.name' | translate }}<span class="required">*</span></label>
+	            </div>
+		            	<div class="col-md-8">
+		              	<input type="text" id="name" name="name" data-ng-model="formData.name" class="form-control" data-ng-maxlength="10">
+			                <span data-ng-show="editsalescataloge.name.$dirty && editsalescataloge.name.$invalid">
+								<small class="error" data-ng-show="editsalescataloge.name.$error.maxlength">Name is required at least 10 characters</small>
+						    </span>
+		            	</div>
+		            </div>
+		        </div>
+		            
+		            <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+		            <label class="control-label" for="salesPlanCategoryId">{{ 'label.salesplancategory' | translate }}<span class="required">*</span></label>
+		        </div>
+  		 			<div class="col-md-8">
+    			  		<select id="salesPlanCategoryId" data-ng-model="formData.salesPlanCategoryId"  data-ng-options="salesPlanCategoryData.id as salesPlanCategoryData.mCodeValue for salesPlanCategoryData in salesPlanCategoryDatas" class="form-control">
+    			  		<option value="">{{'label.select.one' | translate}}</option>
+    			  		</select>
+  		   			</div>
+	           	</div>
+	           </div>
+	       </div>
+	           
+	           
+            <h4>{{'label.heading.SalesCatalogeMapping' | translate}}</h4>
+        	  
+        	  <div class="row">
+        	  	<div class="col-md-6">
+        		<div class="form-group row">
+					<div class="col-md-4">
+	                <label class="control-label">{{ 'label.availableplan' | translate }}</label>
+	            </div>
+	            <div class="col-md-8">
+		                <select id="availableplans" ng-model="allowed" name="allowed" class="form-control multiselectmin" multiple >
+		               		<option data-ng-repeat="availablePlan in availablePlans" value="{{availablePlan.id}}">{{availablePlan.planDescription}}</option>
+		                </select>
+		            </div>
+	                </div>
+	            </div>
+	        
+	               		
+			        
+	               		
+
+	   		     	<div class="col-md-6">
+	   		     		<div class="form-group row">
+                        <div class="col-md-4">
+	       			<label class="control-label col-sm-9">{{ 'label.selectedplan' | translate }}</label>
+	       		</div>
+	       		<div class="col-md-8">
+		          		<select id="selectedplans" name="selectedplans" ng-model="restricted" name="restricted" class="form-control multiselectmin" multiple  >
+		              		<option data-ng-repeat="selectedPlan in selectedPlans" value="{{selectedPlan.id}}">{{selectedPlan.planDescription}}</option>
+		          		</select>
+		          	</div>
+	               	</div>
+				</div>
+			</div>
+			<ul class="btn-group-list text-center mt20 mb20">
+
+		           		<li><button type="button" class="btn btn-primary" data-ng-click="allow()"><i class="fa fa-angle-double-left"></i></button></li>
+		           		<li><button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right"></i></button></li>
+			        </ul>
+				
+				<ul class="btn-group-list text-right mt20 mb20">
+							<li><a href="#/catalogemapping"><button type="reset" class="btn btn-warning">{{'button.cancel'| translate}}</button></a></li>
+            	   			 <li><button id="save" type="submit" data-ng-disabled="editsalescataloge.$dirty && editsalescataloge.$invalid" class="btn btn-primary">{{'button.save'| translate}}</button></li>
+						</ul>
+				
+			</form>
+		
+	</div>
+</div>

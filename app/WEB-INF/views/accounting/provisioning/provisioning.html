@@ -1,0 +1,46 @@
+<div class="content-container" ng-controller="ProvisioningController">
+    <ul class="breadcrumb">
+        <li class="active">{{'label.Provisioning' | translate}}</li>
+    </ul>
+    <div class="widget mb30">
+        <div class="row">
+            <div class="col-md-3">
+                <input ng-autofocus="true" data-ng-model="filterText" type="text" class="form-control" placeholder="{{'label.filterbyname' | translate}}">
+            </div>
+        </div>
+    </div>
+    <div class="widget ">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ 'label. id' | translate }}</th>
+                    <th>{{ 'label.client_id' | translate }}</th>
+                    <th>{{ 'label.request_type' | translate }}</th>
+                    <th>{{ 'label.status' | translate }}</th>
+                    <th>{{ 'label.created_date' | translate }}</th>
+                    <th>{{ 'label.response_message' | translate }}</th>
+                    <th>{{'label.response_status' | translate}}</th>
+                    <th>{{'label.actions' | translate }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="pointer-main" data-ng-repeat="provisioning in provisionings.currentPageItems  | filter:filterText">
+                    <td class="pointer" data-ng-click="routeTo(provisioning.client_id)">{{provisioning.id}}</td>
+                    <td class="pointer" data-ng-click="routeTo(provisioning.client_id)">{{provisioning.client_id}}</td>
+                    <td class="pointer" data-ng-click="routeTo(provisioning.client_id)">{{provisioning.request_type}}</td>
+                    <td class="pointer" data-ng-click="routeTo(provisioning.client_id)">{{provisioning.status}}</td>
+                    <td class="pointer" data-ng-click="routeTo(provisioning.client_id)">{{provisioning.created_date | DateFormat}}</td>
+                    <td class="pointer" data-ng-click="routeTo(provisioning.client_id)">{{provisioning.response_message}}</td>
+                    <td class="pointer" data-ng-click="routeTo(provisioning.client_id)">{{provisioning.response_status}}</td>
+                    <td class="pointer">
+                        <a ng-show="provisioning.status == 'F' " ng-click="reProcess(provisioning.id)" uib-popover="Re Process" popover-trigger="mouseenter"><i class="fa fa-play"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+        <ul class="pager">
+            <li class="previous"><a ng-click="provisionings.previous()" href="" ng-disabled="!provisionings.hasPrevious()">&larr; Prev</a></li>
+            <li class="next"><a ng-click="provisionings.next()" href="" ng-disabled="!provisionings.hasNext()">Next &rarr;</a>
+            </li>
+        </ul>
+    </div>
+</div>

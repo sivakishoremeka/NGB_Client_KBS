@@ -1,0 +1,182 @@
+<div class="content-container" data-ng-controller="AddBillModesController">
+    <ul class="breadcrumb">
+        <li><a href="#/clients">{{'link.clients' | translate}}</a></li>
+        <!-- <li><a href="#/viewclient/id/{{clientId}}" data-ng-click="reset123()">{{'link.view.client' | translate}}</a></li> -->
+        <li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+        <li class="active">{{'label.editbillprofile' | translate}}</li>
+    </ul>
+    <div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+        <h3>{{'label.editbillprofile' | translate}}</h3>
+        <form class="form-horizontal" data-ng-submit="submit()">
+            <api-validate></api-validate>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="billDayOfMonth">{{'label.billdayofmonth' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="billDayOfMonth" class="form-control" data-ng-model="formData.billDayOfMonth" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="lastBillNo">{{'label.lastbillno' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="lastBillNo" class="form-control" data-ng-model="formData.lastBillNo" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="billCurrency">{{'label.billcurrency' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="billCurrency" ng-model="formData.billCurrency" class="form-control" ng-options="currencyData.id as getBothcurrency(currencyData.code,currencyData.name) for currencyData in currencydatas" disabled>
+                                <!-- <option value="">{{'label.select.one' | translate}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="paymentType">{{'label.paymenttype' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" id="paymentType" class="form-control" data-ng-model="formData.paymentType">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="billFrequency">{{'label.billfrequency' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="status" data-ng-model="formData.billFrequency" class="form-control" data-ng-options="billFrequencyCodeData.id as billFrequencyCodeData.billFrequencyCode for billFrequencyCodeData in billFrequencyCodeDatas">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="billSuppressionFlag">{{'label.billsuppressionflag' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="checkbox">
+                                <input type="checkbox" id="billSuppressionFlag" data-ng-model="formData.billSuppressionFlag">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="billSegment">{{'label.billsegment' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="billSegment" class="form-control" data-ng-model="formData.billSegment" data-ng-options="serviceTypes.type as serviceTypes.type for serviceTypes in services"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="firstBill">{{'label.firstbill' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="checkbox">
+                                <input type="checkbox" id="firstBill" data-ng-model="formData.firstBill">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="nextBillDay">{{'label.nextbillday' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" datepicker-pop="dd MMMM yyyy" data-ng-model="date.nextBillDay" is-open="opened" min="minendDate" date-disabled="disabled(date, mode)" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="hotBill">{{'label.hotbill' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="checkbox">
+                                <input type="checkbox" id="hotBill" data-ng-model="formData.hotBill">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="lastBillDay">{{'label.lastbillday' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" datepicker-pop="dd MMMM yyyy" data-ng-model="date.lastBillDay" is-open="opened" min="minendDate" date-disabled="disabled(date, mode)" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/viewclient/id/{{clientId}}">
+                        <button id="cancel" type="reset" class="btn btn-warning">{{'button.cancel'| translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+                </li>
+       </form>
+    </div>
+</div>
+
+
+<!-- <form  novalidate="" class="form-horizontal" data-ng-submit="submit()">
+<api-validate></api-validate>
+<fieldset>
+					<div class="form-group row">
+           <label class="control-label" for="billMode" >{{'label.billmodes' | translate}}</label>
+           <div class="col-sm-3">
+			 <select id="billMode" multiple="multiple" class="form-control">
+		         <option value="P" >Paper</option>
+		         <option value="E" >Email</option>
+		         <option value="S" >SMS</option>
+		         <option value="O" >OSD</option>
+	          </select>
+      					</div>
+    					</div>
+				<div class="col-md-offset-3">
+		<a href="#/viewclient/id/{{clientId}}"><button type="reset" class="btn btn-warning" data-ng-click="reset123()">{{'button.cancel' | translate}}</button></a>
+		<button type="submit" class="btn btn-primary">{{'button.save' | translate}}</button>
+	</div>
+</fieldset>
+</form> -->

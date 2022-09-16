@@ -1,0 +1,178 @@
+<div class="content-container" ng-controller="EditNewTemplateController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'link.admin.masters' | translate}}</a></li>
+        <li class="active">{{'label.edittemplatedefinision' | translate}}</li>
+    </ul>
+    <div class="row">
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h3>{{'label.edittemplatedefinision' | translate}}</h3>
+            </div>
+            <br>
+            
+            <form name="edittemplatedefinision" novalidate="" class="form-horizontal" rc-submit="submit()">
+                <api-validate></api-validate>
+                <fieldset>
+                
+                    <div class="form-group">
+                         <label class="control-label col-sm-2" for="templateName">{{'label.templatename'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="templateName" class="form-control" name="templateName" data-ng-model="formData.templateName" />
+                         </div>
+                     </div>    
+                     
+                     <div class="form-group" >
+                         <label class="control-label col-sm-2" for="delimited">{{ 'label.delimited' | translate }}&nbsp;<span class="required">*</span> &nbsp;</label>
+                              <div class="col-sm-3">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="delimited"  data-ng-model="formData.delimited" ng-selected="selectDelimited(Delimited)">
+                                </label>
+                            </div>      
+                            <!--  <select data-ng-model="delimited" ng-selected="selectDelimited(Delimited)">
+                             <option  value="Delimeter">Delimeter</option>
+                            <option  value="FixedLength">FixedLength</option>
+                          </select> -->
+                    </div>
+                    
+                    <div class="form-group">
+                         <label class="control-label col-sm-2" for="delimiter">{{'label.delimeter'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="delimiter" class="form-control" name="delimiter" data-ng-model="formData.delimiter" />
+                         </div>
+                     </div>
+                    
+                     <!-- <div class="form-group" ng-if="showDelimeter==true">
+                         <label class="control-label col-sm-2" for="delimiter">{{'label.delimeter'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="delimiter" class="form-control" name="delimiter" data-ng-model="formData.delimiter" />
+                         </div>
+                     </div>  -->   
+                     
+                     <!--  <div class="form-group" ng-if="showFixedLength==true">
+                         <label class="control-label col-sm-2" for="FixedLength">{{'label.fixedlength'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="FixedLength" class="form-control" name="FixedLength" data-ng-model="FixedLength" />
+                         </div>
+                     </div>     -->
+                  
+                     <div class="form-group">
+                         <label class="control-label col-sm-2" for="Numderoffields">{{'label.numderoffields'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="numberOfFields" class="form-control" name="numberOfFields" data-ng-model="formData.numberOfFields" />
+                         </div>
+                         
+                         <label class="control-label col-sm-2" style="margin-top:10px" for="isHeader">{{'label.isheader'| translate }}</label>
+                            <div class="col-sm-3">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="isHeader"  data-ng-model="formData.isHeader">
+                                </label>
+                            </div>
+                     </div>
+                         
+                    <div class="form-group">
+                         <label class="control-label col-sm-2" for="headerRecordType">{{'label.headerrecordertype'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="headerRecordType" class="form-control" name="headerRecordType" data-ng-model="formData.headerRecordType" />
+                         </div>
+                         
+                         <label class="control-label col-sm-2" for="eventRecordType">{{ 'label.eventrecordtype' | translate }}&nbsp;<span class="required">*</span> &nbsp;</label>
+                       <div class="col-sm-3">
+                             <select data-ng-model="formData.eventRecordType" ng-selected="selectaddress(address)" class="form-control" >
+                             <option value="">{{'label.select.one' | translate}}</option>
+                             <option  value="CDR">CDR</option>
+                            <option  value="SMS">SMS</option>
+                            <option  value="OTT">OTT</option>
+                          </select>
+                       </div>
+                     </div>    
+
+                    <div class="row">
+                         <div class="toolbar">
+                             <h3>{{'label.heading.createtemplateDefinition' | translate}}</h3>
+                         </div>
+                          <table class="table table-striped">
+                             <tr>
+                                <td>
+                                    <label for="FieldName">{{ 'label.fieldname' | translate }}</label>
+                                    <input  class="input-small form-control" data-ng-model="fieldName" type="text" ng-change = "hello(formData.fieldName)">
+                                </td>
+                                <!-- <td>
+                                    <label for="FieldType">{{ 'label.fieldtype' | translate }}</label>
+                                    <input  class="input-small form-control" data-ng-model="fieldType" type="text" >
+                                </td> -->
+                                 <td>
+                                    <label for="FieldType">{{ 'label.fieldtype' | translate }}</label>
+                                    <select class="input-small form-control" data-ng-model="fieldType" >
+                                      <option value="">{{'label.select.one' | translate}}</option>
+                                      <option  value="Numeric">Numeric</option>
+                                      <option  value="VarChar">VarChar</option>
+                                      <option  value="TinyInt">TinyInt</option>
+                                      <option  value="Decimal">Decimal</option>
+                                      <option  value="Text">Text</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="Length">{{ 'label.length' | translate }}</label>
+                                    <input  class="input-small form-control" data-ng-model="length" type="text" >
+                                </td>
+                                <td>
+                                    <label for="IdentifierType">{{ 'label.identifiertype' | translate }}</label>
+                                    <select class="input-small form-control" data-ng-model="identifierType" >
+                                      <option value="">{{'label.select.one' | translate}}</option>
+                                      <option  value="EventType">EventType</option>
+                                      <option  value="ServiceIdentifier">ServiceIdentifier</option>
+                                    </select>
+                                </td>
+                                <td>
+                                   <a data-ng-click="!(createtemplatedefinition.templatedefinition.$error.pattern)&&addTemplateDefinitionData()" style="margin-left:25px;">
+                                       <i class="fa fa-plus" style="margin-top: 30px;"></i>
+                                   </a>&nbsp;
+                                  </td>
+                            </tr>
+                          </table>
+                          
+                          <div data-ng-show="columns.length>0">
+                            <h3>{{'label.existstemplateDefinition' | translate}}</h3>
+                            <table class="table table-striped">
+                                   <tr class="graybg">
+                                       <th>{{ 'label.fieldname' | translate }}</th>
+                                       <th>{{ 'label.fieldtype' | translate }}</th>
+                                       <th>{{ 'label.length' | translate }}</th>
+                                       <th>{{ 'label.identifiertype' | translate }}</th>
+                                   </tr>
+                                 <tr data-ng-repeat="existsTemplateDefinition in columns track by $index">
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.fieldName" type="text" ></td>
+                                     <!--  <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.fieldType" type="text" ></td> -->
+                                      <td><select class="input-small form-control" data-ng-model="existsTemplateDefinition.fieldType" >
+                                     <option  value="Numeric">Numeric</option>
+                                      <option  value="VarChar">VarChar</option>
+                                      <option  value="TinyInt">TinyInt</option>
+                                      <option  value="Decimal">Decimal</option>
+                                      <option  value="Text">Text</option>
+                                      </select></td>
+                                      <td><input  class="input-small form-control" data-ng-model="existsTemplateDefinition.length" type="text" ></td>
+                                      <td><select class="input-small form-control" data-ng-model="existsTemplateDefinition.identifierType" >
+                                      <option value="">{{'label.select.one' | translate}}</option>
+                                      <option  value="EventType">EventType</option>
+                                      <option  value="ServiceIdentifier" >ServiceIdentifier</option>
+                                    </select></td>
+                                     <!--  <td><a data-ng-click="removeTemplateDefinitionData(existsTemplateDefinition.id)" data-popover="Delete TemplateDefinition" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>&nbsp;</td> -->
+                                <td>
+				                  <a data-ng-click="removeDiscountPrices($index)"><i class="fa fa-times"></i>
+				                  </a>
+				               </td>
+                                 </tr>
+                            </table>
+                            <div class="col-md-offset-9 pull-right">
+                                <a href="#/organization"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+                                <button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+                            </div>
+                           </div>
+                         </div>
+                	</fieldset>
+            	</form>
+            </div>
+        </div>
+    </div>
+</div>

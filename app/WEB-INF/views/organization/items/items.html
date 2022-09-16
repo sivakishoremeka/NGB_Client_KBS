@@ -1,0 +1,71 @@
+<div class="content-container" data-ng-controller="ItemsController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li class="active">{{'label.items' | translate}}&nbsp;&nbsp;</li>
+    </ul>
+    <div class="widget mb30">
+        <!-- <div class="toolbar ptb15 mrl15 bb1 mb20">
+		        	<h4 class="ptrbl0">{{'label.items' | translate}}</h4>
+		        </div> -->
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+            </div>
+            <div class="col-md-9">
+                <ul class="btn-group-list text-right">
+                    <li>
+                        <a has-permission="CREATE_ITEM" href="#/createitem" class="btn primary_btn pull-right">
+                            <i class="fa fa-plus"></i>{{'label.create.new.item' | translate}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{'label.id' | translate}}</th>
+                        <th>{{'label.itemcode' | translate }}</th>
+                        <th>{{'label.itemdescription' | translate }}</th>
+                        <th>{{'label.units' | translate }}</th>
+                        <th>{{'label.total' | translate }}</th>
+                        <th>{{'label.warranty' | translate }}</th>
+                        <th>{{'label.useditems' | translate }}</th>
+                        <th>{{'label.balanced' | translate }}</th>
+                        <th>{{'label.isprovisioning' | translate }}</th>
+                        <th>{{'label.actions' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pointer-main" ng-repeat="item in items.currentPageItems | filter:filterText">
+                        <td class="pointer" data-ng-click="routeToitem(item.id,item.totalItems)">{{item.id}}</td>
+                        <td class="pointer" data-ng-click="routeToitem(item.id,item.totalItems)">{{item.itemCode}}</td>
+                        <td class="pointer" data-ng-click="routeToitem(item.id,item.totalItems)">{{item.itemDescription}}</td>
+                        <td class="pointer" data-ng-click="routeToitem(item.id,item.totalItems)">{{item.units}}</td>
+                        <td class="pointer" data-ng-click="routeToitem(item.id,item.totalItems)">{{item.totalItems}}</td>
+                        <td class="pointer" data-ng-click="routeToitem(item.id,item.totalItems)">{{item.warranty}}</td>
+                        <td class="pointer" data-ng-click="routeToitem(item.id,item.totalItems)">{{item.usedItems}}</td>
+                        <td class="pointer" data-ng-click="routeToitem(item.id,item.totalItems)">{{item.availableItems}}</td>
+                        <td class="pointer" data-ng-click="routeToitem(item.id,item.totalItems)">{{item.isProvisioning}}</td>
+                        <td>
+                            <ul class="table-icon-list">
+                                <li>
+                                    <a has-permission="UPDATE_ITEM" href="#/edititem/{{item.id}}/{{item.totalItems}}" uib-popover="Edit Item" popover-trigger="mouseenter" class="fa fa-edit"></a>
+                                </li>
+                                <li>
+                                    <a data-ng-click="showAudit(item.id,item.totalItems)" uib-popover="Show Audit" popover-trigger="mouseenter" class="fa fa-list"></a>
+                                </li>
+                                <li>
+                                    <a has-permission="DELETE_ITEM" ng-show="item.totalItems == 0" data-ng-click="deleteItem(item.id)" uib-popover="Delete Item" popover-trigger="mouseenter"><i class="fa fa-times"></i></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

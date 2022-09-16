@@ -1,0 +1,673 @@
+<div class="content-container"
+	ng-controller="CreateTimePeriodController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'link.admin.masters' |
+				translate}}</a></li>
+		<li><a href="#/rating">{{'label.rating' | translate}}</a></li>
+		<li><a href="#/createtimeperiod">{{'label.createtimeperiod' |
+				translate}}</a>
+	</ul>
+	<div class="widget card cardgrid mb30">
+		<div class="content">
+			<div class="row d-flex align-items-center">
+				<div class="col-md-3">
+					<input ng-autofocus="true" ng-model="filterText" type="text"
+						ng-keyup="onFilter()" class="form-control" id="offices"
+						placeholder="{{'label.input.searchforpartner' | translate}}">
+				</div>
+				<div class="col-md-9">
+					<ul class="btn-group-list text-right">
+						<li><a class="btn primary_btn"
+							has-permission='CREATE_TIMEMODEL' ng-click="addTimemodel()"><i
+								class="fa fa-plus"> </i>{{'label.addtimemodel' | translate}}</a></li>
+					</ul>
+					<!-- <div class="content">
+			<div class=" col-md- 6 pull-right mt-8 ">
+				<button has-permission="CREATE_TIMEMODEL" type="button" class="btn primary_btn" ng-click="addTimemodel()">
+					<i class="fa fa-plus"></i>{{'label.addtimemodel' | translate}}
+				</button>
+			</div>
+		</div -->
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="widget">
+		<!-- <div class="content"> -->
+		<div class="toolbar">
+			<div data-angular-treeview="true" data-tree-id="treeview"
+				data-tree-model="treedata" data-node-id="id" data-node-label="name"
+				data-node-children="children"></div>
+		</div>
+		<div data-angular-treeview="true" data-tree-id="addresstreeview"
+			data-tree-model="treedata" data-node-id="id" data-node-label="name"
+			data-node-children="children"></div>
+
+
+		<ul id="context1" class="dropdown-menu">
+			<li has-permission="CREATE_LOCATION"><a
+				ng-click="addTimeperiod()">Add TimePeriod</a></li>
+			<li has-permission="UPDATE_LOCATION"><a
+				ng-click="editTimemodel()">Edit TimeModel</a></li>
+			<li has-permission="DELETE_LOCATION"><a
+				ng-click="deleteTimemodel()">Delete TimeModel</a></li>
+		</ul>
+		<ul id="context2" class="dropdown-menu">
+			<li has-permission="CREATE_LOCATION"><a ng-click="addYear()">Add
+					Year</a></li>
+			<li has-permission="UPDATE_LOCATION"><a
+				ng-click="editTimeperiod()">Edit TimePeriod</a></li>
+			<li has-permission="DELETE_LOCATION"><a
+				ng-click="deleteTimeperiod()">Delete TimePeriod</a></li>
+		</ul>
+		<ul id="context3" class="dropdown-menu">
+			<li has-permission="CREATE_LOCATION"><a ng-click="addMonth()">Add
+					Month</a></li>
+			<li has-permission="UPDATE_LOCATION"><a ng-click="editYear()">Edit
+					Year</a></li>
+			<li has-permission="DELETE_LOCATION"><a ng-click="deleteYear()">Delete
+					Year</a></li>
+		</ul>
+		<ul id="context4" class="dropdown-menu">
+			<li has-permission="CREATE_LOCATION"><a ng-click="addDay()">Add
+					Day</a></li>
+			<li has-permission="UPDATE_LOCATION"><a ng-click="editMonth()">Edit
+					Month</a></li>
+			<li has-permission="DELETE_LOCATION"><a ng-click="deleteMonth()">Delete
+					Month</a></li>
+		</ul>
+		<ul id="context5" class="dropdown-menu">
+			<li has-permission="CREATE_LOCATION"><a ng-click="addTime()">Add
+					Time</a></li>
+			<li has-permission="UPDATE_LOCATION"><a ng-click="editDay()">Edit
+					Day</a></li>
+			<li has-permission="DELETE_LOCATION"><a ng-click="deleteDay()">Delete
+					Day</a></li>
+		</ul>
+		<ul id="context6" class="dropdown-menu">
+			<li has-permission="CREATE_LOCATION"><a ng-click="editTime()">Edit
+					Time</a></li>
+			<li has-permission="UPDATE_LOCATION"><a ng-click="deleteTime()">Delete
+					Time</a></li>
+			<!--  <li has-permission="DELETE_LOCATION"><a ng-click="deleteDay()">Delete Day</a></li> -->
+		</ul>
+		<!-- <ul id="context3" class="dropdown-menu">
+			            <li has-permission="CREATE_LOCATION"><a ng-click="addCity()">Add City</a></li>
+			            <li has-permission="UPDATE_LOCATION"><a ng-click="editDistrict()">Edit District</a></li>
+			            <li has-permission="DELETE_LOCATION"><a ng-click="deleteDistrict()">Delete District</a></li>
+			       		<li><a ng-click="serviceAvailblity('district')">Service Availablity</a></li>
+			       </ul>
+			        <ul id="context4" class="dropdown-menu">
+			            <li has-permission="UPDATE_LOCATION"><a ng-click="editCity()">Edit City</a></li>
+			            <li has-permission="DELETE_LOCATION"><a ng-click="deleteCity()">Delete City</a></li>
+			            <li><a ng-click="serviceAvailblity('city')">Service Availablity</a></li>
+			       </ul> -->
+		<!-- </div> -->
+	</div>
+	<!-- </div> -->
+
+
+
+
+
+
+
+	<script type="text/ng-template" id="addTimemodel.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Create Timemodel</h3>
+        </div>
+	 <form name="createtimeperiodform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+            <div class="form-group">
+                         <label class="control-label col-sm-5" for="timeModelName">{{'label.timemodelname'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="timeModelName" class="form-control" name="Name" data-ng-model="formData.timeModelName" />
+                         </div>
+            </div>  
+          	<div class="form-group">
+                         <label class="control-label col-sm-5" for="description">{{'label.description'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="description" class="form-control" name="description" data-ng-model="formData.description" />
+                         </div>
+            </div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="createtimeperiodform.$dirty && createtimeperiodform.$invalid" class="btn btn-primary" >
+				{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+
+	<script type="text/ng-template" id="addTimeperiod.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Add Timeperiod</h3>
+        </div>
+	 <form name="createtimeperiodform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+               <div class="form-group">
+                    <label class="control-label col-sm-5" for="timeperiodName">{{'label.timeperiodname'| translate }}&nbsp;</label>
+                       <div class="col-sm-4">
+                             <input type="text" id="timeperiodName" class="form-control" name="timeperiodName" data-ng-model="formdata.timeperiodName" />
+                      </div>
+               </div> 
+			<div class="form-group">
+                <label class="control-label col-sm-5" for="timeModelName">For This Timemodel</label>
+				<div class="col-sm-4">
+             		 <input  type="text" class="form-control" ng-model="nodeName" readonly/>
+             		
+            	</div>
+	   	   </div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="createtimeperiodform.$dirty && createtimeperiodform.$invalid" class="btn btn-primary" >
+				{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+
+	<script type="text/ng-template" id="addYear.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Add Year</h3>
+        </div>
+	 <form name="createyearform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+               <div class="form-group">
+					<label class="control-label col-sm-2" for="startYear">{{'label.StartYear'| translate }}&nbsp;</label>
+						   <div class="col-sm-3">
+							    <select id="startYear" class="form-control" data-ng-model="formData.startYear">  
+                                     <option value="">{{'label.Select Year' | translate}}</option>
+    			                	 <option ng-repeat="currentyear in totalYear">{{currentyear}}</option>
+    			                </select>
+					       </div>
+                    <label class="control-label col-sm-2" for="endYear">{{'label.EndYear'| translate }}&nbsp;</label>
+                           <div class="col-sm-3">
+							    <select id="endYear" class="form-control" data-ng-model="formData.endYear">  
+                                      <option value="">{{'label.Select Year' | translate}}</option>
+    			                	  <option ng-repeat="currentyear in totalYear">{{currentyear}}</option>
+    			                </select>
+			               </div>
+			 	 </div>
+			  <div class="form-group">
+				<label class="control-label col-sm-4" for="timeperiod">For This TimePeriod </label>
+				<div class="col-sm-4">
+             		 <input  type="text" class="form-control" ng-model="nodeName" readonly/>
+             		
+            	</div>
+	   		</div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <a href="#/createtimeperiod"><button id="submit" ng-click="submit()" data-ng-disabled="createyearform.$dirty && createyearform.$invalid" class="btn btn-primary">
+				{{'label.confirm' | translate}}</button></a>
+        </div>
+	</form>
+    </script>
+	<script type="text/ng-template" id="addMonth.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Add Month</h3>
+        </div>
+	 <form name="createmonthform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+              <div class="form-group">
+				   <label class="control-label col-sm-2" for="startMonth">{{'label.StartMonth'| translate }}&nbsp;</label>
+						  <div class="col-sm-3">
+							   <select id="startMonth" class="form-control" data-ng-model="formData.startMonth">  
+                                     <option value="">{{'label.Select Month' | translate}}</option>
+    			                	 <option ng-repeat="getMonth in months">{{getMonth}}</option>
+    			               </select>
+					      </div>
+                   <label class="control-label col-sm-2" for="endMonth">{{'label.EndMonth'| translate }}&nbsp;</label>
+                          <div class="col-sm-3">
+							   <select id="endMonth" class="form-control" data-ng-model="formData.endMonth">  
+                                     <option value="">{{'label.Select Month' | translate}}</option>
+    			                     <option ng-repeat="getMonth in months">{{getMonth}}</option>
+    			               </select>
+			              </div>
+			 	  </div>
+              <div class="form-group">
+		           <label class="control-label col-sm-4" for="timeperiod">For This TimePeriod </label>
+			    <div class="col-sm-4">
+             		 <input  type="text" class="form-control" ng-model="formData.timeperiodName" readonly/>
+            	</div>
+	   		</div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="createmonthform.$dirty && createmonthform.$invalid" class="btn btn-primary" >
+				{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+	<script type="text/ng-template" id="addDay.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Add Day</h3>
+        </div>
+	 <form name="createdayform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+              <div class="form-group">
+				   <label class="control-label col-sm-2" for="startDay">{{'label.StartDay'| translate }}&nbsp;</label>
+						  <div class="col-sm-3">
+							   <select id="startDay" class="form-control" data-ng-model="formData.startDay">  
+                                    <option value="">{{'label.Select Day' | translate}}</option>
+    			                	<option ng-repeat=" endDays in endDays">{{endDays}}</option>
+    			               </select>
+					      </div>
+                   <label class="control-label col-sm-2" for="endDay">{{'label.EndDay'| translate }}&nbsp;</label>
+                          <div class="col-sm-3">
+							   <select id="endDay" class="form-control" data-ng-model="formData.endDay">  
+                                    <option value="">{{'label.Select Day' | translate}}</option>
+    			                	<option ng-repeat=" endDays in endDays">{{endDays}}</option>
+    			               </select>
+			             </div>
+			  </div>
+			   <div class="form-group">
+		             <label class="control-label col-sm-4" for="timeperiod">For This TimePeriod </label>
+			     <div class="col-sm-4">
+             		 <input  type="text" class="form-control" ng-model="formData.timeperiodName" readonly/>
+            	</div>
+	   		</div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="createdayform.$dirty && createdayform.$invalid" class="btn btn-primary" >
+				{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+	<script type="text/ng-template" id="addTime.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Add Time</h3>
+        </div>
+	 <form name="createtimeform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+              <div class="form-group">
+                    <label class="control-label col-sm-2" for="startTime">{{'label.StartTime'| translate }}&nbsp;</label>
+						   <div class="col-sm-3">
+                                <input id="timepicker1" type="text"  data-ng-model="startTime"
+									style="width: 60px; background-color: #FFFFFF;">
+                           </div>
+
+                    <label class="control-label col-sm-2" for="endTime">{{'label.EndTime'| translate }}&nbsp;</label>
+						   <div class="col-sm-3">
+                                <input id="timepicker2" type="text"  data-ng-model="endTime"
+									style="width: 60px; background-color: #FFFFFF;">
+                           </div>
+               </div>
+               <div class="form-group">
+		           <label class="control-label col-sm-4" for="timeperiod">For This TimePeriod </label>
+			      <div class="col-sm-4">
+             		   <input  type="text" class="form-control" ng-model="formData.timeperiodName" readonly/>
+            	  </div>
+	   		  </div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="createtimeform.$dirty && createtimeform.$invalid" class="btn btn-primary" >
+				{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+	<script type="text/ng-template" id="editTimemodel.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Edit Timemodel</h3>
+        </div>
+	<form name="edittimemodelform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body"  >
+ 		  <fieldset>
+           <div class="form-group">
+                         <label class="control-label col-sm-5" for="timeModelName">{{'label.timemodelname'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="timeModelName" class="form-control" name="Name" data-ng-model="formData.timeModelName" />
+                         </div>
+            </div>  
+          	<div class="form-group">
+                         <label class="control-label col-sm-5" for="description">{{'label.description'| translate }}&nbsp;</label>
+                         <div class="col-sm-3">
+                             <input type="text" id="description" class="form-control" name="description" data-ng-model="formData.description" />
+                         </div>
+            </div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="edittimemodelform.$dirty && edittimemodelform.$invalid" 
+				class="btn btn-primary">{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+	<script type="text/ng-template" id="editTimeperiod.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Edit Timeperiod</h3>
+        </div>
+	<form name="edittimeperiodform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+           	<!--<div class="form-group">
+                    <label class="control-label col-sm-5" for="timeperiodName">{{'label.timeperiodname'| translate }}&nbsp;</label>
+                     <div class="col-sm-4">
+                    <input type="text" id="timeperiodName" class="form-control" name="timeperiodName" data-ng-model="formdata.timeperiodName" />
+                     </div>
+            </div>-->
+
+             <div class="form-group">
+		             <label class="control-label col-sm-4" for="timeperiodName">{{'label.timeperiodname'| translate }} </label>
+			    <div class="col-sm-4">
+             		 <input  type="text" class="form-control" name="timeperiodName" ng-model="formData.timeperiodName" />
+            	</div>
+	   		</div>        
+
+
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="edittimeperiodform.$dirty && edittimeperiodform.$invalid" class="btn btn-primary" 
+				ng-disabled="!edittimeperiodform.$valid">{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+	<script type="text/ng-template" id="editYear.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Edit Year</h3>
+        </div>
+	 <form name="edityearform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+           	<div class="form-group">
+			     <label class="control-label col-sm-2" for="startYear">{{'label.StartYear'| translate }}&nbsp;</label>
+						<div class="col-sm-3">
+						     <select id="startYear" class="form-control" ng-model="formData.startYear">  
+    			                   <option ng-repeat="currentyear in totalYear">{{currentyear}}</option>
+    			             </select>
+					     </div>
+                 <label class="control-label col-sm-2" for="endYear">{{'label.EndYear'| translate }}&nbsp;</label>
+                        <div class="col-sm-3">
+							 <select id="endYear" class="form-control" ng-model="formData.endYear">  
+    			                   <option ng-repeat="currentyear in totalYear">{{currentyear}}</option>
+    			             </select>
+			           </div>
+			</div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="edityearform.$dirty && edityearform.$invalid" class="btn btn-primary" >
+				{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+	<script type="text/ng-template" id="editMonth.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Edit Month</h3>
+        </div>
+	 <form name="editmonthform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+           	  <div class="form-group">
+				   <label class="control-label col-sm-2" for="startMonth">{{'label.StartMonth'| translate }}&nbsp;</label>
+						  <div class="col-sm-3">
+							   <select id="startMonth" class="form-control" data-ng-model="formData.startMonth">  
+    			                	 <option ng-repeat="getMonth in months">{{getMonth}}</option>
+    			               </select>
+					       </div>
+                   <label class="control-label col-sm-2" for="endMonth">{{'label.EndMonth'| translate }}&nbsp;</label>
+                          <div class="col-sm-3">
+							  <select id="endMonth" class="form-control" data-ng-model="formData.endMonth">  
+    			                    <option ng-repeat="getMonth in months">{{getMonth}}</option>
+    			              </select>
+			             </div>
+			 </div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="editmonthform.$dirty && editmonthform.$invalid" class="btn btn-primary" >
+				{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+
+	<script type="text/ng-template" id="editDay.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Edit Day</h3>
+        </div>
+	 <form name="editdayform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+           	   <div class="form-group">
+				    <label class="control-label col-sm-2" for="startDay">{{'label.StartDay'| translate }}&nbsp;</label>
+						   <div class="col-sm-3">
+							    <select id="startDay" class="form-control" data-ng-model="formData.startDay">  
+    			                	 <option ng-repeat=" endDays in endDays">{{endDays}}</option>
+    			                </select>
+					       </div>
+ 
+                   <label class="control-label col-sm-2" for="endDay">{{'label.EndDay'| translate }}&nbsp;</label>
+                          <div class="col-sm-3">
+							   <select id="endDay" class="form-control" data-ng-model="formData.endDay">  
+    			                   <option ng-repeat=" endDays in endDays">{{endDays}}</option>
+    			              </select>
+			             </div>
+			 </div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="editdayform.$dirty && editdayform.$invalid" class="btn btn-primary" >
+				{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+
+	<script type="text/ng-template" id="editTime.html">
+        <div class="modal-header silver">
+          <h3 class="bolder">Edit Time</h3>
+        </div>
+	 <form name="edittimeform" novalidate="" class="form-horizontal">
+		<api-validate></api-validate>
+        <div class="modal-body">
+ 		  <fieldset>
+                <div class="form-group">
+                    <!--<label class="control-label col-sm-2" for="startTime">{{'label.StartTime'| translate }}&nbsp;</label>
+						   <div class="col-sm-3">
+                                <input id="timepicker1" type="text"  data-ng-model="startTime"
+									style="width: 60px; background-color: #FFFFFF;">
+                           </div>-->
+
+                    <!--<label class="control-label col-sm-2" for="endTime">{{'label.EndTime'| translate }}&nbsp;</label>
+						 <div class="col-sm-3">
+                              <input id="timepicker2" type="text"  data-ng-model="endTime"
+							style="width: 60px; background-color: #FFFFFF;">
+                        </div>-->
+ 
+                       <label class="control-label col-sm-2" for="startTime">{{'label.StartTime' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" id="startTime" ng-model="formData.startTime" class="form-control">
+							</div>
+                         
+                       <label class="control-label col-sm-2" for="endTime">{{'label.EndTime' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" id="endTime" ng-model="formData.endTime" class="form-control">
+							</div>
+                <div>
+		    </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" ng-click="submit()" data-ng-disabled="edittimeform.$dirty && edittimeform.$invalid" class="btn btn-primary" >
+				{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+    </script>
+
+	<script type="text/ng-template" id="deleteTimemodel.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete Timemodel</h3>
+                    </div>
+                    <div class="modal-body" style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approveDeleteTimemodel()">{{'label.confirm' | translate}}</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="deleteTimeperiod.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete Timeperiod</h3>
+                    </div>
+                    <div class="modal-body" style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approveDeleteTimeperiod()">{{'label.confirm' | translate}}</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="deleteYear.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete Year</h3>
+                    </div>
+                    <div class="modal-body" style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approveDeleteYear()">{{'label.confirm' | translate}}</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="deleteMonth.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete Month</h3>
+                    </div>
+                    <div class="modal-body" style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approveDeleteMonth()">{{'label.confirm' | translate}}</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="deleteDay.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete Day</h3>
+                    </div>
+                    <div class="modal-body" style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approveDeleteDay()">{{'label.confirm' | translate}}</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="deleteTime.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete Time</h3>
+                    </div>
+                    <div class="modal-body" style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approveDeleteTime()">{{'label.confirm' | translate}}</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="timemodelAlert.html">
+					<div class="modal-header silver">
+                        <h3 class="bolder">Warning</h3>
+                    </div>
+                    <div class="modal-body" modal-middle>
+                       <i class="icon-warning-sign error"></i>Unable to delete <span style='color:blue;font-size:15px;'>
+							<strong>"{{timeModelName}}"</strong></span>,it seems have timeperiods.
+                    </div>
+                    <div class="modal-footer">
+						<button class="btn btn-primary" ng-click="approve()">ok</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="timeperiodAlert.html">
+					<div class="modal-header silver">
+                        <h3 class="bolder">Warning</h3>
+                    </div>
+                    <div class="modal-body" modal-middle>
+                       <i class="icon-warning-sign error"></i>Unable to delete <span style='color:blue;font-size:15px;'>
+							<strong>"{{timeperiodName}}"</strong></span>,it seems have timeperiods.
+                    </div>
+                    <div class="modal-footer">
+						<button class="btn btn-primary" ng-click="approve()">ok</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="YearAlert.html">
+					<div class="modal-header silver">
+                        <h3 class="bolder">Warning</h3>
+                    </div>
+                    <div class="modal-body" modal-middle>
+                       <i class="icon-warning-sign error"></i>Unable to delete <span style='color:blue;font-size:15px;'>
+							<strong>"{{startYear}}"</strong></span>,it seems have timeperiods.
+                    </div>
+                    <div class="modal-footer">
+						<button class="btn btn-primary" ng-click="approve()">ok</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="MonthAlert.html">
+					<div class="modal-header silver">
+                        <h3 class="bolder">Warning</h3>
+                    </div>
+                    <div class="modal-body" modal-middle>
+                       <i class="icon-warning-sign error"></i>Unable to delete <span style='color:blue;font-size:15px;'>
+							<strong>"{{startMonth}}"</strong></span>,it seems have timeperiods.
+                    </div>
+                    <div class="modal-footer">
+						<button class="btn btn-primary" ng-click="approve()">ok</button>
+                    </div>
+      </script>
+
+	<script type="text/ng-template" id="DayAlert.html">
+					<div class="modal-header silver">
+                        <h3 class="bolder">Warning</h3>
+                    </div>
+                    <div class="modal-body" modal-middle>
+                       <i class="icon-warning-sign error"></i>Unable to delete <span style='color:blue;font-size:15px;'>
+							<strong>"{{startDay}}"</strong></span>,it seems have timeperiods.
+                    </div>
+                    <div class="modal-footer">
+						<button class="btn btn-primary" ng-click="approve()">ok</button>
+                    </div>
+      </script>
+
+</div>

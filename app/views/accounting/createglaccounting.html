@@ -1,0 +1,137 @@
+<div class="col-md-12">
+    <ul class="breadcrumb">
+        <li><a href="#/accounting">{{'label.anchor.accounting' | translate}}</a></li>
+        <li><a href="#/accounting_coa">{{'label.anchor.coa' | translate}}</a></li>
+        <li class="active">{{'label.anchor.createglaccount' | translate}}</li>
+    </ul>
+
+	<div class="widget">
+		
+			
+				<h3>{{'label.heading.createglaccount' | translate}}</h3>
+		 	
+			<form name="createglaccountingform" novalidate="" class="form-horizontal well"
+			      ng-controller="AccCreateGLAccountController" rc-submit="submit()">
+				<api-validate></api-validate>
+			    <div class="row">
+			    	<div class="col-md-6">
+			        <div class="form-group row">
+			        	<div class="col-md-4">
+			            <label class="control-label" for="type">{{'label.input.accounttype' | translate}}
+			                    </label>
+			                </div>
+			            <div class="col-md-8">
+							<select id="type" ng-model="formData.type" class="form-control"
+									ng-options="accountType.id as accountType.code | translate for accountType in accountTypes" value="{{accountType.id}}"
+									ng-change="changeType()" required="required">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+			        <div class="form-group row">
+			        	<div class="col-md-4">
+			            <label class="control-label" for="parentId">{{'label.input.parent' | translate}}</label>
+			        </div>
+			            <div class="col-md-8">
+							<select id="parentId" ng-model="formData.parentId" class="form-control"
+									ng-options="headerType.id as headerType.name for headerType in headerTypes"
+									value="{{headerType.id}}">
+								<option value="">{{'label.selectparent' | translate}}</option>
+							</select>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			        <div class="row">
+			    	<div class="col-md-6">
+			        <div class="form-group row">
+			        	<div class="col-md-4">
+			            <label class="control-label ">{{'label.input.glcode' | translate}}<span
+			                    class="required">*</span></label>
+			                </div>
+			            <div class="col-md-8">
+			                <input type="text" id="glCode" name="glCode" ng-autofocus="true" ng-model="formData.glCode" class="form-control" required
+			                       late-Validate/>
+			                <form-validate valattributeform="createglaccountingform" valattribute="glCode"/>
+			            </div>
+			        </div>
+			    </div>
+
+			    	<div class="col-md-6">
+			        <div class="form-group row">
+			        	<div class="col-md-4">
+			            <label class="control-label" >{{'label.input.accountname' | translate}}<span
+								class="required">*</span></label>
+							</div>
+			            <div class="col-md-8">
+			                <input id="name" type="text"  name="name"
+									ng-model="formData.name" class="form-control" required late-Validate/>
+							<form-validate valattributeform="createglaccountingform" valattribute="name"/>
+						</div>
+			        </div>
+			    </div>
+			</div>
+			        <div class="row">
+			    	<div class="col-md-6">
+			        <div class="form-group row">
+			        	<div class="col-md-4">
+			            <label class="control-label " for="usage">{{'label.input.accountusage' | translate}}</label>
+			        </div>
+			
+			            <div class="col-md-8">
+							<select id="usage" ng-model="formData.usage" class="form-control">
+								<option ng-repeat="usageType in usageTypes" value="{{usageType.id}}">{{''+usageType.code+'' | translate}}</option>
+							</select>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="col-md-6">
+			        <div class="form-group row">
+			        	<div class="col-md-4">
+			            <label class="control-label " for="tagId">{{'label.input.tag' | translate}}</label>
+			        </div>
+			            <div class="col-md-8">
+							<select id="tagId" ng-model="formData.tagId" class="form-control"
+									ng-options="type.id as type.name for type in types" value="{{type.id}}">
+								<option value="">{{'label.selecttag' | translate}}</option>
+							</select>
+						</div>
+			        </div>
+			    </div>
+			</div>
+			        <div class="row">
+			    	<div class="col-md-6">
+			        <div class="form-group row">
+			        	<div class="col-md-4">
+			            <label class="control-label" for="manualEntriesAllowed">{{'label.input.manualentriesallowed' |
+			                translate}}</label>
+						</div>
+			            <div class="col-md-8">
+			                <label class="checkbox">
+			                    <input id="manualEntriesAllowed" type="checkbox" ng-model="formData.manualEntriesAllowed">
+			                </label>
+			            </div>
+			        </div>
+			    </div>
+			        <div class="col-md-6">
+			        <div class="form-group row">
+			        	<div class="col-md-4">
+			        	<label class="control-label" for="description">{{'label.input.description' | translate}}</label>
+						</div>
+			            <div class="col-md-8">
+			                <textarea id="description" name="description" ng-model="formData.description" rows="8"
+			                          cols="" class="form-control"></textarea>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			        <ul class="btn-group-list text-right mt20 mb20">
+			            <li><a id="cancel" ng-href="{{cancel}}" class="btn btn-warning">{{'label.button.cancel' | translate}}</a></li>
+			            <li><button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_GLACCOUNT'>{{'label.button.save' | translate}}</button></li>
+			        </ul>
+			    
+			</form>
+		
+	</div>
+</div>

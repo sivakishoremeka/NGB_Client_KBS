@@ -1,0 +1,65 @@
+<div class="content-container" ng-controller="CreateSupplierController">
+  <ul class="breadcrumb">
+    <li><a href="#/organization" >{{'link.admin.masters' | translate}}</a></li>
+    <li><a href="#/supplier">{{'label.supplier' | translate}}</a>
+    <li class="active">{{'label.createsupplier' | translate}}</li>
+  </ul>
+  <div class="widget">
+    
+    
+    <h3>Create New Supplier</h3>
+    
+    
+    <form name="createsupplierform" class="form-horizontal" ng-submit="submit()">
+    <api-validate></api-validate>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label class="control-label" for="supplierCode">{{ 'label.supplier.code' | translate }}<span class="required">*</span></label>
+          </div>
+          <div class="col-md-8">
+            <input type="text" id="supplierCode" name="supplierCode" class="form-control" ng-model="formData.supplierCode" data-ng-maxlength="10">
+          </div>
+          <div class="col-md-12">
+            <span data-ng-show = "createsupplierform.supplierCode.$dirty && createsupplierform.supplierCode.$invalid">
+              <small class="error" data-ng-show="createsupplierform.supplierCode.$error.maxlength">{{'error.suppliercode.definition.length.validation'| translate}}</small>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label class="control-label" for="supplierDescription">{{ 'label.supplier.description' | translate }}<span class="required">*</span></label>
+          </div>
+          <div class="col-md-8">
+            <input type="text" id="supplierDescription" class="form-control" ng-model="formData.supplierDescription">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label class="control-label" for="supplierAddress">{{'label.supplier.address' | translate}}<span class="required">*</span></label>
+          </div>
+          <div class="col-md-8">
+            <textarea rows="2" cols="2" id="supplierAddress" class="form-control" ng-model="formData.supplierAddress"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <ul class="btn-group-list text-right mt20 mb20">
+      <li><a href="#/inventory"><button id="cancel"  type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel'| translate}}</button></a></li>
+      <li><button id="submit"  type="submit" data-ng-disabled="createsupplierform.$dirty && createsupplierform.$invalid" class="btn btn-primary">{{'button.save'| translate}}</button></li>
+    </ul>
+    
+  </form>
+  
+</div>
+</div>

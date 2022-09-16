@@ -1,0 +1,64 @@
+<div class="content-container" ng-controller="ClientIdentifierController">
+    <ul class="breadcrumb">
+        <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+        <li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+        <li class="active">{{'label.anchor.addclientidentities' | translate}}</li>
+    </ul>
+    <div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <form name="clientidentifierform" novalidate="" class="" rc-submit="submit()">
+        <api-validate></api-validate>
+        <div class="widget">
+            <h3>{{'label.heading.addclientidentifier' | translate}}</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="documentTypeId">{{'label.input.documenttype' | translate}}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="documentTypeId" ng-model="formData.documentTypeId" ng-options="documenttype.id as documenttype.name for documenttype in documenttypes" value="{{documenttype.id}}" required="required" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="documentKey">{{'label.input.uniqueidentification' | translate}}<span class="required">*</span></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input id="documentKey" type="text" name="identification" ng-model="formData.documentKey" required="required" class="form-control" required late-Validate/>
+                        </div>
+                        <div class="col-md-12">
+                            <form-validate valattributeform="clientidentifierform" valattribute="identification" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="description">{{'label.input.description' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea id="description" rows="2" ng-model="formData.description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a id="cancel" href="#/viewclient/id/{{clientId}}">
+                        <button type="reset" class="btn btn-warning">{{'label.button.cancel' | translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="save" type="submit" has-permission='CREATE_CLIENTIDENTIFIER' class="btn btn-primary">{{'label.button.save' | translate}}</button>
+                </li>
+
+            </ul>
+        </div>
+    </form>
+</div>

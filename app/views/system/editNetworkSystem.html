@@ -1,0 +1,87 @@
+<div class="content-container" ng-controller="EditNetworkSystemController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/system">{{'link.admin.system' | translate}}</a>
+		</li>
+		<li>
+			<a href="#/mappingconfig">{{'label.managemappingconfigurations' | translate}}</a>
+		</li>
+		<li class="active">{{'label.editnetworksystem' | translate}}</li>
+	</ul>
+	<div class="widget">
+		
+		
+		<h3>{{'label.heading.editnetworkelement' | translate}}</h3>
+		
+		
+		<form class="form-horizontal" novalidate=""  rc-submit="submit()">
+		<api-validate></api-validate>
+		<div class="error" data-ng-show="errorStatus || errorDetails">
+			<label data-ng-show="errorStatus">{{errorStatus}}</label>
+			<label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="systemcode">{{ 'label.systemcode' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="systemcode" name="systemcode" class="form-control" data-ng-model="formData.systemcode" data-ng-pattern="/^[a-zA-Z0-9\s]+$/"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="systemname">{{ 'label.systemname' | translate }}</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" id="systemname" name="systemname" class="form-control" data-ng-model="formData.systemname" data-ng-pattern="/^[a-zA-Z0-9\s]+$/"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" for="isSelector">Group Supported</label>
+					</div>
+					<div class="col-md-8">
+						<label class="checkbox">
+							<input type="checkbox" id="isGroupSupported"  data-ng-model="formData.isGroupSupported">
+						</label>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label class="control-label" >Status</label>
+					</div>
+					<div class="col-md-8">
+						<select ng-model="formData.status" class="form-control"
+							ng-options="status for status in statuses">
+							<option value="">--select search--</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<ul class="btn-group-list text-right mt20 mb20">
+			<li><a href="#/mappingconfig"><button type="reset" class="btn btn-warning" data-ng-click="reset123()">{{'button.cancel'| translate}}</button></a></li>
+			<li><button type="submit" class="btn btn-primary">{{'button.save'| translate}}</button></li>
+		</ul>
+		
+	</form>
+	
+</div>
+</div>

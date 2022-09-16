@@ -1,0 +1,111 @@
+<header class="header ">
+    <div class="container-fluid">
+        <nav class="navbar " role="navigation">
+            <div class="toggle-btn"><a href="#"><i class="fas fa-bars"></i></a></div>
+                <a class="navbar-brand" href="#/home">
+                    <span class="navlogo"> {{branding}}</span>
+                </a>
+                <ul class="nav navbar-nav" id="main-menu-left">
+                    <li>
+                        <a has-permission="READ_PROSPECT" data-ng-class="{ activate: isActive('leads') }" href="#/leads">
+                            <i class="fa fa-handshake-o"></i>{{ 'link.prospects' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a has-permission="READ_INVENTORY" data-ng-class="{ activate: isActive('inventory') }" href="#/inventory">
+                            <i class="fa fa-cubes"></i>{{ 'label.anchor.inventory' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a has-permission="READ_CLIENT" data-ng-class="{ activate: isActive('clients') }" href="#/clients">
+                            <i class="fa fa-users"></i>{{ 'label.anchor.customers' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a has-permission="READ_TICKET" data-ng-class="{ activate: isActive('assignedtickets') }" href="#/assignedtickets">
+                            <i class="fa fa-ticket"></i>{{ 'link.tickets' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a has-permission="READ_PARTNER" data-ng-class="{ activate: isActive('partner') }" href="#/offices">
+                            <i class="fa fa-users"></i>{{ 'link.partner' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a has-permission="READ_REPORT" data-ng-class="{ activate: isActive('rep') }" href="#/reports/all">
+                            <i class="fa fa-bar-chart-o"></i>{{'label.anchor.reports' | translate }}
+                        </a>
+                    </li>
+                    <li class="" uib-dropdown id="preview-menu" has-permission="READ_ORGANIZATION">
+                        <a class="" uib-dropdown-toggle data-toggle="uib-dropdown" ng-class="{ activate: isActive('admin') }" href><i class="fa fa-wrench"></i> {{
+                        'label.anchor.admin' | translate }}<b class="caret"></b></a>
+                        <ul class="" uib-dropdown-menu>
+                            <li><a has-permission="READ_SYSTEM" href="#/system">{{ 'label.anchor.system' | translate }}</a></li>
+                            <li><a has-permission="READ_ORGANIZATION" href="#/organization">{{ 'label.anchor.masters' | translate }}</a></li>
+                            <li><a has-permission="READ_ACCOUNTING" href="#/accounting"> {{'label.anchor.accounting' | translate }}</a></li>
+                            <li><a has-permission="READ_UPLOADSTATUS" href="#/importing">{{'label.anchor.datauploads' | translate }}</a></li>
+                            <li><a has-permission="READ_SCHEDULERJOB" href="#/jobs">{{'label.anchor.schedulerjobs' | translate }}</a></li>
+                            <li><a has-permission="READ_PAYMENTGATEWAY" href="#/paymentGateway">{{'label.anchor.managepaymentgateway' |translate}}
+                            </a></li>
+                            <li><a has-permission="READ_PROVISIONINGSYSTEM" href="#/provisioning">{{'label.anchor.provisioning' |translate}}
+                            </a></li>
+                            <li><a has-permission="READ_EVENTACTIONS" href="#/eventaction">{{'label.anchor.eventactions' |translate}}</a></li>
+                            <li><a has-permission="READ_COMMANDCENTER" href="#/commandcenter">{{'label.anchor.commandcenter' |translate}}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="right-menu">
+                    <form ng-submit="searchSubmit()" class="navbar-form">
+                        <div class="input-group">
+                            <input id="search" type="text" class="form-control input-sm unstyled" data-ng-model="columnValue" placeholder="{{'label.searchorpress'|translate}}">
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav " id="main-menu-right">
+                        <li class="" uib-dropdown id="notification-icon" ng-controller="NotificationsController">
+                            <a href class="" uib-dropdown-toggle data-toggle="uib-dropdown" ng-click="fetchItemsInNotificationTray()">
+                                <span class="fa fa-bell"></span>
+                            </a>
+                            <div class="numberCircle" ng-hide="numberOfUnreadNotifications == 0">{{ numberOfUnreadNotifications }}</div>
+                            <ul class="notification-container" uib-dropdown-menu>
+                                <ul class="notification-list" ng-repeat="notification in notifications">
+                                    <li ng-click="navigateToAction(notification)">
+                                        <h4>{{ notification.content }}</h4>
+                                        <span>{{ notification.createdAt }}</span>
+                                    </li>
+                                </ul>
+                                <li class="notification-list-link">
+                                    <a href="#/notifications">Show all notifications</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="" uib-dropdown id="user-menu">
+                            <a id="user-dropdown" class="" uib-dropdown-toggle data-toggle="uib-dropdown" href>
+                        {{currentSession.user.name}}<b class="caret"></b></a>
+                            <ul class="" uib-dropdown-menu>
+                                <li><a href="#/profile"><i class="fa fa-user"></i> {{ 'label.anchor.profile' | translate
+                            }}</a></li>
+                                <li><a href="#/usersetting"><i class="fa fa-cog"></i> {{ 'label.anchor.settings' | translate
+                            }}</a></li>
+                                <li><a id="logout" data-ng-click="logout()"><i class="fa fa-power-off"></i> {{
+                            'label.anchor.logout' | translate }}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            <div ng-controller="SearchSubmitController">
+                <script type="text/ng-template" id="searchClient.html">
+                    <div class="modal-header silver" style="color:red">
+                        <h3 class="bolder">Error</h3>
+                    </div>
+                    <div class="modal-body modal-small">
+                        <h4>No Clients with this details</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                    </div>
+                </script>
+            </div>
+        </nav>
+     </div>
+</header>

@@ -1,0 +1,50 @@
+<div class="content-container" data-ng-controller="StatementController">
+    <ul class="breadcrumb">
+        <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+        <li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+        <li class="active">{{'label.statement' | translate}}</li>
+    </ul>
+    <div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+        <h3>{{'label.statement' | translate}}</h3>
+        <form class="form-horizontal" data-ng-submit="submit()">
+            <api-validate></api-validate>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.duedate' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" datepicker-pop="dd MMMM yyyy" data-ng-model="start.date" is-open="opened" min="minDate" max="maxDate" class="form-control" date-disabled="disabled(date, mode)" required late-Validate style="background-color:#FFFFFF;" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label">{{ 'label.Promotionalmessage' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea class="form-control" data-ng-model="formData.message"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/viewclient/id/{{clientId}}">
+                        <button id="cancel" type="reset" class="btn btn-warning" data-ng-click="cancel()">{{'button.cancel'| translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button type="submit" class="btn btn-primary">{{'button.save' | translate }}</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

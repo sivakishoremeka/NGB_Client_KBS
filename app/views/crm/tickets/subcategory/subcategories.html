@@ -1,0 +1,44 @@
+<div class="content-container" data-ng-controller="SubcategoryController">
+    <ul class="breadcrumb">
+		 <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+		<li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+		<li class="active">{{'label.creatticket' | translate}}</li>
+	</ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.createsubcategory' | translate}}</h4>
+    		</div>
+    		<br>
+				 <div class="viewsubcategory">
+					<div class=" pull-right">
+						<!-- has-permission="'CREATE_SUBCATEGORY'" --> <a href="#/createSubcategory" class="btn btn1 mrl15 mb20"><i class="fa fa-plus"></i>
+							{{'label.createsubcategory' | translate}}</a>
+					</div>
+	   				<div>
+	   					<div class="col-md-5">
+            				<input ng-model="filterText" type="text" class="form-control mb20" placeholder="Enter text to search#">
+            			</div>
+						<table class="table table-striped">
+	         				<thead>
+	            				<tr>
+			        				<th>{{ 'label.ticket.category' | translate}}</th>
+			       	 				<th>{{ 'label.subcategory'  | translate }}</th>
+			        				<th>{{ 'label.sla'  | translate}}</th>
+			        				<!-- <th>{{'table.actions' | translate}}</th> -->	
+		      					</tr>
+		      				</thead>
+	        				<tbody>
+	            				<tr class="pointer-main" data-ng-repeat="subcategory in subcategories.currentPageItems| filter:filterText"">
+	                				<td class="pointer" data-ng-click="routeTo(subcategory.id)">{{subcategory.maincategory}}</td>  
+	                				<td class="pointer" data-ng-click="routeTo(subcategory.id)">{{subcategory.subcategory}}</td>
+	                				<td class="pointer" data-ng-click="routeTo(subcategory.id)">{{subcategory.timetaken}}</td>         
+	            				</tr>
+	        				</tbody>
+	    				</table>
+					</div>
+				 </div>
+				</div>
+				</div>
+				</div>
+				

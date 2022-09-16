@@ -1,0 +1,124 @@
+<div class="content-container"
+	data-ng-controller="StockTransferController">
+	<ul class="breadcrumb">
+		<li><a href="#/inventory">{{'link.admin.inventory' |
+				translate}}</a></li>
+		<li class="active">{{'label.stocktransfer' | translate}}</li>
+	</ul>
+	<!-- <div class="card cardgrid"> -->
+	<form>
+	<div class="widget mb30">
+		<!-- <div class="toolbar">
+				<div class="toolbar ptb15 mrl15 bb1 mb20">
+					<h4 class="ptrbl0">{{'label.stocktransfer' | translate}}</h4>
+				</div>
+				<div class="row">
+					<div class="col-md-3 mt-8"  >
+				    <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.searchforstock' | translate}}">
+				    </div>
+				    <div class="col-md-9 mt-8 " >
+				       <a has-permission="CREATE_ITEMSALE"  href="#/itemsale/0" class="btn primary_btn pull-right" style="margin:0px 8px;">
+					    <i class="fa fa-plus"></i>{{'label.additemsale' | translate}}</a>     
+					    <a has-permission="CREATE_MRN" href="#/createmrn" class="btn primary_btn pull-right">
+					    <i class="fa fa-plus"></i>{{'label.addmaterialtransfer' | translate}}</a>
+					</div>
+		        </div>
+			</div> -->
+		
+			<div class="row align-items-center">
+				<div class="col-md-4">
+					<div id="search">
+						<input ng-autofocus="true" id="search" type="text" ng-disabled="formData1.oT == true"
+							class="form-control" ng-model="filterText" ng-keyup="onFilter()"
+							placeholder="{{'label.input.searchforstock' | translate}}">
+					</div>
+				</div>
+				<div class="col-md-8">
+					<ul class="btn-group-list text-right">
+						<li><a has-permission="CREATE_ITEMSALE" href="#/itemsale/0"
+							class="btn primary_btn"><i class="fa fa-plus"></i>{{'label.additemsale'
+								| translate }}</a></li>
+						<li><a has-permission="CREATE_MRN" href="#/createmrn"
+							class="btn primary_btn"><i class="fa fa-upload"></i>{{'label.addmaterialtransfer'
+								| translate}}</a></li>
+						<li><a has-permission="READ_TRANSFER" href="#/uploadandprocessmrndetails"
+							class="btn primary_btn"><i class="fa fa-upload"></i>{{'label.heading.bulkstocktransfer'
+								| translate}}</a></li>
+					</ul>
+				</div>
+			</div>
+		
+	</div>
+
+
+
+	<div class="widget">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{'label.id' | translate}}</th>
+					<th>{{'label.requesteddate' | translate}}</th>
+					<th>{{'label.toofficeby' | translate}}</th>
+					<th>{{'label.fromoffices' | translate}}</th>
+					<th>{{'label.itemdescription' | translate}}</th>
+					<th>{{'label.orderedquantity' | translate}}</th>
+					<th>{{'label.receivedquantity' | translate}}</th>
+					<th>{{'label.status' | translate}}</th>
+					<th>{{'label.action' | translate}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="pointer-main"
+					ng-repeat="m in mrn.currentPageItems  | filter:filterText">
+					<td class="pointer" data-ng-click="routeTomrn(m.id)">{{m.id}}</td>
+					<td class="pointer" data-ng-click="routeTomrn(m.id)">{{m.requestedDate
+						| DateFormat}}</td>
+					<td class="pointer" data-ng-click="routeTomrn(m.id)">{{m.toOffice}}</td>
+					<td class="pointer" data-ng-click="routeTomrn(m.id)">{{m.fromOffice}}</td>
+					<td class="pointer" data-ng-click="routeTomrn(m.id)">{{m.itemDescription}}</td>
+					<td class="pointer" data-ng-click="routeTomrn(m.id)">{{m.orderdQuantity}}</td>
+					<td class="pointer" data-ng-click="routeTomrn(m.id)">{{m.receivedQuantity}}</td>
+					<td class="pointer" data-ng-click="routeTomrn(m.id)">{{m.status}}</td>
+					<!-- ng if condition is used to disable action buttons based on office type  -->
+					<td ng-show="m.itemClass !='Prepaid Cards'">
+						<div ng-if="officeType != 'LCO' "> <a
+							has-permission="MOVE_MRN" ng-show="m.status !='Completed'"
+							uib-popover="Moveitems" data-popover-trigger="mouseenter"
+							data-ng-click="storeTransferData(m )"><i
+								class="fa fa-exchange"></i> </a> <a has-permission="MOVE_MRNCARTON"
+							href="#/movemrncartoon" uib-popover="MoveCartoon"
+							data-popover-trigger="mouseenter"> <i class="fa fa-suitcase"></i>
+							</a> 
+						</div>
+						<div ng-if="officeType == 'LCO' ">
+							<i uib-popover="Moveitems" data-popover-trigger="mouseenter" class="fa fa-exchange" style="color:LightGray"></i> &nbsp; 
+							<i uib-popover="MoveCartoon" data-popover-trigger="mouseenter" class="fa fa-suitcase" style="color:LightGray"></i>
+						</div>
+					</td>
+					<td ng-show="m.itemClass =='Prepaid Cards'" >
+						<div ng-if="officeType != 'LCO' ">
+							<a
+							disabled has-permission="UPDATE_MOVE_VOUCHER" ng-show="m.status !='Completed'"
+							style='color: #000000' uib-popover="Movevouchers"
+							data-popover-trigger="mouseenter"
+							data-ng-click="storeTransferData(m)"><i class="fa fa-exchange"
+								style="color: red"></i> </a>
+						</div>
+						<div ng-if="officeType == 'LCO' ">
+							<i uib-popover="Movevouchers" data-popover-trigger="mouseenter" class="fa fa-exchange" style="color:red"></i>
+						</div>
+				   </td>
+				</tr>
+			</tbody>
+		</table>
+		<ul class="pager">
+			<li class="previous"><a ng-click="mrn.previous()" href=""
+				ng-disabled="!mrn.hasPrevious()">&larr;{{ 'label.Prev' |
+					translate }} </a></li>
+			<li class="next"><a ng-click="mrn.next()" href=""
+				ng-disabled="!mrn.hasNext()">{{ 'label.Next' | translate }}
+					&rarr;</a></li>
+		</ul>
+	</div>
+	</form>
+</div>

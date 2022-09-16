@@ -1,0 +1,42 @@
+<div class="content-container" ng-controller="ViewStatementController">
+    <ul class="breadcrumb">
+		<li><a href="#/clients">{{'link.clients' | translate}}</a></li>
+		<li><a href="#/viewclient/id/{{statementDatas[0].clientId}}">{{'label.anchor.viewcustomer' | translate}}</a></li>
+		<li class="active">{{'link.viewstatement' | translate}}</li>
+	</ul>
+	<div ng-include="'views/clients/viewclienttopinfo.html'"></div>
+     <div class="widget">
+	      <ul class="btn-group-list text-right mb20">
+	      	<li>
+	      		<a ng-show="import.processStatus != 'NEW'" ng-click="downloadFile()" class="btn btn-primary"><i class="fa-download-alt"></i> Download Statement</a>
+	      	</li>  	        
+	      </ul>
+         <div class="table-responsive">
+        	<table class="table table-striped ">
+			<tr>
+				<td width="20%">{{ 'label.duedate' | translate }}</td>
+				<td width="70%">{{statementDatas[0].dueDate | DateFormat}}</td>
+			</tr>
+			<tr>
+				<td width="20%">{{ 'label.dueamount' | translate }}</td>
+				<td width="70%">{{statementDatas[0].dueAmount}}</td>
+			</tr>
+	   </table>
+	 </div>
+	   <h4>{{ 'label.transactions' | translate }}</h4>
+	   <div class="table-responsive">
+			<table class="table table-striped">
+			  <thead>
+                   <tr>
+                       <td width="40%">{{ 'label.transactiontype' | translate }}</td>
+                       <td width="70%">{{ 'table.amount' | translate }}</td>
+                   </tr>
+               </thead>
+				<tr ng-repeat="statementData in statementDatas">
+					 <td width="40%">{{statementData.transaction}}</td>        
+                      <td width="70%">{{statementData.amount}}</td>         
+				</tr>
+			 </table>		
+		 </div>
+        </div>
+    </div>     

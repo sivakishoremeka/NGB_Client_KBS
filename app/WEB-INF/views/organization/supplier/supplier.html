@@ -1,0 +1,99 @@
+<div class="content-container" data-ng-controller="SupplierController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li class="active">{{'label.supplier' | translate}}&nbsp;&nbsp;</li>
+	</ul>
+	<div class="widget mb30">
+		
+		
+		<!-- <div class="toolbar ptb15 mrl15 bb1 mb20">
+			<h4 class="ptrbl0">{{'label.supplier' | translate}}</h4>
+		</div> -->
+		<div class="row">
+			<div class="col-md-3">
+				<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+			</div>
+			<div class="col-md-9">
+				<ul class="btn-group-list text-right">
+					<li><a has-permission="CREATE_SUPPLIER" href="#/createsupplier" class="btn primary_btn pull-right">
+					<i class="fa fa-plus"></i>{{ 'button.addsupplier' | translate }}</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		
+	</div>
+	
+	<div class="widget">
+		
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>{{'label.suppliercode' | translate}}</th>
+						<th>{{'label.supplierdescription' | translate}}</th>
+						<th>{{'label.supplieraddress' | translate}}</th>
+						<th>{{'label.actions' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="su in supplier.currentPageItems  | filter:filterText">
+						<td>{{su.supplierCode}}</td>
+						<td>{{su.supplierDescription}}</td>
+						<td>{{su.supplierAddress}}</td>
+						<td><a ng-click="editSupplier(su.id)" uib-popover="Edit Supplier" popover-trigger="mouseenter" class="fa fa-edit"></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		
+		<script type="text/ng-template" id="editsuppliers.html">
+			<div class="widget">
+			<form name="editsupplierform" class="form-horizontal" ng-submit="submit()">
+<api-validate></api-validate>
+
+	<h3>{{'label.editsupplier' | translate}}</h3>
+<div class="form-group row">
+	
+		<div class="col-md-4">
+		<label class="control-label" for="supplierCode">{{ 'label.code' | translate }}<span class="required">*</span></label>
+	</div>
+		<div class="col-md-8">
+			<input type="text" id="supplierCode" name="supplierCode" ng-model="formData.supplierCode" class="form-control"
+			data-ng-maxlength="{{'code' | CodeValidate}}">
+			<span data-ng-show = "editsupplierform.supplierCode.$dirty && editsupplierform.supplierCode.$invalid">
+				<small class ="error-row">{{'error.suppliercode.definition.length.validation'| translate}}</small>
+			</span>
+		</div>
+	</div>
+
+
+	<div class="form-group row">
+		<div class="col-md-4">
+		<label class="control-label" for="supplierDescription">{{ 'label.description' | translate }}
+			<span class="required">*</span></label>
+		</div>
+			<div class="col-md-8">
+				<input type="text" id="supplierDescription" class="form-control" ng-model="formData.supplierDescription">
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-md-4">
+			<label class="control-label" for="supplierAddress">{{'label.address' | translate}}<span class="required">*</span></label>
+		</div>
+			<div class="col-md-8">
+				<textarea rows="2" cols="2" class="form-control" ng-model="formData.supplierAddress"></textarea>
+			</div>
+		</div>
+	
+</form>
+<ul class="modal-footer btn-group-list text-right">
+	<li><button id="cancel" class="btn btn-warning" ng-click="reject()">{{'button.cancel' | translate}}</button></li>
+	<li><button id="submit" data-ng-disabled="editsupplierform.$dirty && editsupplierform.$invalid" class="btn btn-primary" ng-click="accept()"
+	ng-disabled="flag">{{'label.save' | translate}}</button></li>
+</ul>
+</div>
+		</script>
+	</div></div>

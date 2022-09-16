@@ -1,0 +1,50 @@
+<div class="content-container" ng-controller="ViewSalesCatalogeController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li><a href="#/catalogemapping">{{'label.catalogemapping' | translate}}</a></li>
+		<li class="active">{{salesCatalogeData.id}}</li>	
+	</ul>
+	<div class="widget">
+		
+			
+				<h3>{{salesCatalogeData.name}}</h3>
+				<div class="pull-right mb20">
+					
+					    <a has-permission = 'UPDATE_SALESCATALOGE' href="#/editsalescataloge/{{salesCatalogeData.id}}" class="btn primary_btn"><i class="fa fa-edit"></i> Edit</a>
+			            <a has-permission = 'DELETE_SALESCATALOGE' data-ng-click="deletesalescataloge()" class="btn primary_btn"><i class="fa fa-trash-o"></i> Delete</a>           
+					
+			 	</div>
+			
+				  <!-- <h3>&nbsp;&nbsp;&nbsp;{{'label.selectedplandatas' | translate}}</h3> -->
+				    <table class="table table-striped">
+				       <thead>
+				           <tr class="graybg" width="20%">
+				                  <th>{{'label.id' | translate}}</th>
+				                  <th>{{'label.plancode' | translate}}</th>
+				                  <th>{{'label.plandescription' | translate}}</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr ng-repeat="selectedPlan in selectedPlans | filter:filterText">
+				                <td>{{selectedPlan.id}}</td>  
+				                <td>{{selectedPlan.planCode}}</td>        
+				                <td>{{selectedPlan.planDescription}}</td>                
+				            </tr>
+				        </tbody>
+				    </table>
+				    
+			
+	</div>
+	 <script type="text/ng-template" id="approve.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">{{'dialog.salescataloge.title.message' | translate}}</h3>
+                    </div>
+                    <div class="modal-body modal-small">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+                    </div>
+     </script>
+</div>

@@ -1,0 +1,90 @@
+<div class="content-container" ng-controller="AddACHController">
+   <ul class="breadcrumb">
+		<li><a href="#/clients">{{'link.clients' | translate}}</a> <span class="divider"></span></li>
+		<li><a href="#/viewclient/id/{{clientId}}" ng-click="reset123()">{{'label.anchor.viewcustomer' | translate}}</a> <span class="divider"></span></li>
+		<li class="active">{{'link.view.achcard' | translate}}</li>
+	</ul>
+	<div ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+     <h3>{{'label.client.achcard' | translate}}</h3>
+    	<form name="achCard" novalidate="" class="form-horizontal" ng-submit="submit()">
+			<api-validate></api-validate>	
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label class="control-label" for="routingNumber">{{'label.client.achcard.routingNumber' | translate}}<span class="required">*</span></label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" name="routingNumber" class="form-control" ng-model="formData.routingNumber"  required late-Validate/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label class="control-label" for="bankAccountNumber">{{'label.client.achcard.bankAccountNumber' | translate}}<span class="required">*</span></label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" name="bankAccountNumber" class="form-control" ng-model="formData.bankAccountNumber" ng-pattern="/^(?!0+$)\d{1,30}$/" required late-Validate/>
+									<span ng-show="achCard.bankAccountNumber.$invalid"> 
+									<small class="error" ng-show="achCard.bankAccountNumber.$error.pattern">
+				                        Please enter digits only..!
+				                   </small>
+				                </span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-4">
+							 <label class="control-label" for="bankName">{{'label.client.achcard.bankName' | translate}}<span class="required">*</span></label>
+							</div>
+							<div class="col-md-8">
+							  <input type="text" name="bankName" class="form-control" ng-model="formData.bankName" required late-Validate/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-4">
+							  <label class="control-label" for="name">{{'label.client.achcard.name' | translate}}<span class="required">*</span></label>
+							</div>
+							<div class="col-md-8">
+							  <input type="text" name="name" class="form-control" ng-model="formData.name" required late-Validate/>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-4">
+							 <label class="control-label" for="accountType">{{'label.client.achcard.accountType' | translate}}<span class="required">*</span></label>
+							</div>
+							<div class="col-md-8">
+								<div class="form-check-inline">
+								<input  type="radio" name ="accountType" ng-model="formData.accountType" ng-checked="formData.accountType == 'false'" value="Checking" required late-Validate>Checking
+							</div>
+                            <div class="form-check-inline"><input  type="radio" name ="accountType" ng-model="formData.accountType" ng-checked="formData.accountType == 'false'" value="Savings" required late-Validate>Savings</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<ul class="btn-group-list text-right mt20 mb20">
+					<li>
+						<a href="#/viewclient/id/{{clientId}}"><button type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel' | translate}}</button></a>
+					</li>
+					<li>
+						<button type="submit" class="btn btn-primary" ng-disabled="!achCard.$valid">{{'button.save' | translate}}</button>
+					</li>
+				</ul> 
+           </form>
+    	</div>
+    </div>
+
+

@@ -1,0 +1,132 @@
+<div class="content-container" ng-controller="AddPlansController">
+    <ul class="breadcrumb">
+        <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+        <li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+        <li class="active">{{'label.addplans' | translate}}</li>
+    </ul>
+    <div ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="widget">
+        <h3>{{'label.addplans' | translate}}</h3>
+        <form name="Addplans" novalidate="" class="form-horizontal" rc-submit="submit()">
+            <div uib-alert type="danger" ng-show=" errorDetails.length > 0">
+                <label><i class="fa fa-exclamation-circle"></i>Plans Cannot Be Added</label>
+                <div ng-repeat="error in errorDetails">
+                    <label>{{error.code | translate:error.args}}</label>
+                </div>
+            </div>
+            <!-- <api-validate></api-validate> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="salesCatalogeId">{{ 'label.salescataloge' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select id="salesCatalogeId" data-ng-model="formData.salesCatalogeId" data-ng-change="serviceChangeFun(formData.salesCatalogeId)" data-ng-options="salesCataloges.id as salesCataloges.name for salesCataloges in salesCataloges" class="form-control">
+                                <option value="">{{'label.select.one' | translate}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="dateTime">{{ 'label.order.startdate' | translate }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input ng-model="dateTime" is-open="opened" min="minDate" max="maxDate" class="form-control" date-disabled="disabled(date, mode)" required late-Validate style="background-color:#FFFFFF;" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="formData.salesCatalogeId">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label">{{ 'label.availableplan' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <select id="availableplans" ng-model="allowed" name="allowed" class="form-control multiselectmin" multiple>
+                                <option data-ng-repeat="availablePlan in availablePlans | filter:filterText" value="{{availablePlan.id}}">{{availablePlan.planDescription}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label class="control-label">{{ 'label.selectedplan' | translate }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input ng-autofocus="true" ng-model="filterText1" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-12">
+                                <select id="selectedPlan" ng-model="restricted" name="restricted" data-ng-change='setBillingFrequency(postpaidPlanData.id)' class="form-control multiselectmin" multiple>
+                                    <option data-ng-repeat="selectedPlan in selectedPlans | filter:filterText1" value="{{selectedPlan.id}}">{{selectedPlan.planDescription}}</option>
+                                </select>
+                            </div>
+                    </div>
+                </div>
+                <ul class="btn-group-list text-center mt20 mb20">
+                    <li>
+                    	 <button type="button " class="btn btn-primary" data-ng-click="allow()"><i class="fa fa-angle-double-left m-0"></i></button>
+                     
+                    </li>
+                    <li>
+                         <button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right m-0"></i></button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- <div class="form-group" ng-if="!isCrm">
+                      <label class="control-label" for="contractPeriod">{{ 'label.order.contractperiod' | translate }}</label>
+                      		<div class="col-sm-3" ng-hide="formData.isPrepaid == 'Y'">
+                      		<div class="col-sm-3">
+                         		<select ng-model="formData.contractPeriod"  class="form-control"
+                         			ng-options="subscriptiondata.id as subscriptiondata.Contractdata for subscriptiondata in subscriptiondatas" 
+                         				value="{{billRuleData.id}}"></select>
+                      		</div>
+
+                          <div class="col-sm-3" ng-show="formData.isPrepaid == 'Y'">
+                             <select ng-model="formData.contractPeriod"  class="form-control"
+                             	ng-options="paytermdata.duration as paytermdata.duration for paytermdata in paytermdatas" 
+                             		value="{{billRuleData.id}}"></select>
+                          </div>
+
+	                      <div ng-hide="isPrepaidPlan == 'Y'">
+	                       	<label class="control-label" for="paytermCode">{{ 'label.order.chargecircle' | translate }}</label>
+	                         <div class="col-sm-3">
+	                         	<select ng-model="formData.paytermCode"  class="form-control"
+	                         	 	ng-options="paytermdata.paytermtype as paytermdata.paytermtype for paytermdata in paytermdatas" 
+	                         			value="{{billRuleData.id}}"></select>
+	                         </div>
+    		                <label class="control-label" for="billFrequencyCode ">{{ 'label.order.chargecircle' | translate }}</label>
+    		                <div class="col-sm-3">
+	    		               <select id="billFrequencyCode" class="form-control" data-ng-model="formData.billFrequencyCode" ng-change="billFrequencyChangeFun(formData.billFrequencyCode)"
+	    		               	data-ng-options="billFrequencyCode.billFrequencyCode as billFrequencyCode.billFrequencyCode for billFrequencyCode in billFrequencyCodes">
+             						<option value="">{{'label.select.one' | translate}}</option>
+             				   </select>
+    		                </div>
+		                 </div>
+	                </div> -->
+
+            <ul class="btn-group-list text-right mt20 mb20">
+                <li>
+                    <a href="#/salescataloge">
+                        <button type="reset" class="btn btn-warning">{{'button.cancel'| translate}}</button>
+                    </a>
+                </li>
+                <li>
+                    <button id="save" type="submit" data-ng-disabled="createsalescataloge.$dirty && createsalescataloge.$invalid" class="btn btn-primary">{{'button.save'| translate}}</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

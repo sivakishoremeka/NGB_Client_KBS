@@ -1,0 +1,130 @@
+<div class="content-container" ng-controller="CreateMrnController">
+    <ul class="breadcrumb">
+      <li><a href="#/inventory" ng-click="selectedMRN()">{{'link.admin.inventory' | translate}}</a></li>
+       <li><a href="#/stocktransfer">{{'link.stocktransfer' | translate}}</a></li>
+      <li class="active">{{'label.create.add.mrn' | translate}}</li>
+    </ul>
+     <div class="widget">
+         <h3>{{'label.heading.creatematerialtransfer' | translate}}</h3>
+		      <form name="createMRNForm" novalidate="" class="form-horizontal" rc-submit="submit()">
+		      <api-validate></api-validate>
+		    <div class="row">
+		    	<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+					       <label class="control-label" for="mrnId">{{'label.type' | translate }}&nbsp;<span 
+	   								class="required">*</span></label>
+	   						</div>
+							<div class="col-md-8">
+								<select id="mrnId" ng-model="formData.type" class="form-control">
+										<option value="">{{'label.select.one' | translate}}</option>
+										<option>mrn</option>
+										<option>grv</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group row">
+						 <div class="col-md-4">
+							<label class="control-label" for="requestedDate">{{'label.requestdate' | translate }}&nbsp;<span 
+  							class="required">*</span></label>
+						</div>
+						 <div class="col-md-8">
+						 	<input type="text" class="form-control" datepicker-pop="dd MMMM yyyy" ng-model="first.date" is-open="opened" min="minDate" max="maxDate" date-disabled="disabled(date, mode)" required late-Validate style="background-color:#FFFFFF;"  readonly/>
+						 </div>
+					 </div>
+				  </div>
+				</div>
+
+				<div class="row">
+		    	 <div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+					    <label class="control-label" for="toOffice">{{'label.toofficeby' | translate }}&nbsp;<span 
+   							class="required">*</span></label>
+   						</div>
+						 <div class="col-md-8">
+						 <input type="text" placeholder="Enter Entity Code"data-ng-model="formData.toOffice" name="serialNumber"class="form-control" uib-typeahead=" officeData.externalId as groupByOffice(officeData.externalId, officeData.name) for officeData in getData($viewValue,false)" autocomplete="off" data-typeahead-min-length="0">
+						
+							<!-- <select class="form-control" id="toOffice" ng-model="formData.toOffice"
+								ng-options="officeData.id as officeData.nameDecorated for officeData in officeDatas"
+								value="{{officeData.id}}">
+							</select> -->
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+					 <div class="col-md-4">
+						<label class="control-label" for="fromOffice">{{'label.fromoffices' | translate }}&nbsp;<span 
+   							class="required">*</span></label>
+   						</div>
+						 <div class="col-md-8">
+						 <input type="text" placeholder="Enter Entity Code"data-ng-model="formData.fromOffice" name="serialNumber"class="form-control" uib-typeahead=" officeData.externalId as groupByOffice(officeData.externalId, officeData.name) for officeData in getData($viewValue,true)" autocomplete="off" data-typeahead-min-length="0">
+						
+							<!-- <select id="fromOffice" class="form-control" ng-model="formData.fromOffice"
+								ng-options="officeData.id as officeData.nameDecorated for officeData in officeDatas"
+								value="{{officeData.id}}">
+							</select> -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+		    	 <div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+						  <label class="control-label" for="itemDescription">{{'label.item' | translate }}&nbsp;<span 
+   							class="required">*</span></label>
+   						</div>
+						<div class="col-md-8">
+							<select id="itemDescription" class="form-control" ng-model="formData.itemDescription"
+									ng-options="itemMasterData.id as getbothitem(itemMasterData.id, itemMasterData.itemClassName) for itemMasterData in itemMasterDatas"
+									value="{{itemMasterData.itemId}}">
+									<option value="">{{'label.select.one' | translate}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				 <div class="col-md-6">
+					<div class="form-group row">
+						 <div class="col-md-4">
+						<label class="control-label" for="orderdQuantity">{{'label.orderedquantity' | translate }}&nbsp;<span 
+							class="required">*</span></label>
+						</div>
+						 <div class="col-md-8">
+							<input type="text" class="form-control" id="orderdQuantity" name="orderdQuantity" name="orderdQuantity" 
+								ng-model="formData.orderdQuantity" data-ng-pattern="/^[0-9]/">
+							<span data-ng-show="createMRNForm.orderdQuantity.$dirty && createMRNForm.orderdQuantity.$invalid">
+								<small class="error" data-ng-show="createMRNForm.orderdQuantity.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+              <div class="row">
+		    	 <div class="col-md-6">
+					<div class="form-group row">
+					  <div class="col-md-4">
+					  <label class="control-label" for="notes">{{'label.notes' | translate}}&nbsp;<span class="required">*</span></label>
+					</div>
+	   			         <div class="col-md-8">
+	                         <textarea rows="2" cols="2" id="notes" class="form-control" ng-model="formData.notes"></textarea>
+	   			            </div>
+					</div>
+				</div>
+			</div>
+			<ul class="btn-group-list text-right mt20 mb20">
+				<li>
+					<a href="#/stocktransfer"><button id="cancel" type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel' | translate}}</button></a>
+				</li>
+				<li>
+					<button id="save" type="submit" data-ng-disabled="createMRNForm.$dirty && createMRNForm.$invalid" class="btn btn-primary">{{'label.save' | translate}}</button>
+				</li>
+			</ul>
+		   </form>
+      	</div>
+     </div>

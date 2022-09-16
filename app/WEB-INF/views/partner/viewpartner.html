@@ -1,0 +1,305 @@
+<div class="content-container" ng-controller="ViewPartnerController">
+    <ul class="breadcrumb">
+        <li><a href="#/partner" data-ng-click="partnersTab()">{{'label.partner' | translate}}</a></li>
+        <li class="active">{{partner.partnerName}}</li>
+    </ul>
+
+    <div class="card">
+        <div class="content">
+        	<div class="toolbar">
+        		<!-- <h4>{{ 'label.balance.amount' | translate }} : {{partner.balanceAmount}}</h4> -->
+        		<div class="row primarydiv">
+        		  <div class="pull-right">
+        		    <div class="btn-group">
+        		    	<a type="button" class="btn btn_primary" href="#/OfficeTicket/{{partner.id}}">
+							<i class="fa fa-plus"></i>{{"label.addticket" | translate}}
+						</a>
+	        		    <a has-permission="CREATE_OFFICEPAYMENT" href="#/officepayments/{{partner.id}}" class="btn btn_primary">
+	        		       <i class="fa fa-usd "></i>{{'label.officepayments' | translate}}</a>
+		                <a href="#/officeadjustments/{{partner.id}}" class="btn btn_primary">
+	                       <i class="fa fa-adjust"></i>{{'label.officeadjustments' | translate}}</a>
+        		        <a has-permission="UPDATE_PARTNER" href="#/editpartner/{{partner.id}}" class="btn btn_primary">
+        		        	<i class="fa fa-edit"></i>{{'label.editpartner' | translate}}</a>
+        		        <a has-permission="CREATE_PARTNERAGREEMENT" 
+	          			   href="#/createpartneragreement/{{partner.id}}/{{partner.officeId}}" class="btn btn_primary">
+	          			  <i class="fa fa-plus"></i>{{'label.createagreement' | translate}}</a>
+        		    	
+	                </div>
+        		  </div>
+        		</div>
+        	</div>
+   			<div class="row">
+   				<div class="col-md-6">
+   			        <table class="table table-bordered table-striped">
+   			            <tr>
+							<td><strong>{{ 'label.loginname' | translate }}</strong></td>
+							<td>{{partner.loginName}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.parent office' | translate }}</strong></td>
+							<td>{{partner.parentName}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.partner.created.on' | translate }}</strong></td>
+							<td>{{partner.openingDate | DateFormat}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.iscollective' | translate }}</strong></td>
+							<td>{{partner.isCollective}}</td>
+						</tr>
+						<tr>
+                             <td><strong>{{ 'label.businesstype' | translate }}</strong></td>
+                             <td>{{partner.businessType}}</td>
+                        </tr>
+                        <tr>
+                               <td><strong>{{ 'label.orgopenedon' | translate }}</strong></td>
+                               <td>{{partner.openingDate | DateFormat}}</td>
+                           </tr>
+   			        </table>
+   				</div>
+   				<div class="col-md-6">
+   			        <table class="table table-bordered table-striped">
+   			            <tr>
+							<td><strong>{{'label.address' | translate}}</strong></td>
+							<td>{{partner.city}}<strong>,</strong>{{partner.state}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.country' | translate }}</strong></td>
+							<td>{{partner.country}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.email' | translate }}</strong></td>
+							<td>{{partner.email}}</td>
+						</tr>
+							<tr>
+							<td><strong>{{ 'label.phone' | translate }}</strong></td>
+							<td>{{partner.phoneNumber}}</td>
+						</tr>
+						 <tr>
+                             <td><strong>{{ 'label.orgcode' | translate }}<strong></td>
+                             <td>{{partner.externalId}}</td>
+                         </tr>
+                          <tr>
+                              <td><strong>{{ 'label.orgtype' | translate }}<strong></td>
+                              <td>{{partner.officeType}}</td>
+                          </tr>
+   			        </table>
+   				</div>
+   			</div>
+   			<uib-tabset  style="margin-bottom: 0px;">
+    			<uib-tab heading="Agreement Details" >
+     				<br>
+       				<div>
+       					<div class="col-md-3">
+                    		<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" 
+                    			placeholder="{{'label.input.filterbyname' | translate}}">
+                		</div>
+				        <table class="table table-striped">
+					          <thead>
+					            <tr class="graybg">
+					                   <th>{{'label.plandescription' | translate}}</th>
+									   <th>{{'label.agreementstatus' | translate}}</th>
+					                   <th>{{'label.contreffectdate' | translate}}</th>
+					                   <th>{{'label.contrenddate' | translate}}</th>
+					                   <th>Actions</th>
+					            </tr>
+					          </thead>
+					          <tbody>
+					             <tr ng-repeat="agreement in agreements | filter:filterText"> 
+					                <td>{{agreement.planDescription}}</td>     
+					                <td>{{agreement.agreementStatus}}</td>
+					                <td>{{agreement.startDate | DateFormat}}</td>
+					                <td>{{agreement.endDate | DateFormat}}</td> 
+					                <!-- <td><a has-permission="UPDATE_PARTNERAGREEMENT" href="#/editpartneragreement/{{agreements.id}}/{{partner.id}}" 
+					                       uib-popover="Edit Agreement" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td> -->                  
+					             <td><a has-permission="DELETE_PARTNERAGREEMENT" data-ng-click="deleteAgreement(agreement.id,agreement.planPoId,agreement.dealPoId,partner.poId,partner.settlementPoId,agreement.packageId)"
+					                       uib-popover="Delete Agreement" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a></td> 
+					             </tr>
+					          </tbody>
+				        </table>
+        			</div>
+      			</uib-tab>
+    			<uib-tab  heading="Tickets" select="getAllTickets()" active="PartnersTicketTab">
+     				<br>
+					<div>
+						<div class="col-md-3">
+                    		<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" 
+                    			placeholder="{{'label.input.filterbyname' | translate}}">
+                		</div>
+						<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>{{ 'label.priority' | translate}}</th>
+										<th>{{ 'label.ticketdate' | translate }}</th>
+										<th>{{ 'label.problemcode' | translate}}</th>
+										<th>{{ 'label.status' | translate }}</th>
+										<th>{{ 'label.assignto' | translate }}</th>
+										<th>{{ 'label.lastcomment' | translate }}</th>
+										<th>{{'table.actions' | translate}}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="pointer-main" data-ng-repeat="ticket in tickets  | filter:filterText">
+										<td class="pointer" >{{ticket.priority}}</td>  
+										<td class="pointer" >{{ticket.ticketDate | DateFormat}}</td>
+										<td class="pointer" >{{ticket.problemDescription}}</td>
+										<td data-ng-show="(ticket.status == 'OPEN') && ticket.ticketstatus" class="pointer">{{ticket.ticketstatus}}</td>
+										<td data-ng-show="(ticket.status == 'CLOSED') || !ticket.ticketstatus" class="pointer">{{ticket.status}}</td>
+										<td class="pointer" >{{ticket.userName}}</td>  
+										<td class="pointer" >{{ticket.lastComment}}</td>
+										<td>
+											<a data-ng-show="(ticket.status == 'OPEN'||ticket.status == 'New Open'||ticket.status == 'Working'||ticket.status == 'Testing')" has-permission="UPDATE_TICKET" 
+												data-ng-click="routeToEditTicket(officeId,ticket.id)" uib-popover="Comment" 
+													data-popover-trigger="mouseenter"><i class="fa fa-edit viewbgclient-t-actions"></i></a>&nbsp;
+											<a data-ng-show="(ticket.status == 'OPEN'||ticket.status == 'New Open'||ticket.status == 'Working'||ticket.status == 'Testing')" has-permission="CLOSE_TICKET" 
+												data-ng-click="callCloseTicket(officeId,ticket.id)" uib-popover="Close" 
+													data-popover-trigger="mouseenter"><i class="fa fa-times viewbgclient-t-actions"></i></a>
+										</td>           
+									</tr>
+								</tbody>
+							</table>
+						<ul class="pager">
+				   			<li class="previous"><a data-ng-click="patnerDisbursementData.previous()" href="" 
+				   				data-ng-disabled="!patnerDisbursementData.hasPrevious()">&larr; Prev</a></li>
+				   			<li class="next" ><a data-ng-click="patnerDisbursementData.next()" href="" 
+				   				data-ng-disabled="!patnerDisbursementData.hasNext()">Next &rarr;</a></li>
+						</ul>
+					</div>
+				</uib-tab>
+							<uib-tab  heading="Disbursements" select="getPartnerDisbursements()" active="PartnersDisbursementTab">
+     				<br>
+					<div>
+						<div class="col-md-3">
+                    		<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" 
+                    			placeholder="{{'label.input.filterbyname' | translate}}">
+                		</div>
+						<table class="table table-striped">
+							<thead>
+								<tr class="graybg">
+									<th>{{'label.id' | translate}}</th>
+									<th>{{'label.transactiondate' | translate}}</th>
+									<th>{{'label.source' | translate}}</th>
+									<th>{{'label.commissionamount' | translate}}</th>
+									<th>{{'label.commissiontype' | translate}}</th>
+									<th>{{'label.commissionrate' | translate}}</th>
+									<th>{{'label.commissionamount' | translate}}</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr  data-ng-repeat="patnerDisbursementData in patnerDisbursementData.currentPageItems | filter:filterText">
+									<td>{{patnerDisbursementData.id}}</td>
+									<td>{{patnerDisbursementData.transDate |DateFormat}}</td>
+									<td>{{patnerDisbursementData.source}}</td>
+									<td>{{patnerDisbursementData.netAmount}}</td>
+									<td>{{patnerDisbursementData.percentage}}</td>
+									<td>{{patnerDisbursementData.shareAmount}}</td>
+									<td>{{patnerDisbursementData.commissionAmount}}</td>
+									
+								</tr>
+							</tbody>
+						</table>
+						<ul class="pager">
+				   			<li class="previous"><a data-ng-click="patnerDisbursementData.previous()" href="" 
+				   				data-ng-disabled="!patnerDisbursementData.hasPrevious()">&larr; Prev</a></li>
+				   			<li class="next" ><a data-ng-click="patnerDisbursementData.next()" href="" 
+				   				data-ng-disabled="!patnerDisbursementData.hasNext()">Next &rarr;</a></li>
+						</ul>
+					</div>
+				</uib-tab>
+	
+				<uib-tab heading="{{'label.heading.financialtransactions' | translate}}" select="getfinancialtransactions()">
+			
+			<table class="table" table-striped>
+					<thead>
+						<tr class="graybg">
+							<th>{{ 'label.transactionId' | translate }}</th>
+							<th>{{ 'label.transactionType' | translate }}</th>
+							<th>{{ 'label.amount' | translate }}</th>
+							<th>{{ 'label.transDate' | translate }}</th>
+							<th>{{ 'label.transactionCategory' | translate }}</th>
+							<th>{{ 'label.actions' | translate }}</th>
+							
+						</tr>
+					</thead>
+					 <tbody>
+						 <tr  data-ng-repeat="officeFinanceTrans in officeFinanceTrans">
+							<td>{{officeFinanceTrans.transactionId}}</td>
+							<td>{{officeFinanceTrans.transactionType}}</td>
+							<td>{{officeFinanceTrans.amount}}</td>
+							<td>{{officeFinanceTrans.transDate | DateFormat}}</td>
+							<td>{{officeFinanceTrans.transactionCategory}}</td>
+							<td>{{officeFinanceTrans.actions}}</td>
+							<!-- <td><a has-permission = UPDATE_PLAN href="#/editplan/{{plan.id}}" uib-popover="Edit Plan" title="Edit Plan"
+                       data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;</td>> -->
+						</tr>
+					</tbody>
+					 
+						<!-- <tr class="pointer-main"
+							data-ng-repeat="partner in partners  | filter:filterText">
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.partnerName}}</td>
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.parentName}}</td>
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.currency}}</td>
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">
+								{{partner.openingDate | DateFormat}}</td>
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.balanceAmount}}</td>
+							<td><a has-permission='UPDATE_PARTNER'
+								href="#/editpartner/{{partner.id}}" uib-popover="Edit Partner"
+								data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td>
+						</tr> -->
+					</table>
+				</uib-tab>
+    		</uib-tabset>
+        </div>
+    </div>
+    
+    <script type="text/ng-template" id="deletePopupForAgreement.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete Agreement</h3>
+                    </div>
+                    <div class="modal-body style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+                    </div>
+  </script>
+  
+  	<script type="text/ng-template" id="CloseTicket.html">
+		
+	<div class="modal-header silver">
+    			<h4>{{'label.closeticket' | translate}}</h4>
+    		</div>
+    		<br>
+		<div class="modal-body" >
+		<form class="form-horizontal" ng-submit="submit()">
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="status"> {{'label.status' | translate }} </label>
+						<div class="col-sm-4">
+							<select ng-model="formData.status" class="form-control"
+								ng-options="statusData.id as statusData.mCodeValue for statusData in statusDatas"
+								value="{{statusData.id}}"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="description"> {{'label.resolutiondescription' | translate }}</label>
+						<div class="col-sm-4">
+							    <textarea class="form-control" ng-model="formData.resolutionDescription"></textarea>
+						</div>
+					</div>
+					<div class="col-md-offset3-3">
+						<button type="reset" class="btn btn-warning" ng-click="reset123()">Cancel</button></a>
+						<button id="submit" class="btn btn-primary" ng-click="closeTicket()">Save</button>
+					</div>
+		</form>
+		</div>
+	</div>
+</script>
+  
+</div>      

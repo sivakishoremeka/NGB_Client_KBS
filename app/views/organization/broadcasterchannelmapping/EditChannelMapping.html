@@ -1,0 +1,78 @@
+<div class="content-container" ng-controller="EditChannelMappingController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+			<span class="divider"></span>
+		</li>
+		<li>
+			<a href="#/broadcasterchannelmapping">{{'label.broadcasterChannelMapping' | translate}}</a> 
+		    <span class="divider"></span> 
+	   </li>
+       <li class="active">{{'label.editchannelmapping' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h3>{{'label.heading.editchannelmapping' | translate}}</h3>
+			</div>
+			
+				<form name="editchannelmappingform" novalidate="" class="form-horizontal" rc-submit="submit()">
+			    	<api-validate></api-validate>
+			    	<div class="error" data-ng-show="errorStatus || errorDetails" >
+					     <label class="error" data-ng-show="errorStatus">{{errorStatus}}</label>
+					     <label class="error" data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">
+					               {{error.code | translate}}</label>
+	                </div> 
+	                <fieldset>
+		                <div class="form-group">
+					    	<label class="control-label col-sm-2" for="productId">{{'label.createchannelmapping.serviceid'| translate }}&nbsp;<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<!-- <select id="productId" ng-model="formData.productId" ng-options="productData.id as productData.productCode for productData in productDatas" class="form-control">
+								</select> -->
+								<input type="text"  
+				            		data-ng-model="productData" 
+				            		name="productId" 
+				            		class="form-control"
+									uib-typeahead="productData as getBothProduct(productData.productCode,productData.productDescription) for productData in getData($viewValue)" 
+									autocomplete="off" data-typeahead-min-length="0" data-typeahead-on-select="ProductFun(productData)">
+						    </div>
+					    </div>
+					    <!-- <div class="form-group">
+				     		<label class="control-label col-sm-2" for="channelId">{{'label.createchannelmapping.channelid'| translate }}&nbsp;<span class="required">*</span></label>
+					  		<div class="col-sm-3">
+						   		<select id="channelId" ng-model="formData.channelId" ng-options="channelData.id as channelData.channelName for channelData in channelDatas" class="form-control">
+						   		</select> 
+				      		</div>
+			 			</div> -->
+			 			
+			 			<div class="form-group">
+		                <div class="col-sm-3 col-md-3 col-md-offset-2">
+		                	<label class="control-label col-sm-9">{{ 'label.availablechannels' | translate }}</label>
+			           	 	<select id="availablechannels" ng-model="allowed" name="allowed" class="form-control multiselectmin" multiple >
+			            		<option data-ng-repeat="availableChannel in availableChannels" value="{{availableChannel.id}}">{{availableChannel.channelName}}</option>
+			            	</select>
+		                </div>
+		               		
+		                <div class="col-sm-1 col-md-1 paddedtop25px" >
+		                	<button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right"></i></button><br/>
+		                	<button type="button" class="btn btn-primary" data-ng-click="allow()"><i class="fa fa-angle-double-left"></i></button>
+		                </div>
+		               		
+		                <div class="col-sm-3 col-md-3">
+		                	<label class="control-label col-sm-9">{{ 'label.selectedchannels' | translate }}</label>
+			            	<select id="selectedchannels" name="selectedchannels" ng-model="restricted" name="restricted" class="form-control multiselectmin" multiple >
+			            		<option data-ng-repeat="selectedChannel in selectedChannels" value="{{selectedChannel.id}}">{{selectedChannel.channelName}}</option>
+			            	</select>
+		                </div>
+	        			</div>
+			 			
+			 			<div class="col-md-offset-10">
+		            		<a href="#/broadcasterchannelmapping"><button id="cancel" type="reset" class="btn btn-warning" ng-click="reset123()">{{'button.cancel'| translate}}</button></a>
+		            		<button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+	          			</div>
+					    
+	               </fieldset>
+			  </form>
+	    </div>
+	</div>
+</div>

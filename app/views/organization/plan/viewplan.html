@@ -1,0 +1,79 @@
+<div class="content-container" data-ng-controller="ViewPlanController">
+		<ul class="breadcrumb">
+			<li>
+				<a href="#/organization">{{'label.anchor.masters' | translate}}</a> 
+				<span class="divider"></span>
+			</li>
+			<li>
+				<a href="#/plans">{{'label.plans' | translate}}</a>
+				<span class="divider"></span>
+			</li>
+			<li class="active">{{plan.planCode}}</li>	
+		</ul>
+		 
+	<div class="widget">
+		<h3>{{plan.planCode}}</h3>
+			<ul class="btn-group-list text-right mb20">
+                <li>
+                     <a has-permission = 'UPDATE_PLAN' href="#/editplan/{{plan.id}}" class="btn primary_btn"><i class="fa fa-edit"></i> Edit</a>
+                </li>
+                <li>
+                  <a has-permission = 'DELETE_PLAN' data-ng-click="deleteplan()" class="btn primary_btn"><i class="fa fa-trash-o"></i> Delete</a>
+                </li>
+                  <li>
+                    <a has-permission =  'CREATE_PRICE' href="#/createprice/{{plan.id}}" class="btn primary_btn"> <i class="fa fa-edit"></i>Price</a>
+                </li>
+            </ul>	 
+	 <h4>{{contractperiod.name}}</h4>
+	 	<div class="table-responsive">
+		 	<table class="table table-striped">
+		 		<tr>
+		 			<td>{{ 'label.plan.plandescription' | translate }}</td>
+		 			<td>{{plan.planDescription}}</td>
+		 		</tr>
+		 		<tr>
+		 			<td>{{ 'label.plan.status' | translate }}</td>
+		 			<td>{{plan.status}}</td>
+		 		</tr>
+		 		<tr>
+		 			<td>{{ 'label.plan.billingrule' | translate }}</td>
+		 			<td>{{plan.billRule}}</td>
+		 		</tr>
+		 	    <tr>
+		 	   		<td>{{ 'label.plan.provisioningsystem' | translate }}</td>
+		 	   		<td>{{plan.provisionSystem}}</td>
+		 	    </tr>
+		 	    <tr>
+		 	   		<td>{{ 'label.currency' | translate }}</td>
+		 	   		<td>{{plan.currencyCode}}</td>
+		 	    </tr>
+		 	    <tr>
+		 	    	<td valign="top">{{ 'label.plan.product' | translate }}</td>
+		 	    	<td>
+		 	    		<div data-ng-repeat="selectedProduct in plan.selectedProducts">
+		 	    			<span>{{selectedProduct.productCode}}</span>
+		 	    		</div>
+		 	    	</td>
+		 	    </tr>
+		 	    <tr>
+		 	    	<td>{{ 'label.plan.isprepaid' | translate }}</td>
+		 	    	<td>{{plan.isPrepaid}}</td>
+		 	    </tr>
+		 	</table>
+	 	</div>
+   </div>  
+</div>
+
+		 <script type="text/ng-template" id="approve.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">{{'dialog.plan.title.message' | translate}}</h3>
+        </div>
+        <div class="modal-body modal-small">
+           <h4 class="text-center">Are you sure?</h4>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+        </div>
+        </script>
+</div>

@@ -1,0 +1,80 @@
+<div class="content-container" ng-controller="EditRumController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'link.admin.masters' |
+				translate}}</a></li>
+		<li><a href="#/rating">{{'label.rating' | translate}}</a></li>
+		<li><a href="#/editrum">{{'label.editrum' | translate}}</a>
+	</ul>
+	<div class="widget">
+		<h3>{{'label.editrum' | translate}}</h3>
+		<br>
+
+		<form name="editrum" novalidate="" class="form-horizontal"
+			rc-submit="submit()">
+			<api-validate></api-validate>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label" for="rumName">{{'label.rumname'|
+								translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" id="rumName" class="form-control"
+								name="rumName" data-ng-model="formData.rumName" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label" for="chargeCodeId">{{'label.chargecodeid'|
+								translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" id="chargeCodeId" class="form-control"
+								name="chargeCodeId" data-ng-model="formData.chargeCodeId" />
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label" for="templateId">{{'label.templateid'|
+								translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" id="templateId" class="form-control"
+								name="templateId" data-ng-model="formData.templateId" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label col-sm-2" for="rumExpression">{{'label.rumexpression'|
+								translate }}&nbsp;</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" id="rumExpression" class="form-control"
+								name="rumExpression" data-ng-model="formData.rumExpression" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<ul class="btn-group-list text-right mt20 mb20">
+				<li><a href="#/rating"><button id="cancel" type="reset"
+							class="btn">{{'button.cancel'| translate}}</button></a></li>
+				<li>
+					<button id="submit" type="submit" class="btn btn-primary">{{'button.save'|
+						translate}}</button>
+				</li>
+			</ul>
+		</form>
+	</div>
+</div>

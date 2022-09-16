@@ -1,0 +1,92 @@
+<div class="content-container" ng-controller="EditVendorController">
+	<ul class="breadcrumb">
+    	<li><a href="#/vendormanagement">{{'label.vendor.vendormanagement' | translate}}</a></li>
+        <li class="active">{{'label.editvendor' | translate}}</li>
+    </ul>
+<form name="editvendorform" class="form-horizontal" data-ng-submit="submit()">
+	<api-validate></api-validate>
+        <fieldset>
+         <div class="card">
+    		<div class="content">
+    			<div class="toolbar">
+    				<h3>{{'label.editvendor' | translate}}</h3>
+			    </div>
+					<div class="form-group">
+           			  <label class="control-label col-sm-2" for="vendorCode">{{'label.vendor.code' | translate}}<span class="required">*</span></label>
+            			<div class="col-sm-3">
+             			  <input type="text" id="vendorCode" class="form-control" name="vendorCode" data-ng-model="edit.vendorCode" data-ng-maxlength="{{'code' | CodeValidate}}"></br>
+             			<!-- </div>
+             			<div class="col-sm-3"> -->
+             			  <span data-ng-show="editvendorform.vendorCode.$dirty && editvendorform.vendorCode.$invalid">
+							<small class="error" >{{'error.code.definition.length.validation'| translate}}</small>
+						  </span>
+           				</div>
+         			  <label class="control-label col-sm-2" for="vendormobileNo">{{'label.vendor.mobileno' | translate}}<span class="required">*</span></label>
+            			<div class="col-sm-3">
+             			  <input type="text" id="vendormobileNo" name="vendormobileNo" class="form-control"
+             					data-ng-model="edit.vendormobileNo" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/"></br>
+             			<!-- </div>
+             			<div class="col-sm-3">	 -->	
+             			  <span data-ng-show="editvendorform.vendormobileNo.$dirty && editvendorform.vendormobileNo.$invalid">
+							<small class="error" data-ng-show="editvendorform.vendormobileNo.$error.pattern"> {{'label.prospect.error.mobileno' | translate}} </small>
+						  </span>
+           				</div>
+         			</div>	
+					<div class="form-group">
+            		  <label class="control-label col-sm-2" for="vendorName">{{'label.vendor.name' | translate}}<span class="required">*</span></label>
+            			<div class="col-sm-3">
+              				<input type="text" id="vendorName" name="vendorName" class="form-control" data-ng-model="edit.vendorName">
+           				</div>
+           			  <label class="control-label col-sm-2" for="vendorLandlineNo">{{'label.vendor.vendorlandlineno' | translate}}<span class="required">*</span></label>
+            			<div class="col-sm-3">
+             			   <input type="text" id="vendorLandlineNo" name="vendorLandlineNo" class="form-control"
+             				data-ng-model="edit.vendorLandlineNo" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/"></br>
+             				<div data-ng-show="editvendorform.vendorLandlineNo.$dirty && editvendorform.vendorLandlineNo.$invalid">
+								<small class="error" data-ng-show="editvendorform.vendorLandlineNo.$error.pattern"> {{'label.prospect.error.mobileno' | translate}} </small>
+							</div>
+           				</div>
+         			</div>
+					<div class="form-group">
+            			<label class="control-label col-sm-2" for="contactName">{{'label.vendor.conatactname' | translate}}<span class="required">*</span></label>
+            			   <div class="col-sm-3">
+              				 <input type="text" id="contactName" class="form-control" name="contactName" data-ng-model="edit.contactName">
+           				   </div>
+            			<label class="control-label col-sm-2" for="vendorAddress">{{'label.vendor.vendoraddress' | translate}}<span class="required">*</span></label>
+            			  <div class="col-sm-3">
+              					<input type="text" id="vendorAddress" class="form-control" name="vendorAddress" data-ng-model="edit.vendorAddress">
+           				  </div>
+          		     </div>
+					 <div class="form-group">
+            			<label class="control-label col-sm-2" for="vendorEmailId">{{'label.vendor.emailid' | translate}}<span class="required">*</span></label>
+            				<div class="col-sm-3">
+              					<input type="email" id="vendorEmailId" class="form-control" name="vendorEmailId" data-ng-model="edit.vendorEmailId">
+              				<!-- </div>
+              			 	<div class="col-sm-3">	 -->
+              					<span data-ng-show="editvendorform.vendorEmailId.$dirty && editvendorform.vendorEmailId.$invalid">
+									<small class="error" data-ng-show="editvendorform.vendorEmailId.$error.email"> {{'label.prospect.error.email' | translate}} </small>
+								</span>
+           					</div>
+            			<label class="control-label col-sm-2" for="vendorCountry">{{'label.vendor.country' | translate}}<span class="required">*</span></label>
+            			  <div class="col-sm-3">
+             				<select  id="vendorCountry" class="form-control" data-ng-model="edit.vendorCountry"  data-ng-options="countryData.id as countryData.countryName for countryData in countryDatas">
+             				 <option value="">{{'label.select.one' | translate}}</option></select>
+            			  </div>
+          			 </div>
+					 <div class="form-group">
+            			<label class="control-label col-sm-2" for="vendorCurrency">{{'label.vendor.vendorcurrency' | translate}}<span class="required">*</span></label>
+            			  <div class="col-sm-3">
+             				<select  id="vendorCurrency" data-ng-model="edit.vendorCurrency" class="form-control" 
+             				data-ng-options="currencyData.code as currencyData.code for currencyData in currencyDatas">
+             				<option value="">{{'label.select.one' | translate}}</option></select>
+            			 </div>
+          			 </div>
+					<div class="col-md-offset-9">
+                        <a href="#/vendormanagement">
+                        <button id="cancel" type="reset" class="btn btn-warning">{{'button.cancel'| translate}}</button></a>
+                        <button id="submit" type="submit" data-ng-disabled="editvendorform.$dirty && editvendorform.$invalid" class="btn btn-primary">{{'button.save'| translate}}</button>
+                 	</div>
+                 </div>
+              </div>   	
+        </fieldset>
+  </form>
+</div>

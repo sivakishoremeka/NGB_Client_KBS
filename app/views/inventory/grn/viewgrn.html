@@ -1,0 +1,57 @@
+	<div class="content-container" ng-controller="ViewGrnController">
+	<ul class="breadcrumb">
+        <li><a href="#/inventory" ng-click="selectedGRN()">{{'link.admin.inventory' | translate}}</a></li>
+        <li><a href="#/grndetails">{{'link.grndetails' | translate}}</a></li>
+        <li class="active">{{grn.id}}&nbsp;&nbsp;</li>
+    </ul>
+
+    <div class="widget mb30">
+        	<h3>{{grn.id}}</h3>
+    	<div class="row">
+        	<div class="col-md-12">
+        		<ul class="btn-group-list text-right">
+        			<li>
+        				<a  ng-show="grn.orderdQuantity != grn.receivedQuantity" href="#/editgrn/{{grn.id}}" class="btn primary_btn">
+	         				<i class="fa fa-edit"></i> Edit</a>
+        			</li>
+        			<!-- <li>
+        				<a data-ng-click="deleteGrn()" class="btn btn-primary"><i class="icon-trash icon-white"></i> Delete</a>
+        			</li> -->
+        		</ul>
+   			</div>
+      </div>
+  </div>
+
+ <div class="widget">
+	<table class="table table-bordered table-striped">
+		<tr>
+			<td>{{'label.id' | translate }}</td>
+			<td>{{grn.id}}</td>
+		</tr>
+		<tr>
+			<td>{{'label.purchasedate' | translate }}</td>
+			<td>{{grn.purchaseDate | DateFormat}}</td>
+		</tr>
+		<tr>
+			<td>{{'label.suppliername' | translate }}</td>
+			<td>{{grn.supplierName}}</td>
+		</tr>
+		<tr>
+			<td>{{'label.itemdescription' | translate }}</td>
+			<td>{{grn.itemDescription}}</td>
+		</tr>
+		<tr>
+			<td>{{'label.orderdquantity' | translate }}</td>
+			<td>{{grn.orderdQuantity}}</td>
+		</tr>
+		<tr>
+			<td>{{'label.receivedquantity' | translate }}</td>
+			<td>{{grn.receivedQuantity}}</td>
+		</tr>
+		<tr>
+			<td>{{'label.balancequantity' | translate }}</td>
+			<td>{{grn.balanceQuantity}}</td>
+		</tr>
+	</table>
+ </div>
+</div>

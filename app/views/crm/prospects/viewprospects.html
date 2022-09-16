@@ -1,0 +1,217 @@
+<div class="content-container" ng-controller="ViewProspectsController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/leads">{{'link.prospects' | translate}}</a>
+			<span class="divider"></span>
+		</li>
+		<li class="active">{{ label.prospects.firstName}}&nbsp;{{ prospects.lastName}}</li>
+	</ul>
+	<div class="widget mb30">
+		<h3>{{ prospects.firstName}}</h3>
+		 		<ul class="btn-group-list text-right">
+		 			<li>
+		 				<span>
+					      <a href="#/followprospects/{{prospects.id}}" data-ng-show="getVal(prospects.status)"
+					   has-permission = UPDATE_PROSPECT class="btn primary_btn"><i class="fa fa-edit"></i> {{'label.prospects.followup' | translate}} </a>
+			         </span>
+		 			</li>
+		 			<li>
+		 				<span ng-show="prospects.status == 'Prospect'">
+					      <a href="#/generatequote/{{prospects.id}}" data-ng-show="getVal(prospects.status)"
+					    has-permission = GENERATE_QUOTE class="btn primary_btn"><i class="fa fa-edit"></i> {{'label.prospects.generatequote' | translate}} </a> 
+				     </span>
+		 			</li>
+		 			<li>
+		 			   <span ng-show="prospects.status == 'Prospect'">
+					     <a data-ng-click="convertProspect()" data-ng-show="(getVal(prospects.status))"
+					   has-permission = "CONVERT_PROSPECT && CREATE_CLIENT" class="btn primary_btn"><i class="fa fa-edit"></i> {{'label.prospects.convert' | translate}} </a> 
+				  </span>
+		 			</li>
+		 			<li>
+		 				<span>
+					    <a href="#/editprospects/{{prospects.id}}" data-ng-show="getVal(prospects.status)"
+					   has-permission = EDIT_PROSPECT class="btn primary_btn"><i class="fa fa-edit"></i> {{'label.prospects.edit' | translate}} </a> 
+				       </span>
+		 			</li>
+		 			<li>
+		 				<span>
+					<a href="#/cancelprospects/{{prospects.id}}" data-ng-show="getVal(prospects.status)" 
+					   has-permission = DELETE_PROSPECT class="btn primary_btn"><i class="fa fa-trash-o"></i> {{'label.prospects.cancel' | translate}}</a>
+			    </span>
+		 			</li>
+		 			<li>
+		 				<span ng-hide="prospects.status == 'Prospect'">
+					      <a data-ng-click="elevatetoProspect(Prospect)" 
+					   has-permission = ELEVATE_PROSPECT class="btn primary_btn">{{'label.prospects.elevateprospect' | translate}} </a> 
+				       </span>
+		 			</li>
+		 		</ul>
+		 	</div>
+
+        <div class="widget mb30">
+			<table class="table table-striped">
+				<tr>
+					<td>{{ 'label.name' | translate }}</td>
+					<td>{{prospects.firstName}}&nbsp{{prospects.lastName}}</td>
+				</tr>
+				<tr>
+					<td>{{ 'label.emailId' | translate }}</td>
+					<td>{{prospects.email}}</td>
+				</tr>
+				<tr>
+					<td>{{ 'label.phonenumber' | translate }}</td>
+					<td>{{prospects.mobileNumber}}</td>
+				</tr>
+				<tr>
+					<td>{{ 'label.address' | translate }}</td>
+					<td>{{prospects.address}}&nbsp{{prospects.streetArea}}&nbsp{{prospects.cityDistrict}}&nbsp{{prospects.state}}&nbsp{{prospects.country}}</td>
+				</tr>
+				<tr>
+					<td>{{ 'label.note' | translate }}</td>
+					<td>{{prospects.note}}</td>
+				</tr>
+				<tr>
+					<td>{{ 'label.status' | translate }}</td>
+					<td>{{prospects.status}}</td>
+				</tr>
+			</table>
+		 </div>
+
+		   <div class="widget mb30">
+			<h3>{{ 'label.History Data' | translate }}</h3>
+				<table class="table table-striped">
+					<thead>
+						<tr class="graybg">
+						    <th>{{ 'table.heading.callstatus' | translate }}</th>
+						    <th>{{ 'table.heading.nextcall' | translate }}</th>
+						    <th>{{ 'table.heading.note' | translate }}</th>
+						     <th>{{ 'table.heading.username' | translate }}</th>
+						    <th>{{ 'table.heading.assignedto' | translate }}</th>
+						    
+				        </tr>
+		            </thead>
+		            <tbody>
+				        <tr data-ng-repeat="prospectDetailData in prospectDetailData | filter:filterText">
+						   <td>{{prospectDetailData.callStatus}}</td>
+						   <td>{{prospectDetailData.nextTime}}</td>
+						   <td>{{prospectDetailData.notes}}</td>
+						    <td>{{prospectDetailData.username}}</td>
+						   <td>{{prospectDetailData.assignedTo}}</td>
+				       </tr>
+		           </tbody>
+               </table>
+		     </div>
+
+		      <div class="widget mb30">
+	              <h3>{{ 'label.Quote Data' | translate }} </h3>
+	               <ul class="btn-group-list text-right mb20">
+	               	<li>
+	               		 <span> <a class="btn primary_btn"
+			 			data-ng-click="exportPDF()">Invoice</a></span>
+	               	</li>
+	               	 <li>
+	               	 	<span> <a class="btn primary_btn" 
+			 			data-ng-click="quotationData(quoteId)">{{'button.quotationData' | translate}}</a></span>
+	               	 </li>
+	               </ul>
+	           <table class="table table-striped">
+					<thead>
+						<tr class="graybg">								    
+						    <th>{{ 'table.heading.quoteId' | translate }}</th>								    
+						    <th>{{ 'table.heading.quoteNumber' | translate }}</th>
+						    <th>{{ 'table.heading.leadId' | translate }}</th>
+						    <th>{{ 'table.heading.status' | translate }}</th>
+						    <th>{{ 'table.heading.totalCharge' | translate }}</th>
+						    <th>{{ 'table.heading.actions' | translate }}</th>
+						    
+				        </tr>
+		            </thead>
+		            <tbody>
+				        <tr data-ng-repeat="viewquotes in viewquote">
+						   <td>{{viewquotes.quoteId}}</td>							   
+						   <td>{{viewquotes.quoteNumber}}</td>
+						   <td>{{viewquotes.leadId}}</td>							   
+						   <td>{{viewquotes.status}}</td>
+						   <td>{{viewquotes.totalCharge}}</td>
+						   <td><a data-ng-show="viewquotes.status == 'Review' " href="#/editquote/{{prospects.id}}/{{viewquotes.quoteId}}" has-permission = UPDATE_QUOTATION
+				         class="btn btn_primary">
+		        		   <i class="fa fa-edit"></i>
+		        		        </a>
+		        		         <!--          <a data-ng-show="viewquotes.status == 'rejected'" href="#/editquote/{{prospects.id}}/{{viewquotes.quoteId}}" 
+					   has-permission = UPDATE_QUOTATION class="btn btn-primary " ><i class="fa fa-edit"></i> {{'label.prospects.editQuote' | translate}}</a>&nbsp;  -->
+				       </td>
+				       </tr>
+		           </tbody>
+               </table>
+             </div>
+           </div> 
+	
+	
+	<script type="text/ng-template" id="downloadCSVQuatationData.html"> 
+		<form name="downloadCSVform" novalidate="" class="form-horizontal well">
+	 		<api-validate></api-validate>
+		   	<fieldset>
+				<h3>{{'label.downloadquotationsummary' | translate}}</h3>
+						    	<div class="form-group">
+									<label class="control-label col-sm-2" for="status">{{ 'label.downloadtype.format' | translate }}<span class="required">*</span></label>
+									<div class="col-sm-3">
+										<select ng-model="formData.downloadType" class="form-control" required>
+              								<option value="csv">CSV</option>
+              								<option value="pdf">PDF</option>
+          								</select>
+									</div>
+								</div> 
+				  	<div class="modal-footer">
+				    	<button id="cancel" class="btn btn-warning" ng-click="reject(reject)">{{'button.cancel' | translate}}</button>
+				        <button id="submit" class="btn btn-primary" ng-click="accept(accept)" ng-disabled="!downloadCSVform.$valid||flag">{{'label.confirm' | translate}}</button>
+				   	</div>
+				</fieldset>
+			</form>
+		</script>
+		
+	<script type="text/ng-template" id="QuatationData.html"> 
+		<form name="quotationform" novalidate="" class="form-horizontal well">
+	 		<api-validate></api-validate>
+		   	<fieldset>
+				<h3 class="col-sm-12">{{'label.Quotation' | translate}}</h3>
+						    	<div class="form-group">
+									<label class="control-label col-sm-3" for="status">{{ 'label.QuoteId' | translate }}<span class="required">*</span></label>
+									<div class="col-sm-3">
+            			    <select id="quoteId" ng-model="viewquotes" name="quoteId" class="form-control" ng-options="viewquotes as viewquotes.quoteId for viewquotes in viewquote" value="{{viewquote.quoteId}}">
+			            	</select>
+									</div>
+								</div> 
+				  	<div class="modal-footer">
+				    	<button id="cancel" class="btn btn-warning" ng-click="reject(viewquotes)" ng-disabled="!quotationform.$valid||flag">{{'button.Reject' | translate}}</button>
+				        <button id="submit" class="btn btn-primary" ng-click="accept(viewquotes)"   ng-disabled="!quotationform.$valid||flag">{{'button.Accept' | translate}}</button>
+				   	</div>
+				</fieldset>
+			</form>
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</div>

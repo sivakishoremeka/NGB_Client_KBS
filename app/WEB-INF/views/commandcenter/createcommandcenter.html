@@ -1,0 +1,142 @@
+<div class="content-container" ng-controller="CommandCenterController">
+	<ul class="breadcrumb">
+		<li><a href="#/commandcenter">{{'link.commandcenter' |
+				translate}}</a></li>
+		<li class="active">{{'label.createcommandcenter' | translate}}</li>
+	</ul>
+	<div class="widget">
+		<h3>{{'label.heading.createcommandcenter' | translate}}</h3>
+		<form name="createcommandcenterform" novalidate=""
+			class="form-horizontal" rc-submit="submit()">
+			<api-validate></api-validate>
+			<div class="row ">
+				<div class="col-md-6">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label" for="status">{{
+								'label.group' | translate }}</label>
+						</div>
+						<div class="col-md-8">
+							<select id="parentId" ng-model="officeId" class="form-control"
+								ng-change="officeChange(officeId)"
+								ng-options="office.id as office.name for office in offices"
+								value="{{office.id}}">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="col-md-4">
+							<label class="control-label" for="status">{{
+								'label.provisioningsystem' | translate }}</label>
+						</div>
+						<div class="col-md-8">
+							<select id="provisioningSystem" class="form-control"
+								data-ng-model="provisioningSystem"
+								data-ng-change="provisioningSystemchangefun(provisioningSystem)"
+								data-ng-options="provisioningData as provisioningData.systemcode for provisioningData in provisioning">
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group row" ng-if="formData.provisioningSystem">
+						<div class="col-md-2">
+							<label class="control-label" for="status">{{
+								'label.provisioning.commandname' | translate }}</label>
+						</div>
+						<div class="col-md-4">
+							<select ng-model="formData.commandId" class="form-control"
+								ng-change="commandCenter(formData.commandId)"
+								ng-options="commanddata.id as commanddata.commandName for commanddata in commandData"></select>
+						</div>
+						<div class="col-md-6">
+							<textarea id="shown" ng-hide="showNote == ''"
+								class="form-control">
+                                        {{showNote}}</textarea>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div data-ng-repeat="commandParameter in commandParameters"
+						class="form-group row">
+						<div class="col-md-4">
+							<label class="control-label">{{commandParameter.commandParam}}</label>
+						</div>
+						<div class="col-md-8">
+							<input
+								ng-if="commandParameter.paramType != 'Combo' && commandParameter.paramType != 'Boolean' && commandParameter.paramType != 'Date' && commandParameter.paramType != 'DateTime' && commandParameter.paramType !='Integer'"
+								class="form-control" type="text" name="paramValue"
+								data-ng-model="commandParameter.commandValue"
+								ng-focus="focusFieldFun(commandParameter.paramNotes)"
+								ng-blur="onBlurField()"
+								maxlength={{commandParameter.paramLength}} /> <input
+								ng-if="commandParameter.paramType == 'Integer'"
+								name="{{commandParameter.commandParam}}"
+								data-ng-model="commandParameter.commandValue"
+								class="form-control"
+								ng-focus="focusFieldFun(commandParameter.paramNotes)"
+								ng-blur="onBlurField()"
+								maxlength={{commandParameter.paramLength}}
+								data-ng-pattern="/^\d{0,30}(\.\d{1,30})?$/" required />
+
+							<div
+								data-ng-show="commandcenterform.{{commandParameter.commandParam}}.$dirty && commandcenterform.{{commandParameter.commandParam}}.$invalid">
+								<small class="error"
+									data-ng-show="commandcenterform.{{commandParameter.commandParam}}.$error.pattern">{{'error.not.numeric.validation'
+									| translate}}</small>
+							</div>
+
+							<select ng-if="commandParameter.paramType == 'Combo'"
+								id="paramValue" data-ng-model="commandParameter.commandValue"
+								class="form-control"
+								data-ng-options="detail.mCodeValue as detail.mCodeValue for detail in paramValuesData">
+							</select> <select ng-if="commandParameter.paramType == 'Boolean'"
+								id="paramValue" data-ng-model="commandParameter.commandValue"
+								class="form-control"
+								data-ng-options="paramValue for paramValue in paramValues">
+							</select> <input ng-focus="focusFieldFun(commandParameter.paramNotes)"
+								ng-blur="onBlurField()" type="text"
+								ng-if="commandParameter.paramType == 'Date'"
+								class="form-control" data-datepicker-pop="dd/MM/yyyy"
+								id="paramValue" data-ng-model="commandParameter.commandValue"
+								data-is-open="opened2" min="minDate" max="'2020-06-22'"
+								data-date-disabled="disabled(date, mode)"
+								style="background-color: #FFFFFF;" /> <input
+								ng-focus="focusFieldFun(commandParameter.paramNotes)"
+								ng-blur="onBlurField()" type="text"
+								ng-if="commandParameter.paramType == 'DateTime'"
+								class="form-control" id="paramValue"
+								data-ng-model="commandParameter.commandValue"
+								data-is-open="opened2" min="minDate" max="'2020-06-22'"
+								data-date-disabled="disabled(date, mode)"
+								style="background-color: #FFFFFF;" />
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<ul class="btn-group-list text-right mt20 mb20">
+				<li><a id="cancel" href="#/commandcenter">
+						<button type="reset" class="btn btn-warning">{{'label.button.cancel'
+							| translate}}</button>
+				</a></li>
+				<li>
+					<button id="save" type="submit"
+						data-ng-disabled="!createcommandcenterform.$valid"
+						class="btn btn-primary " has-permission='CREATE_COMMANDCENTER'>{{'label.button.save'
+						| translate}}</button>
+				</li>
+			</ul>
+		</form>
+
+	</div>
+
+</div>
